@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -86,18 +85,16 @@ textarea { min-height:64px; resize:vertical; line-height:1.6; }
   <div class="ticker-edit" onclick="showTab('cenario')">✏️ Editar</div>
 </div>
 
-<div class="tabs">
+<div class="tabs" style="grid-template-columns:repeat(4,1fr)">
   <button class="tab" onclick="showTab('cenario')">⚙ Cenário</button>
+  <button class="tab" onclick="showTab('clientes')">👥 Clientes</button>
   <button class="tab active" onclick="showTab('venda')">Venda / Pitch</button>
   <button class="tab" onclick="showTab('carteira')">Carteira</button>
-  <button class="tab" onclick="showTab('reuniao')">Agendamento</button>
-  <button class="tab" onclick="showTab('prospeccao')">Prospecção</button>
 </div>
 
 <div class="main">
 
 <!-- ===== CENÁRIO ===== -->
-
 <div class="panel" id="panel-cenario">
   <div class="info-box">
     <div class="info-box-title">🤖 Atualização automática de mercado</div>
@@ -139,8 +136,33 @@ textarea { min-height:64px; resize:vertical; line-height:1.6; }
   <div class="tip-box">💡 Fontes sugeridas: BACEN (bcb.gov.br), Investing.com, Status Invest ou morning note da sua corretora.</div>
 </div>
 
-<!-- ===== VENDA ===== -->
+<!-- ===== CLIENTES ===== -->
+<div class="panel" id="panel-clientes">
+  <div class="box">
+    <div class="box-title" style="color:#1e3f6b">● Cadastrar novo cliente</div>
+    <div class="g2">
+      <div class="field"><label>Nome</label><input id="cli-nome" placeholder="João Silva"></div>
+      <div class="field"><label>Sobrenome</label><input id="cli-sobrenome" placeholder="Silva"></div>
+      <div class="field"><label>WhatsApp</label><input id="cli-tel" placeholder="5511999999999" type="tel"></div>
+      <div class="field"><label>E-mail</label><input id="cli-email" placeholder="joao@email.com" type="email"></div>
+    </div>
+    <button onclick="cadastrarCliente()" style="width:100%;padding:12px;background:#1e3f6b;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:sans-serif;margin-top:4px">+ Cadastrar Cliente</button>
+  </div>
 
+  <div class="box">
+    <div class="box-title" style="color:#1e3f6b">● Clientes cadastrados</div>
+    <div id="lista-clientes">
+      <p style="font-size:13px;color:#bbb;font-style:italic">Nenhum cliente cadastrado ainda.</p>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+      <button onclick="exportarClientes()" style="flex:1;padding:9px;background:#f5f3ef;border:1px solid #ddd;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:sans-serif;color:#555;min-width:120px">📤 Exportar backup</button>
+      <button onclick="document.getElementById('importar-input').click()" style="flex:1;padding:9px;background:#f5f3ef;border:1px solid #ddd;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:sans-serif;color:#555;min-width:120px">📥 Importar backup</button>
+      <input type="file" id="importar-input" accept=".json" style="display:none" onchange="importarClientes(event)">
+    </div>
+  </div>
+</div>
+
+<!-- ===== VENDA ===== -->
 <div class="panel active" id="panel-venda">
   <div class="prod-row">
     <button class="prod-btn active" id="prod-rf" onclick="switchProd('rf')">📄 Renda Fixa</button>
@@ -148,10 +170,15 @@ textarea { min-height:64px; resize:vertical; line-height:1.6; }
   </div>
 
   <!-- RF -->
-
   <div id="section-rf">
     <div class="box">
       <div class="box-title" style="color:#2a6b4a">● Cliente</div>
+      <div class="field" style="margin-bottom:10px">
+        <label>Selecionar cliente cadastrado</label>
+        <select id="rf-cli-sel" onchange="selecionarCliente('rf')" style="width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:7px;font-size:14px;font-family:sans-serif;background:#fafafa">
+          <option value="">-- Selecione ou preencha manualmente --</option>
+        </select>
+      </div>
       <div class="g2">
         <div class="field"><label>Nome</label><input id="rf-cliente" placeholder="João Silva"></div>
         <div class="field"><label>Perfil</label><select id="rf-perfil"><option value="">Selecione</option><option>Conservador</option><option>Moderado</option><option>Arrojado</option><option>Agressivo</option></select></div>
@@ -166,99 +193,99 @@ textarea { min-height:64px; resize:vertical; line-height:1.6; }
     <div class="box" id="rf-ativos-box">
       <div class="box-title" style="color:#2a6b4a">● Ativos Sugeridos</div>
 
-```
-  <!-- ATIVO 1 -->
-  <div style="background:#f9f9f7;border:1px solid #e0e0d8;border-radius:8px;padding:12px;margin-bottom:10px">
-    <div style="font-size:11px;font-weight:700;color:#2a6b4a;margin-bottom:8px">ATIVO 1</div>
-    <div class="g3">
-      <div class="field"><label>Tipo</label><select id="rf-tipo"><option>CDB</option><option>LCI</option><option>LCA</option><option>LCD</option><option>CRI</option><option>CRA</option><option>Debênture</option><option>Debênture Incentivada</option><option>Tesouro Direto</option></select></div>
-      <div class="field"><label>Emissor</label><input id="rf-emissor" placeholder="Banco, Empresa..."></div>
-      <div class="field"><label>Rating</label><input id="rf-rating" placeholder="AAA, A+, sem rating..."></div>
-      <div class="field"><label>Indexador</label><select id="rf-indexador"><option>CDI+</option><option>% CDI</option><option>IPCA+</option><option>Prefixado</option></select></div>
-      <div class="field"><label>Taxa % a.a.</label><input id="rf-taxa" placeholder="CDI+1,5 ou 15"></div>
-      <div class="field"><label>Vencimento</label><input id="rf-venc" placeholder="Jan/2027"></div>
-      <div class="field"><label>Liquidez</label><select id="rf-liq"><option>No vencimento</option><option>D+1</option><option>D+30</option><option>D+60</option><option>Diária</option><option>Mercado secundário</option></select></div>
-      <div class="field"><label>Sugestão de valor</label><input id="rf-valor1" placeholder="Ex: R$ 50.000"></div>
-    </div>
-  </div>
+      <!-- ATIVO 1 -->
+      <div style="background:#f9f9f7;border:1px solid #e0e0d8;border-radius:8px;padding:12px;margin-bottom:10px">
+        <div style="font-size:11px;font-weight:700;color:#2a6b4a;margin-bottom:8px">ATIVO 1</div>
+        <div class="g3">
+          <div class="field"><label>Tipo</label><select id="rf-tipo"><option>CDB</option><option>LCI</option><option>LCA</option><option>LCD</option><option>CRI</option><option>CRA</option><option>Debênture</option><option>Debênture Incentivada</option><option>Tesouro Direto</option></select></div>
+          <div class="field"><label>Emissor</label><input id="rf-emissor" placeholder="Banco, Empresa..."></div>
+          <div class="field"><label>Rating</label><input id="rf-rating" placeholder="AAA, A+, sem rating..."></div>
+          <div class="field"><label>Indexador</label><select id="rf-indexador"><option>CDI+</option><option>% CDI</option><option>IPCA+</option><option>Prefixado</option></select></div>
+          <div class="field"><label>Taxa % a.a.</label><input id="rf-taxa" placeholder="CDI+1,5 ou 15"></div>
+          <div class="field"><label>Vencimento</label><input id="rf-venc" placeholder="Jan/2027"></div>
+          <div class="field"><label>Liquidez</label><select id="rf-liq"><option>No vencimento</option><option>D+1</option><option>D+30</option><option>D+60</option><option>Diária</option><option>Mercado secundário</option></select></div>
+          <div class="field"><label>Sugestão de valor</label><input id="rf-valor1" placeholder="Ex: R$ 50.000"></div>
+        </div>
+      </div>
 
-  <!-- SEPARADOR E/OU -->
-  <div style="display:flex;align-items:center;gap:10px;margin:10px 0" id="rf-separador" style="display:none">
-    <div style="flex:1;height:1px;background:#ddd"></div>
-    <div style="display:flex;gap:6px">
-      <button onclick="setSeparador('E')" id="sep-e" class="sep-btn" style="padding:5px 14px;border-radius:20px;border:1px solid #ddd;font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#888;font-family:sans-serif">E</button>
-      <button onclick="setSeparador('OU')" id="sep-ou" class="sep-btn" style="padding:5px 14px;border-radius:20px;border:1px solid #ddd;font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#888;font-family:sans-serif">OU</button>
-    </div>
-    <div style="flex:1;height:1px;background:#ddd"></div>
-  </div>
+      <!-- SEPARADOR E/OU -->
+      <div style="display:flex;align-items:center;gap:10px;margin:10px 0" id="rf-separador" style="display:none">
+        <div style="flex:1;height:1px;background:#ddd"></div>
+        <div style="display:flex;gap:6px">
+          <button onclick="setSeparador('E')" id="sep-e" class="sep-btn" style="padding:5px 14px;border-radius:20px;border:1px solid #ddd;font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#888;font-family:sans-serif">E</button>
+          <button onclick="setSeparador('OU')" id="sep-ou" class="sep-btn" style="padding:5px 14px;border-radius:20px;border:1px solid #ddd;font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#888;font-family:sans-serif">OU</button>
+        </div>
+        <div style="flex:1;height:1px;background:#ddd"></div>
+      </div>
 
-  <!-- ATIVO 2 (oculto por padrão) -->
-  <div id="rf-ativo2" style="display:none;background:#f9f9f7;border:1px solid #e0e0d8;border-radius:8px;padding:12px;margin-bottom:10px">
-    <div style="font-size:11px;font-weight:700;color:#2a6b4a;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-      <span id="rf-ativo2-label">ATIVO 2</span>
-      <button onclick="removerAtivo2('rf')" style="background:none;border:none;font-size:16px;cursor:pointer;color:#999">✕</button>
-    </div>
-    <div class="g3">
-      <div class="field"><label>Tipo</label><select id="rf-tipo2"><option>CDB</option><option>LCI</option><option>LCA</option><option>LCD</option><option>CRI</option><option>CRA</option><option>Debênture</option><option>Debênture Incentivada</option><option>Tesouro Direto</option></select></div>
-      <div class="field"><label>Emissor</label><input id="rf-emissor2" placeholder="Banco, Empresa..."></div>
-      <div class="field"><label>Rating</label><input id="rf-rating2" placeholder="AAA, A+, sem rating..."></div>
-      <div class="field"><label>Indexador</label><select id="rf-indexador2"><option>CDI+</option><option>% CDI</option><option>IPCA+</option><option>Prefixado</option></select></div>
-      <div class="field"><label>Taxa % a.a.</label><input id="rf-taxa2" placeholder="CDI+1,5 ou 15"></div>
-      <div class="field"><label>Vencimento</label><input id="rf-venc2" placeholder="Jan/2027"></div>
-      <div class="field"><label>Liquidez</label><select id="rf-liq2"><option>No vencimento</option><option>D+1</option><option>D+30</option><option>D+60</option><option>Diária</option><option>Mercado secundário</option></select></div>
-      <div class="field"><label>Sugestão de valor</label><input id="rf-valor2" placeholder="Ex: R$ 50.000"></div>
-    </div>
-  </div>
+      <!-- ATIVO 2 (oculto por padrão) -->
+      <div id="rf-ativo2" style="display:none;background:#f9f9f7;border:1px solid #e0e0d8;border-radius:8px;padding:12px;margin-bottom:10px">
+        <div style="font-size:11px;font-weight:700;color:#2a6b4a;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+          <span id="rf-ativo2-label">ATIVO 2</span>
+          <button onclick="removerAtivo2('rf')" style="background:none;border:none;font-size:16px;cursor:pointer;color:#999">✕</button>
+        </div>
+        <div class="g3">
+          <div class="field"><label>Tipo</label><select id="rf-tipo2"><option>CDB</option><option>LCI</option><option>LCA</option><option>LCD</option><option>CRI</option><option>CRA</option><option>Debênture</option><option>Debênture Incentivada</option><option>Tesouro Direto</option></select></div>
+          <div class="field"><label>Emissor</label><input id="rf-emissor2" placeholder="Banco, Empresa..."></div>
+          <div class="field"><label>Rating</label><input id="rf-rating2" placeholder="AAA, A+, sem rating..."></div>
+          <div class="field"><label>Indexador</label><select id="rf-indexador2"><option>CDI+</option><option>% CDI</option><option>IPCA+</option><option>Prefixado</option></select></div>
+          <div class="field"><label>Taxa % a.a.</label><input id="rf-taxa2" placeholder="CDI+1,5 ou 15"></div>
+          <div class="field"><label>Vencimento</label><input id="rf-venc2" placeholder="Jan/2027"></div>
+          <div class="field"><label>Liquidez</label><select id="rf-liq2"><option>No vencimento</option><option>D+1</option><option>D+30</option><option>D+60</option><option>Diária</option><option>Mercado secundário</option></select></div>
+          <div class="field"><label>Sugestão de valor</label><input id="rf-valor2" placeholder="Ex: R$ 50.000"></div>
+        </div>
+      </div>
 
-  <!-- ATIVO 3 (oculto por padrão) -->
-  <div id="rf-ativo3" style="display:none;background:#f9f9f7;border:1px solid #e0e0d8;border-radius:8px;padding:12px;margin-bottom:10px">
-    <div style="font-size:11px;font-weight:700;color:#2a6b4a;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-      <span>ATIVO 3</span>
-      <button onclick="removerAtivo3('rf')" style="background:none;border:none;font-size:16px;cursor:pointer;color:#999">✕</button>
-    </div>
-    <div class="g3">
-      <div class="field"><label>Tipo</label><select id="rf-tipo3"><option>CDB</option><option>LCI</option><option>LCA</option><option>LCD</option><option>CRI</option><option>CRA</option><option>Debênture</option><option>Debênture Incentivada</option><option>Tesouro Direto</option></select></div>
-      <div class="field"><label>Emissor</label><input id="rf-emissor3" placeholder="Banco, Empresa..."></div>
-      <div class="field"><label>Rating</label><input id="rf-rating3" placeholder="AAA, A+, sem rating..."></div>
-      <div class="field"><label>Indexador</label><select id="rf-indexador3"><option>CDI+</option><option>% CDI</option><option>IPCA+</option><option>Prefixado</option></select></div>
-      <div class="field"><label>Taxa % a.a.</label><input id="rf-taxa3" placeholder="CDI+1,5 ou 15"></div>
-      <div class="field"><label>Vencimento</label><input id="rf-venc3" placeholder="Jan/2027"></div>
-      <div class="field"><label>Liquidez</label><select id="rf-liq3"><option>No vencimento</option><option>D+1</option><option>D+30</option><option>D+60</option><option>Diária</option><option>Mercado secundário</option></select></div>
-      <div class="field"><label>Sugestão de valor</label><input id="rf-valor3" placeholder="Ex: R$ 50.000"></div>
-    </div>
-  </div>
+      <!-- ATIVO 3 (oculto por padrão) -->
+      <div id="rf-ativo3" style="display:none;background:#f9f9f7;border:1px solid #e0e0d8;border-radius:8px;padding:12px;margin-bottom:10px">
+        <div style="font-size:11px;font-weight:700;color:#2a6b4a;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+          <span>ATIVO 3</span>
+          <button onclick="removerAtivo3('rf')" style="background:none;border:none;font-size:16px;cursor:pointer;color:#999">✕</button>
+        </div>
+        <div class="g3">
+          <div class="field"><label>Tipo</label><select id="rf-tipo3"><option>CDB</option><option>LCI</option><option>LCA</option><option>LCD</option><option>CRI</option><option>CRA</option><option>Debênture</option><option>Debênture Incentivada</option><option>Tesouro Direto</option></select></div>
+          <div class="field"><label>Emissor</label><input id="rf-emissor3" placeholder="Banco, Empresa..."></div>
+          <div class="field"><label>Rating</label><input id="rf-rating3" placeholder="AAA, A+, sem rating..."></div>
+          <div class="field"><label>Indexador</label><select id="rf-indexador3"><option>CDI+</option><option>% CDI</option><option>IPCA+</option><option>Prefixado</option></select></div>
+          <div class="field"><label>Taxa % a.a.</label><input id="rf-taxa3" placeholder="CDI+1,5 ou 15"></div>
+          <div class="field"><label>Vencimento</label><input id="rf-venc3" placeholder="Jan/2027"></div>
+          <div class="field"><label>Liquidez</label><select id="rf-liq3"><option>No vencimento</option><option>D+1</option><option>D+30</option><option>D+60</option><option>Diária</option><option>Mercado secundário</option></select></div>
+          <div class="field"><label>Sugestão de valor</label><input id="rf-valor3" placeholder="Ex: R$ 50.000"></div>
+        </div>
+      </div>
 
-  <button onclick="adicionarAtivo('rf')" id="rf-add-btn" style="width:100%;padding:10px;border:1px dashed #ccc;border-radius:8px;background:transparent;color:#888;font-size:13px;font-weight:600;cursor:pointer;font-family:sans-serif">
-    + Adicionar outro ativo
-  </button>
-</div>
-<div class="box">
-  <div class="box-title" style="color:#b8963e">● Por que este ativo agora? — Tese</div>
-  <div style="font-size:12px;color:#888;margin-bottom:8px">Selecione uma ou mais teses:</div>
-  <div class="tese-tags" id="rf-teses"></div>
-  <div class="field" style="margin-top:12px"><label>Complemento livre</label>
-    <textarea id="rf-tese-custom" placeholder="Ex: Guerra no Irã elevou petróleo, momento ideal para IPCA+..."></textarea>
-  </div>
-</div>
-<div class="box">
-  <div class="box-title" style="color:#2a6b4a">● Canal</div>
-  <div class="canal-row" id="rf-canal-row">
-    <button class="canal-btn active" onclick="setCanal('rf','wpp',this)">💬 WhatsApp</button>
-    <button class="canal-btn" onclick="setCanal('rf','email',this)">📧 E-mail</button>
-    <button class="canal-btn" onclick="setCanal('rf','linkedin',this)">💼 LinkedIn</button>
-  </div>
-</div>
-<button class="btn-gerar" id="btn-rf" style="background:#2a6b4a" onclick="gerarVenda('rf')">✦ Gerar Pitch</button>
-<div class="result-wrap" id="result-rf">
-  <div class="result-header"><span class="result-label" id="rl-rf">💬 WhatsApp</span><button class="btn-copy" onclick="copiar('result-rf-body',this)">Copiar</button></div>
-  <div class="result-body" id="result-rf-body"></div>
-</div>
-```
-
+      <button onclick="adicionarAtivo('rf')" id="rf-add-btn" style="width:100%;padding:10px;border:1px dashed #ccc;border-radius:8px;background:transparent;color:#888;font-size:13px;font-weight:600;cursor:pointer;font-family:sans-serif">
+        + Adicionar outro ativo
+      </button>
+    </div>
+    <div class="box">
+      <div class="box-title" style="color:#b8963e">● Por que este ativo agora? — Tese</div>
+      <div style="font-size:12px;color:#888;margin-bottom:8px">Selecione uma ou mais teses:</div>
+      <div class="tese-tags" id="rf-teses"></div>
+      <div class="field" style="margin-top:12px"><label>Complemento livre</label>
+        <textarea id="rf-tese-custom" placeholder="Ex: Guerra no Irã elevou petróleo, momento ideal para IPCA+..."></textarea>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title" style="color:#2a6b4a">● Canal</div>
+      <div class="canal-row" id="rf-canal-row">
+        <button class="canal-btn active" onclick="setCanal('rf','wpp',this)">💬 WhatsApp</button>
+        <button class="canal-btn" onclick="setCanal('rf','email',this)">📧 E-mail</button>
+        <button class="canal-btn" onclick="setCanal('rf','linkedin',this)">💼 LinkedIn</button>
+      </div>
+    </div>
+    <button class="btn-gerar" id="btn-rf" style="background:#2a6b4a" onclick="gerarVenda('rf')">✦ Gerar Pitch</button>
+    <div class="result-wrap" id="result-rf">
+      <div class="result-header"><span class="result-label" id="rl-rf">💬 WhatsApp</span><button class="btn-copy" onclick="copiar('result-rf-body',this)">Copiar</button></div>
+      <div class="result-body" id="result-rf-body"></div>
+      <div class="result-actions" id="result-rf-actions" style="display:none;padding:12px 16px;background:#f9f9f7;border-top:1px solid #eee;display:none;gap:8px;flex-wrap:wrap">
+        <button onclick="enviarWhatsApp('result-rf-body')" style="flex:1;padding:10px;background:#25d366;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:sans-serif;min-width:120px">💬 Abrir no WhatsApp</button>
+        <button onclick="enviarEmail('result-rf-body')" style="flex:1;padding:10px;background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:sans-serif;min-width:120px">📧 Abrir no E-mail</button>
+      </div>
+    </div>
   </div>
 
   <!-- FUNDO -->
-
   <div id="section-fundo" style="display:none">
     <div class="box">
       <div class="box-title" style="color:#2a6b4a">● Cliente</div>
@@ -331,14 +358,23 @@ textarea { min-height:64px; resize:vertical; line-height:1.6; }
     <div class="result-wrap" id="result-fd">
       <div class="result-header"><span class="result-label" id="rl-fd">💬 WhatsApp</span><button class="btn-copy" onclick="copiar('result-fd-body',this)">Copiar</button></div>
       <div class="result-body" id="result-fd-body"></div>
+      <div id="result-fd-actions" style="display:none;padding:12px 16px;background:#f9f9f7;border-top:1px solid #eee;gap:8px;flex-wrap:wrap">
+        <button onclick="enviarWhatsApp('result-fd-body')" style="flex:1;padding:10px;background:#25d366;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:sans-serif;min-width:120px">💬 Abrir no WhatsApp</button>
+        <button onclick="enviarEmail('result-fd-body')" style="flex:1;padding:10px;background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:sans-serif;min-width:120px">📧 Abrir no E-mail</button>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- ===== CARTEIRA ===== -->
-
 <div class="panel" id="panel-carteira">
   <div class="box"><div class="box-title" style="color:#b8963e">● Cliente</div>
+    <div class="field" style="margin-bottom:8px">
+      <label>Selecionar cliente cadastrado</label>
+      <select id="ct-cli-sel" onchange="selecionarCliente('ct')" style="width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:7px;font-size:14px;font-family:sans-serif;background:#fafafa">
+        <option value="">-- Selecione ou preencha manualmente --</option>
+      </select>
+    </div>
     <div class="field"><input id="ct-cliente" placeholder="Nome do cliente"></div>
   </div>
   <div class="box"><div class="box-title" style="color:#b8963e">● Rentabilidade</div>
@@ -374,9 +410,14 @@ textarea { min-height:64px; resize:vertical; line-height:1.6; }
 </div>
 
 <!-- ===== AGENDAMENTO ===== -->
-
 <div class="panel" id="panel-reuniao">
   <div class="box"><div class="box-title" style="color:#1e3f6b">● Cliente & Contexto</div>
+    <div class="field" style="margin-bottom:10px">
+      <label>Selecionar cliente cadastrado</label>
+      <select id="rn-cli-sel" onchange="selecionarCliente('rn')" style="width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:7px;font-size:14px;font-family:sans-serif;background:#fafafa">
+        <option value="">-- Selecione ou preencha manualmente --</option>
+      </select>
+    </div>
     <div class="g2">
       <div class="field"><label>Nome</label><input id="rn-cliente" placeholder="Carlos Eduardo"></div>
       <div class="field"><label>Tipo de reunião</label><select id="rn-tipo"><option>Revisão de carteira</option><option>Reunião de relacionamento</option><option>Apresentação de oportunidade</option><option>Planejamento financeiro</option><option>Revisão de metas</option></select></div>
@@ -399,9 +440,14 @@ textarea { min-height:64px; resize:vertical; line-height:1.6; }
 </div>
 
 <!-- ===== PROSPECÇÃO ===== -->
-
 <div class="panel" id="panel-prospeccao">
   <div class="box"><div class="box-title" style="color:#8b2e2e">● Prospect</div>
+    <div class="field" style="margin-bottom:10px">
+      <label>Selecionar cliente cadastrado</label>
+      <select id="pr-cli-sel" onchange="selecionarCliente('pr')" style="width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:7px;font-size:14px;font-family:sans-serif;background:#fafafa">
+        <option value="">-- Selecione ou preencha manualmente --</option>
+      </select>
+    </div>
     <div class="g2">
       <div class="field"><label>Nome</label><input id="pr-nome" placeholder="Ana Lima"></div>
       <div class="field"><label>Cargo</label><input id="pr-cargo" placeholder="Sócia, Médica, Diretor..."></div>
@@ -481,7 +527,7 @@ function showTab(name) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
-  const tabs = ['cenario','venda','carteira','reuniao','prospeccao'];
+  const tabs = ['cenario','clientes','venda','carteira'];
   document.querySelectorAll('.tab')[tabs.indexOf(name)].classList.add('active');
 }
 
@@ -563,74 +609,104 @@ async function refinarComIA(base, instrucao) {
   const key = apiKey();
   if (!key) return base;
 
-  const sistemaPrompt = `Você é um assessor de investimentos parceiro — próximo, humano, usa o primeiro nome do cliente. Tom de amigo que entende muito de investimento. Não é vendedor. É conselheiro.
+  const sistemaPrompt = `Você é um assessor de investimentos parceiro no Brasil — próximo, usa o primeiro nome, escreve como amigo que entende muito de investimento. Trabalha na XP Investimentos. Não é vendedor. É conselheiro de confiança.
 
-EXEMPLOS REAIS DO ESTILO DO ASSESSOR (aprenda com estes e replique):
+EXEMPLOS REAIS DO SEU ESTILO:
 
-EXEMPLO 1 — Reciclagem de carteira com fundo estruturado:
-"Xirau, tudo bem? Conforme mencionei em nossa última agenda:
-Minha sugestão é diminuir nossa exposição em 50% nos ativos CRA BRF e CRA Minerava. Para realocar, faríamos uma reserva no fundo XP Habitat, segue abaixo um pouco a respeito do ativo:
+EXEMPLO 1 — Prospecção personalizada com detalhes do cliente:
+"Olá Mônica, tudo bem?
+Me chamo Fabio de Freitas, sou seu novo assessor de investimentos aqui na XP. Peguei seu contato com seu esposo, Jorge. Ele me informou que vocês têm interesse em voltar a investir conosco.
+Queria te convidar para uma reunião inicial de planejamento financeiro, para desenharmos juntos os próximos passos. Como você está de agenda? Sei que sua rotina é corrida por conta do pequeno Gustavo, então saiba que posso me adequar ao melhor horário para você."
 
-*HABTSR 2*
-O XP Habitat Renda Imobiliária é um fundo com a dinâmica de cotas sênior e subordinada, composto majoritariamente por um *portfolio diversificado de CRIs*, com objetivo de retorno preferencial de *IPCA+10% a.a., isento de IRPF*.
-O Fundo possui *prazo de 5 anos (prorrogável por mais 2)* e conta com uma *subordinação ("proteção") de ~15%*."
+EXEMPLO 2 — Convite para evento exclusivo:
+"Oi Carlos, bom dia! Tudo bem? Espero que tenha aproveitado o feriado de Carnaval.
+Quero te convidar para um almoço exclusivo que estamos organizando para um grupo seleto de empresários e CFOs no dia 05/03, aqui em São Paulo. Será um encontro em formato petit comité, mais reservado e propício para troca de ideias.
+Confirmaram presença o Caio Megale, economista-chefe da XP, e o Paulo Gama, head de análise política da XP.
+Como tenho pouquíssimas vagas, pensei em você. Posso confirmar seu nome na lista de convidados?"
 
-EXEMPLO 2 — Múltiplos ativos de renda fixa com sugestão de alocação:
-"Paulo, eu acho que você já tem bastante exposição em pré fixado, então vou te mandar aqui algumas sugestões de Pós e uma de pré...veja o que acha.
+EXEMPLO 3 — Fundo com renda mensal e diferenciais detalhados:
+"*Fundo Renda Fixa Valora Pré Agro – Renda Mensal de 15% a.a. Isenta*
+O Valora Pré Agro gera *dividendos mensais* a partir de operações de crédito do agronegócio. Você investe pela *cota sênior*, com *retorno alvo de 15% ao ano líquidos*, pagos mensalmente.
+• *Pagamentos mensais (aprox. 1,17% a.m.)*
+• *Subordinação de 20%* como colchão de segurança
+• *Baixa volatilidade:* cotas via CETIP
+Ideal para quem busca rentabilidade, proteção e renda mensal recorrente."
 
-LCD BRDE - FEV/2035
-Taxa 94%
-Isento de IR
-Rating AAA
-Resgate antecipado via mercado secundário disponível.
+EXEMPLO 4 — RF isento com duas janelas de liquidez e equivalência:
+"Estamos com um Ativo Isento de Renda Fixa com retorno de *100% do CDI (117% se tivesse IR)* para quem mantiver até o vencimento. Se precisar resgatar antes: *95% do CDI (111% se tivesse IR)*, com *liquidez D+1*.
+O fundo aplica em Renda Fixa Isenta de infraestrutura, com recompra garantida e proteção de 12% para PF.
+• *Prazo:* 6 anos | *Pagamento:* bullet | *IOF* em resgates abaixo de 30 dias.
+Esse fundo tem grande procura e pode encerrar a qualquer momento."
 
-CDB PERNAMBUCANAS FINANCIADOR - MAR/2030
-Taxa 110% do CDI
-Sem rating
+EXEMPLO 5 — Debênture com transparência sobre riscos:
+"Estamos em um daqueles momentos raros em que é possível travar uma taxa muito acima da média em um emissor de primeira linha por um prazo longo.
+Trata-se da emissão da Petrobras Pré Fixada:
+• Emissor: Petrobras | Taxa: 15,13% a.a. pré-fixada
+• Prazo 10 anos (vencimento 2036) | Pagamento bullet
+Como todo investimento, envolve riscos (crédito e mercado), então a ideia é avaliar se faz sentido dentro do seu perfil e objetivos.
+Se tiver interesse, me responde que eu te explico em mais detalhes."
 
-CDB BANCO C6 CONSIGNADO S.A. - JURO MENSAL - MAR/2032
-Taxa 14,85%
-Rating A+
+EXEMPLO 6 — Agendamento de reunião com flexibilidade:
+"Oi Bárbara, tudo bem? Como combinamos, gostaria de confirmar nossa reunião de planejamento financeiro — o ponto de partida para desenharmos juntos os próximos passos e estruturar sua carteira.
+Como será por vídeo, tenho bastante flexibilidade de horário para não atrapalhar sua rotina. Você pode me indicar alguns dias e horários que funcionem?"
 
-Sugestão de alocação:
-LCD BRDE --> 50k
-CDB Pernambucanas --> 50k
-CDB C6 --> 43k"
+EXEMPLO 7 — Acompanhamento mensal com resumo macro:
+"Olá Carlos, boa noite! Acabei de te enviar a evolução mensal do seu patrimônio referente a outubro de 2025. Junto, compartilhei também um breve resumo macro com os principais acontecimentos do mês.
+A ideia é te manter sempre bem informado sobre os seus investimentos e reforçar que sigo à disposição como seu ponto de apoio."
 
-O QUE APRENDER COM ESSES EXEMPLOS:
-- Abre com contexto da carteira do cliente — mostra que você conhece a posição dele
-- Explica o PORQUÊ da sugestão antes de apresentar o produto
-- Quando há múltiplos ativos, apresenta cada um de forma limpa e separada
-- Inclui dados técnicos objetivos: taxa, rating, liquidez, vencimento
-- Quando faz sentido, sugere alocação em reais — facilita a decisão do cliente
-- Tom casual e direto — "veja o que acha", "vou te mandar aqui"
-- Usa *negrito* estrategicamente nos dados-chave
-- Nunca pressiona — apresenta, contextualiza e deixa o cliente decidir
+EXEMPLO 8 — Múltiplos ativos RF com sugestão de alocação:
+"Paulo, você já tem bastante exposição em pré fixado, então vou te mandar algumas sugestões de Pós e uma de pré...veja o que acha.
+LCD BRDE - FEV/2035 | Taxa 94% | Isento de IR | Rating AAA | Mercado secundário disponível
+CDB Pernambucanas - MAR/2030 | Taxa 110% do CDI
+CDB Banco C6 - MAR/2032 | Taxa 14,85% | Rating A+
+Sugestão: LCD BRDE → 50k | CDB Pernambucanas → 50k | CDB C6 → 43k"
 
-ESTRUTURA SPIN (aplicar naturalmente, sem ser mecânico):
-1. SITUAÇÃO — mostre que conhece a posição atual do cliente (1 frase)
-2. PROBLEMA — o risco ou oportunidade perdida (1-2 frases, concreto)
-3. IMPLICAÇÃO — o que acontece se não agir (1 frase, sem alarmismo)
-4. NECESSIDADE — o produto como solução natural
+PADRÕES DO SEU ESTILO:
+- Personaliza com detalhes da vida do cliente quando tem (família, rotina, ocasiões, feriados)
+- Sempre mostra equivalência tributada para isentos: "94% CDI isento = 111% CDI tributado"
+- Destaca subordinação/colchão de segurança como argumento de proteção
+- Menciona riscos quando relevante — honestidade gera mais confiança que omissão
+- Urgência real: lote limitado, data de abertura, grande procura, pode encerrar
+- Duas janelas de liquidez quando disponível (até vencimento vs antecipado)
+- Bullets com • dentro dos cards e descrições
+- Renda mensal: destaca % mensal além do anual
+- Sugere alocação em reais quando múltiplos ativos
+- CTAs: "Me avisa se quiser garantir", "posso simular o impacto na sua carteira", "me responde que eu explico em mais detalhes", "posso confirmar seu nome?"
 
-FORMATO DO CARD DE PRODUTO (sempre assim):
-────────────────────
+ESTRUTURA PARA PITCH DE PRODUTO (fluida, sem títulos):
+1. Abertura — contexto macro ou situação do cliente (1-2 frases)
+2. Tese — por que agora, por que esse produto (2-3 frases)
+3. Card com dados técnicos, bullets e equivalência tributada
+4. Condições comerciais (liquidez, prazo, aplicação mínima)
+5. Urgência se aplicável
+6. CTA natural
+
+ESTRUTURA PARA AGENDAMENTO/RELACIONAMENTO:
+1. Saudação personalizada com detalhe pessoal se disponível
+2. Contexto ou motivo do contato
+3. Proposta clara e direta
+4. Flexibilidade — adapta ao cliente
+5. CTA simples: "Me diz um dia que funcione" / "Posso confirmar?"
+
+FORMATO DO CARD DE PRODUTO:
+———————————————
 📌 *[TIPO] — [EMISSOR]*
-💰 *[TAXA]* ([indexador])
-📅 Vencimento: [DATA]
-💧 Liquidez: [LIQUIDEZ]
-[⭐ Rating: [RATING] — se disponível]
-[🟢 Isento de IR — apenas se aplicável]
-────────────────────
-
-CTA FINAL — sempre uma variação de "O que acha de seguirmos com o ativo?" adaptada ao contexto. Nunca use ponto de exclamação no CTA.
+🔹 *Retorno:* [TAXA] ([indexador])
+🔹 *Equivalente tributado:* ~[cálculo] — apenas se isento
+🔹 *Liquidez:* [LIQUIDEZ]
+🔹 *Vencimento:* [DATA]
+🔹 *Rating:* [RATING — apenas se fornecido]
+🔹 *Subordinação:* [% — apenas se disponível]
+[🟢 Isento de IR para pessoa física]
+[💵 Sugestão de alocação: R$ [VALOR]]
+———————————————
 
 REGRAS ABSOLUTAS:
-- Máx 130 palavras no texto corrido (fora o card) para WhatsApp
-- Para e-mail: primeira linha "Assunto: [assunto direto e específico]"
-- NUNCA invente taxas, ratings ou dados não fornecidos
-- NUNCA use: "Espero que esteja bem", "Conforme combinado", "Qualquer dúvida estou à disposição", "Fico à disposição"
-- Se houver sugestão de alocação em reais, inclua ao final do card
+- Máx 150 palavras no texto corrido (fora o card) para WhatsApp
+- Para e-mail: primeira linha "Assunto: [assunto específico]"
+- NUNCA invente taxas, ratings, equivalências ou datas não fornecidas
+- NUNCA use: "Espero que esteja bem", "Fico à disposição", "Qualquer dúvida"
+- NUNCA use gírias: "tá", "muda o jogo", "top"
 - Retorne APENAS o texto final da mensagem, sem comentários`;
 
   const prompt = sistemaPrompt + '\n\n' + instrucao + '\n\nMensagem base para reescrever:\n' + base;
@@ -766,6 +842,7 @@ async function gerarVenda(prod) {
       final = await refinarComIA(base, 'Reescreva a mensagem abaixo mantendo a estrutura SPIN (Situação, Problema, Implicação, Necessidade), com linguagem mais natural, fluida e persuasiva.');
     }
     showResult(resultId, labelId, final, canalVal);
+    mostrarAcoes(resultId);
   } catch(e) {
     showResult(resultId, labelId, 'Erro: ' + e.message, canalVal);
   }
@@ -847,6 +924,42 @@ async function gerarProspeccao() {
   btn.disabled = false; btn.textContent = '✦ Gerar Mensagem de Prospecção';
 }
 
+// ─── ENVIO DIRETO ────────────────────────────
+function enviarWhatsApp(bodyId) {
+  const txt = document.getElementById(bodyId).textContent;
+  
+  // Remove caracteres que quebram a URL mas preserva emojis e negrito do WhatsApp
+  const limpo = txt
+    .replace(/────────────────────/g, '———————————————')  // linha separadora compatível
+    .trim();
+  
+  const encoded = encodeURIComponent(limpo);
+  const tel = window._clienteAtual?.tel || '';
+  const url = tel
+    ? 'https://wa.me/' + tel.replace(/\D/g,'') + '?text=' + encoded
+    : 'https://wa.me/?text=' + encoded;
+  window.open(url, '_blank');
+}
+
+function enviarEmail(bodyId) {
+  const txt = document.getElementById(bodyId).textContent;
+  const lines = txt.split('\n');
+  let assunto = 'Oportunidade de investimento';
+  let corpo = txt;
+  if (lines[0].startsWith('Assunto:')) {
+    assunto = lines[0].replace('Assunto:', '').trim();
+    corpo = lines.slice(2).join('\n');
+  }
+  const emailDest = window._clienteAtual?.email || '';
+  const mailto = 'mailto:' + emailDest + '?subject=' + encodeURIComponent(assunto) + '&body=' + encodeURIComponent(corpo);
+  window.open(mailto, '_blank');
+}
+
+function mostrarAcoes(resultId) {
+  const actions = document.getElementById(resultId + '-actions');
+  if (actions) actions.style.display = 'flex';
+}
+
 // ─── MULTI ATIVO ─────────────────────────────
 let rfAtivoCount = 1;
 let separador = 'E';
@@ -893,17 +1006,177 @@ function removerAtivo3(mod) {
 
 function buildCard(tipo, emissor, rating, indexador, taxa, venc, liq, valor, isento) {
   const isentoTxt = isento ? '\n🟢 Isento de IR para pessoa física' : '';
-  const ratingTxt = rating ? '\n⭐ Rating: ' + rating : '';
-  const valorTxt = valor ? '\n💵 Sugestão: ' + valor : '';
-  return '────────────────────\n'
+  const ratingTxt = rating ? '\n🔹 *Rating:* ' + rating : '';
+  const valorTxt = valor ? '\n💵 *Sugestão de alocação:* R$ ' + valor.replace('R$','').replace('R$ ','').trim() : '';
+  
+  // Calcula equivalente tributado para isentos
+  let equivTxt = '';
+  if (isento && taxa) {
+    const taxaNum = parseFloat(taxa.replace(',','.'));
+    if (!isNaN(taxaNum) && taxaNum > 0) {
+      const equiv = (taxaNum / 0.85).toFixed(1).replace('.',',');
+      equivTxt = '\n🔹 *Equivalente tributado:* ~' + equiv + '% a.a.';
+    }
+  }
+
+  return '———————————————\n'
     + '📌 *' + tipo + (emissor ? ' — ' + emissor : '') + '*\n'
-    + '💰 *' + (taxa || 'taxa a confirmar') + '* (' + indexador + ')\n'
-    + (venc ? '📅 Vencimento: ' + venc + '\n' : '')
-    + '💧 Liquidez: ' + liq
+    + '🔹 *Retorno:* ' + (taxa || 'taxa a confirmar') + '% (' + indexador + ')'
+    + equivTxt + '\n'
+    + '🔹 *Liquidez:* ' + liq + '\n'
+    + (venc ? '🔹 *Vencimento:* ' + venc + '\n' : '')
     + ratingTxt
     + isentoTxt
     + valorTxt + '\n'
-    + '────────────────────';
+    + '———————————————';
+}
+
+// ─── CLIENTES ────────────────────────────────
+let clientes = [];
+
+function salvarClientes() {
+  localStorage.setItem('clientes_v1', JSON.stringify(clientes));
+}
+
+function carregarClientes() {
+  // Sempre começa com Luiz Calfat garantido
+  const luiz = {
+    id: 1,
+    nome: 'Luiz',
+    sobrenome: 'Calfat',
+    nomeCompleto: 'Luiz Calfat',
+    tel: '5511957800022',
+    email: 'l.carloscalfat1998@gmail.com'
+  };
+
+  try {
+    const raw = localStorage.getItem('clientes_v1');
+    clientes = raw ? JSON.parse(raw) : [];
+  } catch(e) {
+    clientes = [];
+  }
+
+  // Remove versão antiga do Luiz e reinsere atualizada
+  clientes = clientes.filter(c => c.id !== 1);
+  clientes.unshift(luiz);
+  salvarClientes();
+  renderLista();
+  atualizarSeletores();
+}
+
+function cadastrarCliente() {
+  const nome = v('cli-nome').trim();
+  const sobrenome = v('cli-sobrenome').trim();
+  const tel = v('cli-tel').trim();
+  const email = v('cli-email').trim();
+
+  if (!nome) { alert('Digite o nome do cliente.'); return; }
+
+  const cliente = {
+    id: Date.now(),
+    nome: nome,
+    sobrenome: sobrenome,
+    nomeCompleto: nome + (sobrenome ? ' ' + sobrenome : ''),
+    tel: tel,
+    email: email
+  };
+
+  clientes.push(cliente);
+  salvarClientes();
+  renderLista();
+  atualizarSeletores();
+
+  // Limpar campos
+  ['cli-nome','cli-sobrenome','cli-tel','cli-email'].forEach(id => document.getElementById(id).value = '');
+
+  alert('Cliente ' + cliente.nomeCompleto + ' cadastrado!');
+}
+
+function exportarClientes() {
+  if (clientes.length === 0) { alert('Nenhum cliente para exportar.'); return; }
+  const json = JSON.stringify(clientes, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'clientes_backup_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importarClientes(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const dados = JSON.parse(e.target.result);
+      if (!Array.isArray(dados)) throw new Error('Formato inválido');
+      const novos = dados.filter(n => !clientes.find(c => c.id === n.id));
+      clientes = [...clientes, ...novos];
+      salvarClientes();
+      renderLista();
+      atualizarSeletores();
+      alert(novos.length + ' cliente(s) importado(s) com sucesso!');
+    } catch(err) {
+      alert('Erro ao importar: arquivo inválido.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function deletarCliente(id) {
+  if (!confirm('Remover este cliente?')) return;
+  clientes = clientes.filter(c => c.id !== id);
+  salvarClientes();
+  renderLista();
+  atualizarSeletores();
+}
+
+function renderLista() {
+  const lista = document.getElementById('lista-clientes');
+  if (clientes.length === 0) {
+    lista.innerHTML = '<p style="font-size:13px;color:#bbb;font-style:italic">Nenhum cliente cadastrado ainda.</p>';
+    return;
+  }
+  lista.innerHTML = clientes.map(c => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eee">
+      <div>
+        <div style="font-size:14px;font-weight:600;color:#1a1814">${c.nomeCompleto}</div>
+        <div style="font-size:12px;color:#888;margin-top:2px">
+          ${c.tel ? '📱 ' + c.tel : ''}${c.tel && c.email ? ' · ' : ''}${c.email ? '📧 ' + c.email : ''}
+        </div>
+      </div>
+      <button onclick="deletarCliente(${c.id})" style="background:none;border:none;font-size:18px;cursor:pointer;color:#ccc;padding:4px 8px">✕</button>
+    </div>
+  `).join('');
+}
+
+function atualizarSeletores() {
+  const seletores = ['rf-cli-sel', 'fd-cli-sel', 'ct-cli-sel', 'rn-cli-sel', 'pr-cli-sel'];
+  const opts = '<option value="">-- Selecione ou preencha manualmente --</option>'
+    + clientes.map(c => `<option value="${c.id}">${c.nomeCompleto}${c.tel ? ' · ' + c.tel : ''}</option>`).join('');
+  seletores.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = opts;
+  });
+}
+
+function selecionarCliente(mod) {
+  const selId = mod + '-cli-sel';
+  const sel = document.getElementById(selId);
+  if (!sel || !sel.value) return;
+  const cliente = clientes.find(c => c.id == sel.value);
+  if (!cliente) return;
+
+  // Preenche nome no módulo correspondente
+  const nomeMap = { rf: 'rf-cliente', fd: 'fd-cliente', ct: 'ct-cliente', rn: 'rn-cliente', pr: 'pr-nome' };
+  const nomeEl = document.getElementById(nomeMap[mod]);
+  if (nomeEl) nomeEl.value = cliente.nome;
+
+  // Salva tel e email no estado para uso no envio
+  window._clienteAtual = cliente;
 }
 
 // ─── PERSISTÊNCIA ────────────────────────────
@@ -933,6 +1206,7 @@ function carregarLocal() {
     if (d.resumo)  document.getElementById('m-resumo').value = d.resumo;
     updateTicker();
   } catch(e) {}
+  carregarClientes();
 }
 
 // ─── ATUALIZAÇÃO AUTOMÁTICA DE MERCADO ───────
@@ -1048,6 +1322,5 @@ document.getElementById('fd-bench').addEventListener('change', function() {
 // Atualiza dados de mercado automaticamente 1x por dia
 verificarAtualizacaoAutomatica();
 </script>
-
 </body>
 </html>
