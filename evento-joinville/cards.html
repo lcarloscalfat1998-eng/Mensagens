@@ -58,7 +58,8 @@ h1 em{font-style:normal;color:var(--gold)}
 .pillar{background:var(--ink2);border-left:6px solid var(--gold);padding:30px 36px;display:grid;grid-template-columns:110px 1fr;align-items:center}
 .pillar .r{font-size:64px;font-weight:900;color:var(--gold)}
 .pillar b{font-size:36px;display:block;font-weight:700}
-.pillar span{font-size:26px;color:var(--muted)}
+.pillar span{font-size:26px;color:var(--muted);line-height:1.4}
+.pillar .by{font-style:normal;color:var(--cream);font-weight:600}
 .people{display:grid;grid-template-columns:1fr 1fr;gap:44px 40px;margin-top:56px}
 .person{display:flex;flex-direction:column;gap:10px}
 .av{width:150px;height:150px;border-radius:50%;border:4px solid var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:52px;color:var(--gold);background:var(--ink2);background-size:cover;background-position:center}
@@ -83,6 +84,7 @@ const E = window.EVENTO;
 const EVT = new Date(E.data + "T12:00:00");
 const tbd = h => h.replace(/\[([^\]<]+)\]/g,'<span class="tbd">$1</span>');
 const logo = () => E.logo ? `<div class="logo"><img src="${E.logo}" alt=""></div>` : `<div class="logo"><span class="mk">xp</span><span class="sb">${E.marca}</span></div>`;
+const byPapel = r => E.pessoas.filter(p=>p.papel===r).map(p=>p.nome).join(" e ");
 const TOTAL = 8; // capítulos de conteúdo
 const ini = n => n.replace(/[\[\]]/g,"").split(/\s+/).filter(Boolean).slice(0,2).map(s=>s[0]).join("").toUpperCase();
 const dd = d => { const x=new Date(d+"T12:00:00"); return String(x.getDate()).padStart(2,"0")+"/"+String(x.getMonth()+1).padStart(2,"0"); };
@@ -110,7 +112,7 @@ function ecoSVG(){
     s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#FFC709" stroke-opacity=".45" stroke-width="2" stroke-dasharray="6 8"/>`;});
   nodes.forEach((n,i)=>{const a=-Math.PI/2+i*2*Math.PI/nodes.length;const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
     s+=`<circle cx="${x}" cy="${y}" r="74" fill="#141414" stroke="#FFC709" stroke-width="2"/><text x="${x}" y="${y+8}" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="600">${n}</text>`;});
-  s+=`<circle cx="${cx}" cy="${cy}" r="108" fill="#FFC709"/><text x="${cx}" y="${cy-4}" text-anchor="middle" fill="#000" font-size="36" font-weight="700" font-weight="800">Família</text><text x="${cx}" y="${cy+32}" text-anchor="middle" fill="#000" font-size="20" font-weight="600" letter-spacing="3">NO CENTRO</text>`;
+  s+=`<circle cx="${cx}" cy="${cy}" r="108" fill="#FFC709"/><text x="${cx}" y="${cy-4}" text-anchor="middle" fill="#000" font-size="36" font-weight="800">Família</text><text x="${cx}" y="${cy+32}" text-anchor="middle" fill="#000" font-size="20" font-weight="600" letter-spacing="3">NO CENTRO</text>`;
   return s+"</svg>";
 }
 
@@ -120,14 +122,14 @@ const cards = [
     <div class="kicker">Save the date</div>
     <div class="big-date" style="margin-top:50px">03.12</div>
     <h1 style="font-size:84px;margin-top:30px">Um jantar. <em>Cinco convidados.</em> Uma conversa sobre o que vem pela frente.</h1>
-    <p class="lead muted" style="margin-top:36px">${E.cidade} · ${E.horario}. Nas próximas semanas, vamos compartilhar pílulas do que estará à mesa.</p>`},
+    <p class="lead muted" style="margin-top:36px">${E.local} · ${E.cidade} · ${E.horario}<br>Nas próximas semanas, compartilharemos aqui um pouco do que estará à mesa.</p>`},
   {id:"02-agenda", date:"2026-11-16", tag:"A agenda", body:`
     <div class="kicker">O roteiro da noite</div>
     <h1>Do mundo<br><em>à sua mesa.</em></h1>
     <div class="pillars">
-      <div class="pillar"><div class="r">I</div><div><b>Cenários</b><span>Geopolítico · Macro global · Brasil</span></div></div>
-      <div class="pillar"><div class="r">II</div><div><b>Wealth Planning</b><span>Sucessão · Tributação · Offshore · Holdings</span></div></div>
-      <div class="pillar"><div class="r">III</div><div><b>Ecossistema</b><span>Quem faz o quê na proteção do seu patrimônio</span></div></div>
+      <div class="pillar"><div class="r">I</div><div><b>Cenários</b><span>Geopolítico · Macro global · Brasil<br><em class="by">com ${byPapel("Cenários & Alocação")}</em></span></div></div>
+      <div class="pillar"><div class="r">II</div><div><b>Wealth Planning</b><span>Sucessão · Tributação · Offshore · Holdings<br><em class="by">com ${byPapel("Wealth Planning")}</em></span></div></div>
+      <div class="pillar"><div class="r">III</div><div><b>Ecossistema</b><span>Quem faz o quê na proteção do seu patrimônio<br><em class="by">com ${byPapel("Anfitrião")}</em></span></div></div>
     </div>`},
   {id:"03-geopolitica-macro", date:"2026-11-18", cap:1, tag:"Cenários · 1/3", disc:1, body:`
     <div class="kicker">Geopolítica & Macro global</div>
@@ -161,11 +163,11 @@ const cards = [
     ${items([["Organização","Imóveis, participações e investimentos sob uma gestão única."],["Sucessão em vida","Doação de quotas com cláusulas de proteção e usufruto."],["Eficiência — com critério","ITCMD, ganho de capital e custo de manutenção entram na conta."]])}
     <div class="question">A sua holding foi feita sob medida — ou de prateleira?</div>`},
   {id:"09-quem-estara-a-mesa", date:"2026-11-27", tag:"Quem estará à mesa", body:`
-    <div class="kicker">Os anfitriões e especialistas</div>
+    <div class="kicker">Anfitriões e convidados especiais</div>
     <h1 style="font-size:92px">Quem senta <em>com você.</em></h1>
-    <div class="people">${E.pessoas.map(p=>`<div class="person">${av(p)}<div class="role">${p.papel}</div><div class="nm">${p.nome}</div><div class="cg">${p.cargo}</div></div>`).join("")}</div>`},
-  ...specialists.map((p,i)=>({id:`10${"abcdefg"[i]}-especialista-${i+1}`, date:i===0?"2026-11-30":"2026-12-01", tag:"Quem estará à mesa", body:`
-    <div class="kicker">${p.papel}</div>
+    <div class="people">${E.pessoas.map(p=>`<div class="person">${av(p)}<div class="role">${p.titulo}</div><div class="nm">${p.nome}</div><div class="cg">${p.cargo}</div></div>`).join("")}</div>`},
+  ...specialists.map((p,i)=>({id:`10${"abcdefg"[i]}-${p.slug}`, date:i===0?"2026-11-30":"2026-12-01", tag:"Quem estará à mesa", body:`
+    <div class="kicker">${p.titulo} · ${p.papel}</div>
     <div class="spot" style="margin-top:44px">${av(p)}</div>
     <h1 style="font-size:80px;margin-top:40px">${p.nome}</h1>
     <p class="lead gold" style="margin-top:14px;font-weight:600;font-size:30px">${p.cargo}</p>
@@ -189,12 +191,12 @@ const cards = [
   {id:"13-e-hoje", date:"2026-12-03", tag:"Hoje", light:1, body:`
     <div class="kicker">${E.dataExtenso}</div>
     <div class="big-date" style="margin-top:80px;font-size:260px">É hoje.</div>
-    <p class="lead" style="margin-top:50px">${E.horario} · ${E.local}<br><span class="muted">${E.cidade}</span></p>
+    <p class="lead" style="margin-top:50px;font-weight:600">${E.horario} · ${E.local}<br><span class="muted" style="font-weight:400">${E.endereco}</span></p>
     <div class="question">Nos vemos à mesa.</div>`},
   {id:"14-obrigado", date:"2026-12-04", tag:"Pós-evento", light:1, body:`
     <div class="kicker">Obrigado pela noite</div>
     <h1>A conversa <em>continua.</em></h1>
-    <p class="lead">Foi um prazer receber você em Joinville. Nos próximos dias, envio um resumo dos principais pontos e fico à disposição para aprofundarmos o seu caso — com calma, e sob medida.</p>
+    <p class="lead">Foi um prazer receber você em Joinville. Nos próximos dias, envio um resumo dos principais pontos da noite e fico à disposição para aprofundarmos o seu caso, com calma e sob medida.</p>
     <p style="margin-top:40px;font-size:32px;font-weight:800">${E.pessoas[0].nome}<br><span style="font-weight:500;font-size:26px">${E.pessoas[0].cargo}</span></p>
     <div class="question">Do mundo à mesa — e da mesa ao seu plano.</div>`},
 ];

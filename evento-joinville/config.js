@@ -1,6 +1,5 @@
 // =====================================================================
 //  CONFIGURAÇÃO DO EVENTO — edite aqui e rode:  node render.js
-//  Tudo que está entre [colchetes] é placeholder para você preencher.
 // =====================================================================
 window.EVENTO = {
   serie: "Do Mundo à Mesa",                 // nome da série / storytelling
@@ -15,23 +14,22 @@ window.EVENTO = {
   horario: "20h",
   cidade: "Joinville · SC",
   local: "Santa Mistura",
-  endereco: "R. Otto Boehm, 722 · América",
+  endereco: "R. Otto Boehm, 722 · América · Joinville",
   traje: "Esporte fino",
   vagas: 5,
 
-  // Pessoas que estarão à mesa (anfitriões + especialistas que você vai levar).
-  // foto: caminho opcional, ex. "fotos/carlos.jpg" (quadrada). Sem foto = iniciais.
+  // Pessoas à mesa. titulo = rótulo principal; papel = tema que conduz; slug = nome do arquivo.
   pessoas: [
-    { nome: "Luiz Calfat", papel: "Anfitrião", cargo: "Banker · XP Investimentos",
+    { nome: "Luiz Calfat", titulo: "Anfitrião", papel: "Anfitrião", cargo: "Banker · XP Investimentos", slug: "luiz-calfat",
       bio: "Advogado formado pelo Mackenzie, com 5 anos de carreira em M&A. Há 3 anos é banker na XP Investimentos, cuidando do patrimônio de famílias e empresários.",
       foto: "fotos/luiz-calfat.jpg" },
-    { nome: "Glaucio Gonçalves", papel: "Anfitrião", cargo: "Diretor Comercial · Softdata Hub de Tecnologia",
+    { nome: "Glaucio Gonçalves", titulo: "Anfitrião", papel: "Anfitrião", cargo: "Diretor Comercial · Softdata Hub de Tecnologia", slug: "glaucio-goncalves",
       bio: "", foto: "fotos/glaucio-goncalves.jpg" },
-    { nome: "André Torres", papel: "Cenários & Alocação", cargo: "Economista · XP Investimentos · CNPI e CGA",
-      bio: "Economista pelo Insper, com mais de 11 anos de mercado. Passou pelas tesourarias do Haitong e do Scotiabank, pela Estratégia de Alocação em Renda Fixa do Bradesco Private Bank e estruturou o Research de Renda Fixa da Genial. Há mais de 3 anos na XP, desenha estratégias de alocação para investidores de alta renda.",
-      foto: "fotos/especialista-cenarios.jpg" },
-    { nome: "Isabella Magalhães", papel: "Wealth Planning", cargo: "Advogada · Patrimonial e Sucessório · CFP e CGA",
+    { nome: "André Torres", titulo: "Economista", papel: "Cenários & Alocação", cargo: "XP Investimentos · CNPI e CGA", slug: "economista-andre-torres",
+      bio: "Formado pelo Insper, com mais de 11 anos de mercado. Passou pelas tesourarias do Haitong e do Scotiabank, pela Estratégia de Alocação em Renda Fixa do Bradesco Private Bank e estruturou o Research de Renda Fixa da Genial. Há mais de 3 anos na XP, desenha estratégias de alocação para investidores de alta renda.",
+      foto: "fotos/andre-torres.jpg" },
+    { nome: "Isabella Magalhães", titulo: "Advogada", papel: "Wealth Planning", cargo: "Patrimonial e Sucessório · CFP e CGA", slug: "advogada-isabella-magalhaes",
       bio: "Especializada em gestão de patrimônio e estruturas de investimento no Brasil e no exterior, com foco em famílias UHNW. Mestre (LL.M.) em Direito dos Mercados Financeiro e de Capitais pelo Insper e pós-graduada em Planejamento Patrimonial e Sucessório pela FGV. Atua com fundos exclusivos, offshores e trusts em múltiplas jurisdições.",
-      foto: "fotos/especialista-wealth.jpg" },
+      foto: "fotos/isabella-magalhaes.jpg" },
   ],
 };

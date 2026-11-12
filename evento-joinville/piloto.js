@@ -12,6 +12,8 @@ const md = fs.readFileSync(path.join(D, "ROTEIRO.md"), "utf8");
 const msgs = {};
 for (const m of md.matchAll(/\*\*(\d{2}) · ([^·]+)· ([^*]+)\*\*\n((?:> .*\n?)+)/g))
   msgs[m[1]] = { data: m[2].trim(), titulo: m[3].trim(), texto: m[4].replace(/^> /gm, "").trim() };
+const horas = {};
+for (const m of md.matchAll(/^\| (\d{2}) \| \w+ [\d/]+ \| ([^|]+) \|/gm)) horas[m[1]] = m[2].trim();
 const dias = { "13/11":"sex","16/11":"seg","18/11":"qua","20/11":"sex","23/11":"seg","24/11":"ter","25/11":"qua","26/11":"qui","27/11":"sex","30/11":"seg","01/12":"ter","02/12":"qua","03/12":"qui","04/12":"sex" };
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\[([^\]]+)\]/g,'<span class="tbd">$1</span>');
 const items = pngs.map(f => { const n = f.slice(0,2); return { f, n, ...(msgs[n]||{data:"",titulo:f,texto:""}) }; });
@@ -30,7 +32,7 @@ p{font-size:32px;line-height:1.45}
 .tbd{border:2px dashed currentColor;border-radius:6px;padding:0 .2em;opacity:.8}
 .row{display:grid;grid-template-columns:170px 90px 1fr;align-items:center;padding:24px 0;border-bottom:1px solid #2a2a2a;font-size:38px;font-weight:600}
 .row .d{font-weight:800;color:#FFC709;font-size:40px}.row .w{color:#8a8a8a;text-transform:uppercase;font-size:24px;letter-spacing:.1em}
-.row.ev{background:#FFC709;color:#000;margin:0 -24px;padding:20px 24px;border:0}.row.ev .d,.row.ev .w{color:#000}
+.row.ev{background:#FFC709;color:#000;margin:0 -24px;padding:20px 24px;border:0}.row.ev .d,.row.ev .w,.row.ev small{color:#000!important}
 .img{width:900px;height:1125px;margin:40px auto 0;display:block;box-shadow:0 0 0 1px #2a2a2a}
 .bubble{margin-top:40px;background:#1f2c33;border-radius:18px;padding:28px 32px;font-size:28px;line-height:1.45;color:#e9edef;position:relative}
 .bubble small{display:block;color:#8696a0;font-size:20px;margin-bottom:10px;letter-spacing:.06em;text-transform:uppercase}
@@ -52,10 +54,10 @@ const cal = `<section class="pg" id="cal">
   <div class="k">Arquitetura de datas</div>
   <h2 style="margin-top:20px">${items.length} toques até a mesa</h2>
   <div style="display:flex;gap:30px;margin-top:24px;font-size:24px;color:#8a8a8a"><span>Cenários: 18 e 20/11</span><span>Wealth: 23 a 26/11</span><span>Pessoas: 27/11 a 01/12</span></div>
-  <div style="margin-top:50px">${items.map(i=>`<div class="row ${i.data==="03/12"?"ev":""}"><span class="d">${i.data}</span><span class="w">${dias[i.data]||""}</span><span>${esc(i.titulo)}</span></div>`).join("")}</div>
+  <div style="margin-top:50px">${items.map(i=>`<div class="row ${i.data==="03/12"?"ev":""}"><span class="d">${i.data}</span><span class="w">${dias[i.data]||""}</span><span>${esc(i.titulo)}<small style="color:#8a8a8a;font-size:24px;font-weight:500"> · ${horas[i.n]||""}</small></span></div>`).join("")}</div>
 </section>`;
 const pages = items.map(i => `<section class="pg">
-  <div class="hd"><div class="k">${i.data} · ${dias[i.data]||""}</div><div class="n">${i.n} / ${items.length}</div></div>
+  <div class="hd"><div class="k">${i.data} · ${dias[i.data]||""} · ${horas[i.n]||""}</div><div class="n">${i.n} / ${items.length}</div></div>
   <h2 style="margin-top:18px;font-size:54px">${esc(i.titulo)}</h2>
   <img class="img" src="png/${i.f}">
   <div class="bubble"><small>Texto do WhatsApp</small>${esc(i.texto).replace(/\n/g,"<br>")}</div>
