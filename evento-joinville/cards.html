@@ -2,68 +2,74 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Do Mundo à Mesa — Pílulas</title>
+<title>Do Mundo à Mesa</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#1a1814; --ink2:#252019; --line:#3a332a;
-  --cream:#f5f3ef; --muted:#a79f92; --gold:#d9b25f; --gold2:#f0c060;
+  /* Paleta XP: preto, branco e amarelo. Ajuste --gold para o hex exato do manual de marca. */
+  --ink:#000000; --ink2:#141414; --line:#2a2a2a;
+  --cream:#ffffff; --muted:#a3a3a3; --gold:#FFC709;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0e0d0b;font-family:Inter,"Liberation Sans",sans-serif;padding:40px;display:flex;flex-wrap:wrap;gap:40px;justify-content:center}
-.card{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--ink);color:var(--cream);padding:96px 96px 0;display:flex;flex-direction:column}
-.card.light{background:var(--cream);color:var(--ink)}
-.card.light .muted{color:#6d655a}
-.card::before{content:"";position:absolute;inset:36px;border:1px solid rgba(217,178,95,.28);pointer-events:none}
-.card.light::before{border-color:rgba(26,24,20,.15)}
-.serif{font-family:"Playfair Display","DejaVu Serif",serif}
+body{background:#1c1c1c;font-family:Inter,"Liberation Sans",sans-serif;padding:40px;display:flex;flex-wrap:wrap;gap:40px;justify-content:center}
+.card{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--ink);color:var(--cream);padding:84px 96px 0;display:flex;flex-direction:column}
+.card::after{content:"";position:absolute;right:-180px;top:-180px;width:520px;height:520px;border:2px solid var(--gold);opacity:.18;transform:rotate(45deg);pointer-events:none}
+.card.y{background:var(--gold);color:#000}
+.card.y::after{border-color:#000;opacity:.12}
+.card.y .muted,.card.y .item span,.card.y .disc{color:rgba(0,0,0,.8)}
+.card.y .lead{font-weight:400}
+.card.y .gold,.card.y .kicker,.card.y .foot .cd,.card.y .big-date,.card.y h1 em{color:#000}
+.card.y .question{border-color:#000}
+.card.y .foot{border-color:rgba(0,0,0,.25)}
+.card.y .tbd{border-color:rgba(0,0,0,.5);color:rgba(0,0,0,.7)}
 .gold{color:var(--gold)}
 .muted{color:var(--muted)}
-.top{display:flex;justify-content:space-between;align-items:center;font-size:22px;letter-spacing:.22em;text-transform:uppercase;font-weight:600}
-.top .serie{color:var(--gold)}
-.chip{border:1px solid currentColor;padding:10px 20px;border-radius:40px;font-size:20px;letter-spacing:.18em}
-.kicker{margin-top:56px;font-size:26px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:600}
-h1{font-family:"Playfair Display","DejaVu Serif",serif;font-weight:700;font-size:92px;line-height:1.04;margin-top:24px;letter-spacing:-.01em}
-h1 em{font-style:italic;font-weight:500;color:var(--gold)}
-.light h1 em{color:#a8822f}
-.lead{font-size:36px;line-height:1.45;margin-top:40px;font-weight:300;max-width:860px}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:20px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;position:relative;z-index:1}
+.logo{display:flex;align-items:center;gap:16px;height:64px}
+.logo img{height:64px;width:auto}
+.logo .mk{font-weight:900;font-size:58px;letter-spacing:-.04em;line-height:1;text-transform:lowercase}
+.logo .sb{font-weight:500;font-size:22px;letter-spacing:.02em;text-transform:none;border-left:2px solid var(--gold);padding-left:16px;line-height:1.1}
+.card.y .logo .sb{border-color:#000}
+.chip{border:2px solid currentColor;padding:10px 20px;border-radius:6px;font-size:18px;letter-spacing:.16em}
+.kicker{margin-top:56px;font-size:24px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:700}
+h1{font-family:"Inter Display",Inter,sans-serif;font-weight:800;font-size:88px;line-height:1.02;margin-top:22px;letter-spacing:-.035em}
+h1 em{font-style:normal;color:var(--gold)}
+.lead{font-size:34px;line-height:1.45;margin-top:40px;font-weight:300;max-width:860px}
 .list{margin-top:40px;display:flex;flex-direction:column;gap:22px}
 .item{display:grid;grid-template-columns:72px 1fr;gap:20px;align-items:start}
-.item .n{font-family:"Playfair Display",serif;font-size:40px;color:var(--gold);line-height:1}
-.item b{display:block;font-size:34px;font-weight:600;margin-bottom:6px}
+.item .n{font-size:30px;font-weight:800;color:#000;background:var(--gold);width:56px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:4px}
+.card.y .item .n{background:#000;color:var(--gold)}
+.item b{display:block;font-size:33px;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
 .item span{font-size:26px;line-height:1.38;color:var(--muted);font-weight:400}
-.light .item span{color:#6d655a}
-.light .item .n{color:#a8822f}
-.question{margin-top:auto;border-left:4px solid var(--gold);padding:6px 0 6px 32px;font-family:"Playfair Display",serif;font-style:italic;font-size:36px;line-height:1.3}
-.foot{border-top:1px solid rgba(217,178,95,.3);margin:0 -96px;padding:30px 96px 66px;display:flex;justify-content:space-between;align-items:center;font-size:22px;letter-spacing:.14em;text-transform:uppercase}
-.light .foot{border-color:rgba(26,24,20,.15)}
-.foot .cd{color:var(--gold);font-weight:700}
-.light .foot .cd{color:#a8822f}
-.progress{display:flex;gap:8px;margin-top:22px}
-.progress i{height:5px;flex:1;background:rgba(217,178,95,.2);border-radius:3px}
+.question{margin-top:auto;border-left:6px solid var(--gold);padding:6px 0 6px 30px;font-weight:600;font-size:36px;line-height:1.28;letter-spacing:-.01em}
+.foot{border-top:1px solid #2a2a2a;margin:0 -96px;padding:28px 96px 60px;display:flex;justify-content:space-between;align-items:center;font-size:20px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.foot .cd{color:var(--gold);font-weight:800}
+.progress{display:flex;gap:8px;margin-top:26px}
+.progress i{height:6px;flex:1;background:#2a2a2a}
 .progress i.on{background:var(--gold)}
-.light .progress i{background:rgba(26,24,20,.12)}.light .progress i.on{background:#a8822f}
-.content{flex:1;display:flex;flex-direction:column;min-height:0;padding-bottom:44px}
-.disc{font-size:18px;color:var(--muted);letter-spacing:.02em;opacity:.85;padding-bottom:22px}
-.big-date{font-family:"Playfair Display",serif;font-size:300px;line-height:.9;color:var(--gold);font-weight:700;letter-spacing:-.03em}
-.stat{display:flex;align-items:baseline;gap:24px;margin-top:50px}
-.stat .v{font-family:"Playfair Display",serif;font-size:160px;color:var(--gold);line-height:1;font-weight:700}
-.stat .l{font-size:30px;line-height:1.35;max-width:520px;color:var(--muted)}
-.pillars{display:grid;grid-template-columns:1fr;gap:26px;margin-top:56px}
-.pillar{border:1px solid rgba(217,178,95,.35);padding:30px 36px;display:grid;grid-template-columns:120px 1fr;align-items:center}
-.pillar .r{font-family:"Playfair Display",serif;font-size:76px;color:var(--gold)}
-.pillar b{font-size:36px;display:block}
+.content{flex:1;display:flex;flex-direction:column;min-height:0;padding-bottom:40px;position:relative;z-index:1}
+.disc{font-size:16px;line-height:1.35;color:#8a8a8a;padding-bottom:20px}
+.big-date{font-size:290px;line-height:.88;color:var(--gold);font-weight:900;letter-spacing:-.06em}
+.stat{display:flex;align-items:center;gap:30px;margin-top:40px}
+.stat .v{font-size:130px;color:var(--gold);line-height:1;font-weight:900;letter-spacing:-.05em}
+.stat .l{font-size:28px;line-height:1.35;max-width:520px;color:var(--muted)}
+.pillars{display:grid;grid-template-columns:1fr;gap:22px;margin-top:56px}
+.pillar{background:var(--ink2);border-left:6px solid var(--gold);padding:30px 36px;display:grid;grid-template-columns:110px 1fr;align-items:center}
+.pillar .r{font-size:64px;font-weight:900;color:var(--gold)}
+.pillar b{font-size:36px;display:block;font-weight:700}
 .pillar span{font-size:26px;color:var(--muted)}
-.people{display:grid;grid-template-columns:1fr 1fr;gap:40px 40px;margin-top:60px}
-.person{display:flex;flex-direction:column;gap:12px}
-.av{width:150px;height:150px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:"Playfair Display",serif;font-size:56px;color:var(--gold);background:var(--ink2);background-size:cover;background-position:center}
-.person .role{font-size:19px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-top:8px}
-.person .nm{font-size:34px;font-weight:600}
-.person .cg{font-size:24px;color:var(--muted)}
-.spot .av{width:300px;height:300px;font-size:110px}
+.people{display:grid;grid-template-columns:1fr 1fr;gap:44px 40px;margin-top:56px}
+.person{display:flex;flex-direction:column;gap:10px}
+.av{width:150px;height:150px;border-radius:50%;border:4px solid var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:52px;color:var(--gold);background:var(--ink2);background-size:cover;background-position:center}
+.person .role{font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-top:8px}
+.person .nm{font-size:32px;font-weight:700}
+.person .cg{font-size:23px;color:var(--muted)}
+.spot .av{width:300px;height:300px;font-size:104px}
 .info{margin-top:56px;display:grid;grid-template-columns:200px 1fr;gap:26px 20px;font-size:32px}
-.info dt{color:var(--gold);letter-spacing:.18em;text-transform:uppercase;font-size:22px;font-weight:600;padding-top:8px}
+.info dt{color:var(--gold);letter-spacing:.18em;text-transform:uppercase;font-size:21px;font-weight:700;padding-top:8px}
+.tbd{border:2px dashed rgba(255,199,9,.7);border-radius:6px;padding:0 .25em;color:inherit;opacity:.9;white-space:nowrap}
+.info .tbd,.lead .tbd,.person .tbd{white-space:normal}
 svg text{font-family:Inter,sans-serif}
 </style>
 <script src="config.js"></script>
@@ -73,6 +79,8 @@ svg text{font-family:Inter,sans-serif}
 <script>
 const E = window.EVENTO;
 const EVT = new Date(E.data + "T12:00:00");
+const tbd = h => h.replace(/\[([^\]<]+)\]/g,'<span class="tbd">$1</span>');
+const logo = () => E.logo ? `<div class="logo"><img src="${E.logo}" alt=""></div>` : `<div class="logo"><span class="mk">xp</span><span class="sb">${E.marca}</span></div>`;
 const TOTAL = 8; // capítulos de conteúdo
 const ini = n => n.replace(/[\[\]]/g,"").split(/\s+/).filter(Boolean).slice(0,2).map(s=>s[0]).join("").toUpperCase();
 const dd = d => { const x=new Date(d+"T12:00:00"); return String(x.getDate()).padStart(2,"0")+"/"+String(x.getMonth()+1).padStart(2,"0"); };
@@ -82,13 +90,13 @@ function countdown(d){
 }
 function progress(c){ if(!c) return ""; let s='<div class="progress">'; for(let i=1;i<=TOTAL;i++) s+=`<i class="${i<=c?'on':''}"></i>`; return s+'</div>'; }
 function shell({id,date,cap,tag,light,body,disc}){
-  return `<section class="card ${light?'light':''}" data-id="${id}">
-    <div class="top"><span class="serie">${E.serie}</span><span class="chip">${tag}</span></div>
+  return tbd(`<section class="card ${light?'y':''}" data-id="${id}">
+    <div class="top">${logo()}<span class="chip">${tag}</span></div>
     ${progress(cap)}
     <div class="content">${body}</div>
-    ${disc?`<div class="disc">Conteúdo informativo e educacional. Não constitui recomendação de investimento, jurídica ou tributária.</div>`:""}
-    <div class="foot"><span>${E.marca}</span><span>${E.cidade} · 03.12</span><span class="cd">${countdown(date)}</span></div>
-  </section>`;
+    ${disc?`<div class="disc">${E.disclaimer}</div>`:""}
+    <div class="foot"><span>${E.serie}</span><span>${E.cidade} · 03.12</span><span class="cd">${countdown(date)}</span></div>
+  </section>`);
 }
 const items = arr => `<div class="list">${arr.map((x,i)=>`<div class="item"><div class="n">${String(i+1).padStart(2,"0")}</div><div><b>${x[0]}</b><span>${x[1]}</span></div></div>`).join("")}</div>`;
 const av = p => `<div class="av" style="${p.foto?`background-image:url('${p.foto}')`:''}">${p.foto?'':ini(p.nome)}</div>`;
@@ -97,16 +105,16 @@ function ecoSVG(){
   const nodes=["Investimentos","Sucessório","Tributário","Internacional","Proteção","Empresa"];
   const cx=444,cy=330,R=250; let s=`<svg width="740" height="550" viewBox="0 0 888 660">`;
   nodes.forEach((n,i)=>{const a=-Math.PI/2+i*2*Math.PI/nodes.length;const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
-    s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#d9b25f" stroke-opacity=".45" stroke-width="2" stroke-dasharray="6 8"/>`;});
+    s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#FFC709" stroke-opacity=".45" stroke-width="2" stroke-dasharray="6 8"/>`;});
   nodes.forEach((n,i)=>{const a=-Math.PI/2+i*2*Math.PI/nodes.length;const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
-    s+=`<circle cx="${x}" cy="${y}" r="74" fill="#252019" stroke="#d9b25f" stroke-width="2"/><text x="${x}" y="${y+8}" text-anchor="middle" fill="#f5f3ef" font-size="22" font-weight="600">${n}</text>`;});
-  s+=`<circle cx="${cx}" cy="${cy}" r="108" fill="#d9b25f"/><text x="${cx}" y="${cy-4}" text-anchor="middle" fill="#1a1814" font-size="36" font-weight="700" font-family="Playfair Display,serif">Família</text><text x="${cx}" y="${cy+32}" text-anchor="middle" fill="#1a1814" font-size="20" font-weight="600" letter-spacing="3">NO CENTRO</text>`;
+    s+=`<circle cx="${x}" cy="${y}" r="74" fill="#141414" stroke="#FFC709" stroke-width="2"/><text x="${x}" y="${y+8}" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="600">${n}</text>`;});
+  s+=`<circle cx="${cx}" cy="${cy}" r="108" fill="#FFC709"/><text x="${cx}" y="${cy-4}" text-anchor="middle" fill="#000" font-size="36" font-weight="700" font-weight="800">Família</text><text x="${cx}" y="${cy+32}" text-anchor="middle" fill="#000" font-size="20" font-weight="600" letter-spacing="3">NO CENTRO</text>`;
   return s+"</svg>";
 }
 
 const specialists = E.pessoas.filter(p=>p.papel!=="Anfitrião");
 const cards = [
-  {id:"01-save-the-date", date:"2026-11-13", tag:"Convite", body:`
+  {id:"01-save-the-date", date:"2026-11-13", tag:"Convite", light:1, body:`
     <div class="kicker">Save the date</div>
     <div class="big-date" style="margin-top:50px">03.12</div>
     <h1 style="font-size:84px;margin-top:30px">Um jantar. <em>Cinco convidados.</em> Uma conversa sobre o que vem pela frente.</h1>
@@ -176,13 +184,13 @@ const cards = [
       <dt>Traje</dt><dd>${E.traje}</dd>
     </dl>
     <div class="question">Do mundo à mesa: três cenários, uma conversa, ${E.vagas} convidados.</div>`},
-  {id:"13-e-hoje", date:"2026-12-03", tag:"Hoje", body:`
+  {id:"13-e-hoje", date:"2026-12-03", tag:"Hoje", light:1, body:`
     <div class="kicker">${E.dataExtenso}</div>
     <div class="big-date" style="margin-top:80px;font-size:260px">É hoje.</div>
     <p class="lead" style="margin-top:50px">${E.horario} · ${E.local}<br><span class="muted">${E.cidade}</span></p>
     <div class="question">Nos vemos à mesa.</div>`},
   {id:"14-obrigado", date:"2026-12-04", tag:"Pós-evento", light:1, body:`
-    <div class="kicker" style="color:#a8822f">Obrigado pela noite</div>
+    <div class="kicker">Obrigado pela noite</div>
     <h1>A conversa <em>continua.</em></h1>
     <p class="lead">Foi um prazer receber você em Joinville. Nos próximos dias, envio um resumo dos principais pontos e fico à disposição para aprofundarmos o seu caso — com calma, e sob medida.</p>
     <div class="question">Do mundo à mesa — e da mesa ao seu plano.</div>`},

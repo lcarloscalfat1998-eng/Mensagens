@@ -4,7 +4,12 @@
 // =====================================================================
 window.EVENTO = {
   serie: "Do Mundo à Mesa",                 // nome da série / storytelling
-  marca: "[Sua Empresa]",                   // aparece no rodapé de todas as peças
+  // LOGO: salve o arquivo oficial (PNG/SVG com fundo transparente, versão branca
+  // ou preta) nesta pasta e informe o nome, ex.: "logo-xp.png".
+  // Vazio = selo tipográfico provisório "xp | <marca>".
+  logo: "",
+  marca: "Investimentos",                   // texto ao lado do selo provisório
+  disclaimer: "Conteúdo informativo e educacional; não constitui recomendação de investimento, jurídica ou tributária. [Nome do escritório] é empresa de assessoria de investimento registrada na CVM, que atua como preposta da XP Investimentos CCTVM S.A.",
   data: "2026-12-03",
   dataExtenso: "03 de dezembro · quinta-feira",
   horario: "20h",
