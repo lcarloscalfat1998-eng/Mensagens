@@ -22,11 +22,11 @@ window.EVENTO = {
   // Pessoas que estarão à mesa (anfitriões + especialistas que você vai levar).
   // foto: caminho opcional, ex. "fotos/carlos.jpg" (quadrada). Sem foto = iniciais.
   pessoas: [
-    { nome: "Luiz Calfá", papel: "Anfitrião", cargo: "Banker · XP Investimentos",
+    { nome: "Luiz Calfat", papel: "Anfitrião", cargo: "Banker · XP Investimentos",
       bio: "Advogado formado pelo Mackenzie, com 5 anos de carreira em M&A. Há 3 anos é banker na XP Investimentos, cuidando do patrimônio de famílias e empresários.",
-      foto: "fotos/luiz-calfa.jpg" },
+      foto: "fotos/luiz-calfat.jpg" },
     { nome: "[Nome do Cliente]",     papel: "Anfitrião",         cargo: "[Cargo / empresa]",          bio: "[1 linha sobre o cliente que apresenta os convidados]", foto: "" },
-    { nome: "André Torres", papel: "Cenários & Alocação", cargo: "Investor · XP Investimentos · CNPI e CGA",
+    { nome: "André Torres", papel: "Cenários & Alocação", cargo: "Economista · XP Investimentos · CNPI e CGA",
       bio: "Economista pelo Insper, com mais de 11 anos de mercado. Passou pelas tesourarias do Haitong e do Scotiabank, pela Estratégia de Alocação em Renda Fixa do Bradesco Private Bank e estruturou o Research de Renda Fixa da Genial. Há mais de 3 anos na XP, desenha estratégias de alocação para investidores de alta renda.",
       foto: "fotos/especialista-cenarios.jpg" },
     { nome: "Isabella Magalhães", papel: "Wealth Planning", cargo: "Advogada · Patrimonial e Sucessório · CFP e CGA",
