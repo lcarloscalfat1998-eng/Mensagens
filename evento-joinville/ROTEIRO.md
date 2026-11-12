@@ -16,6 +16,7 @@ A série tem 15 envios e vai do mais amplo ao mais pessoal: **o mundo → o Bras
 - Cada pílula de conteúdo termina com uma pergunta que será respondida no jantar.
 - A barra de progresso no topo e a contagem regressiva no rodapé mostram ao convidado que ele acompanha uma história com data marcada.
 - Os anfitriões e os convidados especiais são apresentados na reta final, depois que os temas criaram interesse.
+- O fechamento é o ecossistema XP em 360°: o cliente no centro, escolhendo, e todos os serviços da XP ao redor dele.
 
 **Formato das imagens:** PNG 1080×1350 (vertical 4:5), ideal para WhatsApp. Os arquivos já estão nomeados na ordem de envio (`01_13-11_…` até `15_04-12_…`).
 
@@ -35,7 +36,7 @@ A série tem 15 envios e vai do mais amplo ao mais pessoal: **o mundo → o Bras
 | 08 | qui 26/11 | 8h30 | Holdings | Cap. 6: a estrutura |
 | 09 | sex 27/11 | 9h | Quem estará à mesa | Apresentar anfitriões e convidados |
 | 10 | seg 30/11 | 8h30 | Economista: André Torres | Autoridade em cenários |
-| 11 | seg 30/11 | 12h30 | Ecossistema | Cap. 7: quem faz o quê |
+| 11 | seg 30/11 | 12h30 | Ecossistema XP 360° | Cap. 7: você no centro |
 | 12 | ter 01/12 | 8h30 | Advogada: Isabella Magalhães | Autoridade em wealth planning |
 | 13 | qua 02/12 | 10h | Véspera | Logística e confirmação |
 | 14 | qui 03/12 | 10h | É hoje | Lembrete final |
@@ -51,7 +52,7 @@ A série tem 15 envios e vai do mais amplo ao mais pessoal: **o mundo → o Bras
 > Olá, tudo bem? O Glaucio Gonçalves e eu estamos organizando um jantar reservado em Joinville no dia **3 de dezembro**, para apenas cinco convidados. Será uma conversa franca sobre os cenários que vêm pela frente e o que eles significam para o patrimônio da sua família. Será um prazer contar com a sua presença. Nas próximas semanas, compartilho por aqui algumas pílulas dos temas da noite. Posso reservar o seu lugar?
 
 **02 · 16/11 · A agenda**
-> A noite terá três blocos: **cenários** (geopolítico, macro global e Brasil), com o economista André Torres; **wealth planning** (sucessão, tributação, offshore e holdings), com a advogada Isabella Magalhães; e o **ecossistema** que integra tudo isso. Do mundo à mesa.
+> A noite terá três blocos: **cenários** (geopolítico, macro global e Brasil), com o economista André Torres; **wealth planning** (sucessão, tributação, offshore e holdings), com a advogada Isabella Magalhães; e o **ecossistema XP**, com uma visão 360° em que você está no centro de tudo. Do mundo à mesa.
 
 **03 · 18/11 · Geopolítica & Macro**
 > Primeira pílula: o mundo mudou de regime. Juros globais, tarifas e conflitos deixaram de ser notícia e passaram a ser variáveis de portfólio. No dia 3, vamos discutir o que isso significa na prática.
@@ -77,8 +78,8 @@ A série tem 15 envios e vai do mais amplo ao mais pessoal: **o mundo → o Bras
 **10 · 30/11 · Economista: André Torres**
 > Apresento o André Torres, economista que conduzirá a conversa sobre cenários. Formado pelo Insper, tem mais de 11 anos de mercado, com passagens pelas tesourarias do Haitong e do Scotiabank, pelo Bradesco Private Bank e pela Genial. Há mais de três anos na XP, desenha estratégias de alocação para investidores de alta renda.
 
-**11 · 30/11 · Ecossistema**
-> Ninguém protege um patrimônio sozinho. Investimentos, jurídico, tributário, internacional e proteção precisam conversar entre si. É esse o fechamento da nossa noite.
+**11 · 30/11 · Ecossistema XP 360°**
+> Para fechar a noite, o ecossistema XP: você no centro e, ao seu redor, serviços bancários, investimentos, mesas de renda fixa e renda variável, advogados, client solutions, investors, consultoria e diferentes formas de atendimento. Quem escolhe o caminho é você. O ecossistema inteiro trabalha para executar.
 
 **12 · 01/12 · Advogada: Isabella Magalhães**
 > E apresento a Isabella Magalhães, advogada que conduzirá a conversa de wealth planning. Dedica a carreira a patrimônio e estruturas de investimento de famílias de alta renda, no Brasil e no exterior. É mestre pelo Insper, pós-graduada em Planejamento Patrimonial e Sucessório pela FGV e certificada CFP. Sucessão, offshore e holdings fazem parte do seu dia a dia.

@@ -106,13 +106,18 @@ const items = arr => `<div class="list">${arr.map((x,i)=>`<div class="item"><div
 const av = p => `<div class="av" style="${p.foto?`background-image:url('${p.foto}')`:''}">${p.foto?'':ini(p.nome)}</div>`;
 
 function ecoSVG(){
-  const nodes=["Investimentos","Sucessório","Tributário","Internacional","Proteção","Empresa"];
-  const cx=444,cy=330,R=250; let s=`<svg width="740" height="550" viewBox="0 0 888 660">`;
-  nodes.forEach((n,i)=>{const a=-Math.PI/2+i*2*Math.PI/nodes.length;const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
-    s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#FFC709" stroke-opacity=".45" stroke-width="2" stroke-dasharray="6 8"/>`;});
-  nodes.forEach((n,i)=>{const a=-Math.PI/2+i*2*Math.PI/nodes.length;const x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
-    s+=`<circle cx="${x}" cy="${y}" r="74" fill="#141414" stroke="#FFC709" stroke-width="2"/><text x="${x}" y="${y+8}" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="600">${n}</text>`;});
-  s+=`<circle cx="${cx}" cy="${cy}" r="108" fill="#FFC709"/><text x="${cx}" y="${cy-4}" text-anchor="middle" fill="#000" font-size="36" font-weight="800">Família</text><text x="${cx}" y="${cy+32}" text-anchor="middle" fill="#000" font-size="20" font-weight="600" letter-spacing="3">NO CENTRO</text>`;
+  const nodes=[["Serviços","bancários"],["Investimentos"],["Mesa de","Renda Fixa"],["Mesa de","Renda Variável"],["Advogados"],["Client","Solutions"],["Investors"],["Consultoria"],["Formas de","atendimento"]];
+  const cx=450,cy=410,R=318,r=86; let s=`<svg width="800" height="729" viewBox="0 0 900 820">`;
+  s+=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#FFC709" stroke-opacity=".35" stroke-width="2"/>`;
+  s+=`<circle cx="${cx}" cy="${cy}" r="${R-130}" fill="none" stroke="#FFC709" stroke-opacity=".18" stroke-width="2" stroke-dasharray="4 10"/>`;
+  const pos=i=>{const a=-Math.PI/2+i*2*Math.PI/nodes.length;return [cx+R*Math.cos(a),cy+R*Math.sin(a)];};
+  nodes.forEach((n,i)=>{const [x,y]=pos(i);s+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#FFC709" stroke-opacity=".4" stroke-width="2" stroke-dasharray="6 8"/>`;});
+  nodes.forEach((n,i)=>{const [x,y]=pos(i);
+    s+=`<circle cx="${x}" cy="${y}" r="${r}" fill="#141414" stroke="#FFC709" stroke-width="3"/>`;
+    const fs=n.some(t=>t.length>11)?19:21;
+    if(n.length===1) s+=`<text x="${x}" y="${y+7}" text-anchor="middle" fill="#fff" font-size="${fs}" font-weight="700">${n[0]}</text>`;
+    else s+=`<text x="${x}" y="${y-5}" text-anchor="middle" fill="#fff" font-size="${fs}" font-weight="700">${n[0]}</text><text x="${x}" y="${y+21}" text-anchor="middle" fill="#fff" font-size="${fs}" font-weight="700">${n[1]}</text>`;});
+  s+=`<circle cx="${cx}" cy="${cy}" r="132" fill="#FFC709"/><text x="${cx}" y="${cy+4}" text-anchor="middle" fill="#000" font-size="58" font-weight="900" letter-spacing="-1">Você</text><text x="${cx}" y="${cy+44}" text-anchor="middle" fill="#000" font-size="20" font-weight="700" letter-spacing="3">QUEM ESCOLHE</text>`;
   return s+"</svg>";
 }
 
@@ -129,7 +134,7 @@ const cards = [
     <div class="pillars">
       <div class="pillar"><div class="r">I</div><div><b>Cenários</b><span>Geopolítico · Macro global · Brasil<br><em class="by">com ${byPapel("Cenários & Alocação")}</em></span></div></div>
       <div class="pillar"><div class="r">II</div><div><b>Wealth Planning</b><span>Sucessão · Tributação · Offshore · Holdings<br><em class="by">com ${byPapel("Wealth Planning")}</em></span></div></div>
-      <div class="pillar"><div class="r">III</div><div><b>Ecossistema</b><span>Quem faz o quê na proteção do seu patrimônio<br><em class="by">com ${byPapel("Anfitrião")}</em></span></div></div>
+      <div class="pillar"><div class="r">III</div><div><b>Ecossistema XP</b><span>Visão 360°: você no centro de tudo<br><em class="by">com ${E.pessoas[0].nome}</em></span></div></div>
     </div>`},
   {id:"03-geopolitica-macro", date:"2026-11-18", cap:1, tag:"Cenários · 1/3", disc:1, body:`
     <div class="kicker">Geopolítica & Macro global</div>
@@ -172,11 +177,11 @@ const cards = [
     <h1 style="font-size:80px;margin-top:40px">${p.nome}</h1>
     <p class="lead gold" style="margin-top:14px;font-weight:600;font-size:30px">${p.cargo}</p>
     <p class="spot-bio">${p.bio}</p>`})),
-  {id:"11-ecossistema", date:"2026-11-30", cap:7, tag:"Ecossistema", body:`
-    <div class="kicker">Análise do ecossistema</div>
-    <h1>Ninguém protege um patrimônio <em>sozinho.</em></h1>
-    <div style="margin-top:40px;display:flex;justify-content:center">${ecoSVG()}</div>
-    <div class="question">Quem conversa com quem no seu patrimônio hoje?</div>`},
+  {id:"11-ecossistema", date:"2026-11-30", cap:7, tag:"Ecossistema XP", body:`
+    <div class="kicker">Ecossistema XP · Visão 360°</div>
+    <h1>Você no <em>centro.</em></h1>
+    <div style="margin-top:6px;display:flex;justify-content:center">${ecoSVG()}</div>
+    <div class="question">Você escolhe. O ecossistema inteiro trabalha ao seu redor.</div>`},
   {id:"12-vespera", date:"2026-12-02", cap:8, tag:"Amanhã", body:`
     <div class="kicker">Está tudo pronto</div>
     <h1>Amanhã, <em>à mesa.</em></h1>
