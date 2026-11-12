@@ -21,7 +21,7 @@
 | 07 | qua 25/11 | Offshore | Cap. 5: o patrimônio fora do Brasil |
 | 08 | qui 26/11 | Holdings | Cap. 6: a estrutura |
 | 09 | sex 27/11 | Quem estará à mesa | Apresentar o time |
-| 10 | seg 30/11 | Especialista: Cenários & Alocação | Autoridade |
+| 10 | seg 30/11 | Especialista: Cenários & Alocação (André Torres) | Autoridade |
 | 11 | seg 30/11 (à tarde) | Ecossistema | Cap. 7: quem faz o quê |
 | 12 | ter 01/12 | Especialista: Wealth Planning (Isabella Magalhães) | Autoridade |
 | 13 | qua 02/12 | Véspera: logística | Confirmação |
@@ -62,7 +62,7 @@
 > Quero te apresentar quem vai estar com a gente no dia 3. Um time pequeno, escolhido a dedo para os temas da noite.
 
 **10 · 30/11 · Especialista 1**
-> Quero te apresentar o [Nome], que vai conduzir a conversa sobre cenários no jantar. Economista pelo Insper, com mais de 11 anos de mercado: passou pelas tesourarias do Haitong e do Scotiabank, pelo Bradesco Private Bank e pela Genial. Há mais de 3 anos está na XP, desenhando estratégias de alocação para investidores de alta renda. Vai ser uma conversa muito rica.
+> Quero te apresentar o André Torres, que vai conduzir a conversa sobre cenários no jantar. Economista pelo Insper, com mais de 11 anos de mercado: passou pelas tesourarias do Haitong e do Scotiabank, pelo Bradesco Private Bank e pela Genial. Há mais de 3 anos está na XP, desenhando estratégias de alocação para investidores de alta renda. Vai ser uma conversa muito rica.
 
 **11 · 30/11 · Ecossistema**
 > Ninguém protege um patrimônio sozinho. Investimentos, jurídico, tributário, internacional e proteção precisam conversar entre si. É isso que vamos fechar no jantar.
@@ -71,10 +71,10 @@
 > E quem vai conduzir a conversa de wealth planning é a Isabella Magalhães. Advogada com mais de uma década dedicada a patrimônio e estruturas de investimento de famílias de alta renda, no Brasil e no exterior. É mestre pelo Insper, pós-graduada em Planejamento Patrimonial e Sucessório pela FGV e certificada CFP. Sucessão, offshore e holdings são o dia a dia dela.
 
 **13 · 02/12 · Véspera**
-> Amanhã é o nosso jantar! Seguem os detalhes 👇 Qualquer coisa, me chama. Confirmado?
+> Amanhã é o nosso jantar! 20h no Santa Mistura (R. Otto Boehm, 722, América, Joinville). Seguem os detalhes 👇 Qualquer coisa, me chama. Confirmado?
 
 **14 · 03/12 · É hoje**
-> Hoje, às [20h]. Nos vemos à mesa. 🥂
+> Hoje, às 20h, no Santa Mistura. Nos vemos à mesa. 🥂
 
 **15 · 04/12 · Obrigado**
 > Obrigado pela presença ontem, foi um prazer. Nos próximos dias te mando um resumo dos principais pontos. Que tal marcarmos 30 minutos para olhar o seu caso com calma?
