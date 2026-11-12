@@ -66,6 +66,66 @@ textarea { min-height:64px; resize:vertical; line-height:1.6; }
 .tip-box { margin-top:12px; background:#f5f3ef; border:1px solid #ddd; border-radius:8px; padding:10px 14px; font-size:12px; color:#888; }
 .saved-btn { width:100%; padding:13px; border:none; border-radius:9px; font-size:15px; font-weight:700; cursor:pointer; font-family:sans-serif; color:#fff; background:#1a1814; }
 .situacao-block { margin-top:10px; }
+/* ===== PAINEL DE PERFORMANCE ===== */
+.pn-hero { background:#1a1814; color:#f5f3ef; border-radius:10px; padding:14px 16px; margin-bottom:14px; display:flex; gap:16px; flex-wrap:wrap; align-items:center; }
+.pn-hero-main { flex:1 1 100%; }
+.pn-hero-stat { flex:1; }
+.pn-hero-sub { font-size:10px; color:#888; letter-spacing:.1em; text-transform:uppercase; }
+.pn-hero-title { font-size:17px; font-weight:700; margin-top:2px; }
+.pn-hero-stat { text-align:center; }
+.pn-hero-stat b { display:block; font-size:20px; color:#f0c060; }
+.pn-hero-stat span { font-size:9px; color:#888; text-transform:uppercase; letter-spacing:.06em; }
+.pn-meta { margin-bottom:14px; }
+.pn-meta:last-child { margin-bottom:0; }
+.pn-meta-top { display:flex; justify-content:space-between; align-items:baseline; gap:8px; margin-bottom:5px; }
+.pn-meta-label { font-size:13px; font-weight:700; }
+.pn-meta-val { font-size:12px; color:#666; font-family:monospace; white-space:nowrap; }
+.pn-track { position:relative; height:10px; background:#f0ede8; border-radius:5px; }
+.pn-fill { position:absolute; left:0; top:0; bottom:0; border-radius:5px; background:#1e3f6b; min-width:2px; }
+.pn-pace { position:absolute; top:-3px; bottom:-3px; width:2px; background:#1a1814; border-radius:1px; }
+.pn-meta-foot { display:flex; justify-content:space-between; gap:8px; margin-top:5px; font-size:11px; color:#888; flex-wrap:wrap; }
+.pn-badge { display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; white-space:nowrap; }
+.pn-ok { background:#e3efe8; color:#2a6b4a; }
+.pn-warn { background:#f5ecd8; color:#8a6a1e; }
+.pn-bad { background:#f3e1e1; color:#8b2e2e; }
+.pn-neutral { background:#f0ede8; color:#888; }
+.pn-legend { font-size:11px; color:#999; margin-top:10px; display:flex; align-items:center; gap:6px; }
+.pn-legend i { display:inline-block; width:2px; height:12px; background:#1a1814; }
+.pn-counters { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+@media(max-width:500px) { .pn-counters { grid-template-columns:repeat(3,1fr); } }
+.pn-counter { border:1px solid #eee; border-radius:8px; padding:8px 4px; text-align:center; background:#fafaf8; }
+.pn-counter-n { font-size:22px; font-weight:800; }
+.pn-counter-l { font-size:10px; color:#888; text-transform:uppercase; letter-spacing:.04em; margin-bottom:6px; }
+.pn-counter-btns { display:flex; gap:4px; justify-content:center; }
+.pn-counter-btns button { width:30px; height:28px; border:1px solid #ddd; border-radius:6px; background:#fff; font-size:15px; font-weight:700; cursor:pointer; color:#1a1814; }
+.pn-counter-btns button.plus { background:#1a1814; color:#fff; border-color:#1a1814; }
+.pn-funil-row { display:grid; grid-template-columns:92px 1fr 54px; align-items:center; gap:8px; margin-bottom:4px; }
+.pn-funil-label { font-size:12px; font-weight:600; color:#555; }
+.pn-funil-bar { height:22px; background:#1e3f6b; border-radius:0 4px 4px 0; min-width:2px; }
+.pn-funil-n { font-size:13px; font-weight:700; font-family:monospace; text-align:right; }
+.pn-funil-conv { font-size:11px; color:#999; padding:0 0 6px 100px; }
+.pn-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+@media(max-width:500px) { .pn-kpis { grid-template-columns:1fr 1fr; } }
+.pn-kpi { border:1px solid #eee; border-radius:8px; padding:10px; background:#fafaf8; }
+.pn-kpi-l { font-size:10px; color:#888; text-transform:uppercase; letter-spacing:.05em; }
+.pn-kpi-v { font-size:18px; font-weight:800; margin-top:3px; }
+.pn-kpi-h { font-size:10px; color:#aaa; margin-top:2px; line-height:1.4; }
+.pn-acao { display:flex; gap:10px; align-items:center; padding:10px 0; border-bottom:1px solid #f0ede8; }
+.pn-acao:last-child { border-bottom:none; }
+.pn-acao-ico { font-size:18px; width:24px; text-align:center; }
+.pn-acao-txt { flex:1; min-width:0; }
+.pn-acao-nome { font-size:13px; font-weight:700; }
+.pn-acao-mot { font-size:11px; color:#888; }
+.pn-btn-sm { padding:6px 10px; border-radius:6px; border:1px solid #ddd; background:#fff; font-size:11px; font-weight:700; cursor:pointer; font-family:sans-serif; color:#555; white-space:nowrap; text-decoration:none; }
+.pn-btn-sm.wa { background:#2a6b4a; border-color:#2a6b4a; color:#fff; }
+.pn-cli { border:1px solid #eee; border-radius:8px; margin-bottom:6px; }
+.pn-cli summary { padding:10px 12px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:13px; font-weight:700; list-style:none; }
+.pn-cli summary::-webkit-details-marker { display:none; }
+.pn-cli-body { padding:4px 12px 12px; }
+.pn-cli-body .field label { font-size:11px; }
+.pn-cli-body input { padding:7px 10px; font-size:13px; }
+.pn-empty { font-size:13px; color:#bbb; font-style:italic; }
+.pn-link { background:none; border:none; color:#1e3f6b; font-size:11px; font-weight:700; cursor:pointer; font-family:sans-serif; float:right; letter-spacing:0; text-transform:none; }
 </style>
 </head>
 <body>
@@ -85,7 +145,8 @@ textarea { min-height:64px; resize:vertical; line-height:1.6; }
   <div class="ticker-edit" onclick="showTab('cenario')">✏️ Editar</div>
 </div>
 
-<div class="tabs" style="grid-template-columns:repeat(4,1fr)">
+<div class="tabs" style="grid-template-columns:repeat(5,1fr)">
+  <button class="tab" onclick="showTab('painel')">📊 Painel</button>
   <button class="tab" onclick="showTab('cenario')">⚙ Cenário</button>
   <button class="tab" onclick="showTab('clientes')">👥 Clientes</button>
   <button class="tab active" onclick="showTab('venda')">Venda / Pitch</button>
@@ -93,6 +154,60 @@ textarea { min-height:64px; resize:vertical; line-height:1.6; }
 </div>
 
 <div class="main">
+
+<!-- ===== PAINEL DE PERFORMANCE ===== -->
+<div class="panel" id="panel-painel">
+  <div class="pn-hero" id="pn-hero"></div>
+
+  <div class="box">
+    <div class="box-title" style="color:#1e3f6b">● Metas do mês <button class="pn-link" onclick="toggleMetasForm()">✏️ Editar metas / resultado</button></div>
+    <div id="pn-metas-form" style="display:none;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0ede8">
+      <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Metas mensais</div>
+      <div class="g3">
+        <div class="field"><label>Captação líquida R$</label><input type="number" id="pn-meta-captacao" oninput="salvarMetas()"></div>
+        <div class="field"><label>Receita R$</label><input type="number" id="pn-meta-receita" oninput="salvarMetas()"></div>
+        <div class="field"><label>Novos clientes</label><input type="number" id="pn-meta-novos" oninput="salvarMetas()"></div>
+        <div class="field"><label>Reuniões</label><input type="number" id="pn-meta-reunioes" oninput="salvarMetas()"></div>
+        <div class="field"><label>Contatos por dia</label><input type="number" id="pn-meta-contatos" oninput="salvarMetas()"></div>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin:6px 0 8px">Realizado no mês <span id="pn-mes-label"></span></div>
+      <div class="g3">
+        <div class="field"><label>Captação líquida R$</label><input type="number" id="pn-real-captacao" oninput="salvarMetas()"></div>
+        <div class="field"><label>Receita R$</label><input type="number" id="pn-real-receita" oninput="salvarMetas()"></div>
+        <div class="field"><label>Novos clientes</label><input type="number" id="pn-real-novos" oninput="salvarMetas()"></div>
+      </div>
+      <div style="font-size:11px;color:#aaa">Reuniões são contadas automaticamente pelos registros de atividade abaixo.</div>
+    </div>
+    <div id="pn-metas"></div>
+  </div>
+
+  <div class="box">
+    <div class="box-title" style="color:#b8963e">● Atividade de hoje</div>
+    <div class="pn-counters" id="pn-hoje"></div>
+    <div id="pn-hoje-meta" style="margin-top:14px"></div>
+  </div>
+
+  <div class="box">
+    <div class="box-title" style="color:#1e3f6b">● Funil comercial do mês</div>
+    <div id="pn-funil"></div>
+  </div>
+
+  <div class="box">
+    <div class="box-title" style="color:#2a6b4a">● Carteira</div>
+    <div class="pn-kpis" id="pn-kpis"></div>
+  </div>
+
+  <div class="box">
+    <div class="box-title" style="color:#8b2e2e">● Quem contatar agora</div>
+    <div id="pn-acoes"></div>
+  </div>
+
+  <div class="box">
+    <div class="box-title" style="color:#555">● Dados dos clientes</div>
+    <div style="font-size:12px;color:#888;margin-bottom:10px">Preencha patrimônio, último contato, aniversário e próximo vencimento para alimentar o painel e a lista de prioridades.</div>
+    <div id="pn-carteira"></div>
+  </div>
+</div>
 
 <!-- ===== CENÁRIO ===== -->
 <div class="panel" id="panel-cenario">
@@ -527,7 +642,8 @@ function showTab(name) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
-  const tabs = ['cenario','clientes','venda','carteira'];
+  const tabs = ['painel','cenario','clientes','venda','carteira'];
+  if (name === 'painel') renderPainel(true);
   document.querySelectorAll('.tab')[tabs.indexOf(name)].classList.add('active');
 }
 
@@ -1194,7 +1310,7 @@ function salvarLocal() {
 function carregarLocal() {
   try {
     const raw = localStorage.getItem('central_mensagens');
-    if (!raw) return;
+    if (!raw) { carregarClientes(); return; }
     const d = JSON.parse(raw);
     if (d.apiKey) { document.getElementById('api-key').value = d.apiKey; checkApiKey(); }
     if (d.selic)   document.getElementById('m-selic').value = d.selic;
@@ -1306,9 +1422,298 @@ function verificarAtualizacaoAutomatica() {
   }
 }
 
+// ─── PAINEL DE PERFORMANCE ───────────────────
+const DASH_KEY = 'dashboard_v1';
+let dash = { metas:{}, meses:{}, atividades:{}, cli:{} };
+const pnAbertos = new Set();
+const ATIV = [
+  { k:'ligacoes',    l:'Ligações' },
+  { k:'mensagens',   l:'Mensagens' },
+  { k:'reunioes',    l:'Reuniões' },
+  { k:'propostas',   l:'Propostas' },
+  { k:'fechamentos', l:'Fechamentos' }
+];
+
+function pnDia(d) { d = d || new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+function pnMes() { return pnDia().slice(0,7); }
+function pnNum(x) { const n = parseFloat(x); return isNaN(n) ? 0 : n; }
+function pnEsc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function pnBrl(n) {
+  const a = Math.abs(n), s = n < 0 ? '-' : '';
+  if (a >= 1e6) return s + 'R$ ' + (a/1e6).toLocaleString('pt-BR', { maximumFractionDigits:2 }) + ' mi';
+  if (a >= 1e4) return s + 'R$ ' + (a/1e3).toLocaleString('pt-BR', { maximumFractionDigits:1 }) + ' mil';
+  return s + 'R$ ' + a.toLocaleString('pt-BR', { maximumFractionDigits:0 });
+}
+function pnInt(n) { return Math.round(n).toLocaleString('pt-BR'); }
+function pnPct(x) { return (x * 100).toLocaleString('pt-BR', { maximumFractionDigits: x < 0.1 ? 1 : 0 }) + '%'; }
+function pnDiasDesde(iso) {
+  if (!iso) return null;
+  const [y,m,d] = iso.split('-').map(Number);
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  return Math.round((hoje - new Date(y, m-1, d)) / 86400000);
+}
+function pnDiasAteAniv(iso) {
+  if (!iso) return null;
+  const [, m, d] = iso.split('-').map(Number);
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  let prox = new Date(hoje.getFullYear(), m-1, d);
+  if (prox < hoje) prox = new Date(hoje.getFullYear()+1, m-1, d);
+  return Math.round((prox - hoje) / 86400000);
+}
+
+function carregarDash() {
+  try {
+    const raw = localStorage.getItem(DASH_KEY);
+    if (raw) dash = Object.assign(dash, JSON.parse(raw));
+  } catch(e) {}
+}
+function salvarDash() { try { localStorage.setItem(DASH_KEY, JSON.stringify(dash)); } catch(e) {} }
+
+function pnDiasUteis() {
+  const hoje = new Date(), y = hoje.getFullYear(), m = hoje.getMonth();
+  const fim = new Date(y, m+1, 0).getDate();
+  let total = 0, passados = 0;
+  for (let d = 1; d <= fim; d++) {
+    const wd = new Date(y, m, d).getDay();
+    if (wd === 0 || wd === 6) continue;
+    total++;
+    if (d < hoje.getDate()) passados++;
+  }
+  return { total, passados, restantes: Math.max(total - passados, 0) };
+}
+
+function pnSomaAtiv(filtro) {
+  const t = {}; ATIV.forEach(a => t[a.k] = 0);
+  Object.entries(dash.atividades).forEach(([dia, val]) => {
+    if (filtro(dia)) ATIV.forEach(a => t[a.k] += (val[a.k] || 0));
+  });
+  return t;
+}
+
+// ─── metas ───
+function toggleMetasForm() {
+  const f = document.getElementById('pn-metas-form');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+function pnPreencherForm() {
+  const mt = dash.metas, re = dash.meses[pnMes()] || {};
+  const set = (id, val) => { document.getElementById(id).value = val ? val : ''; };
+  set('pn-meta-captacao', mt.captacao); set('pn-meta-receita', mt.receita);
+  set('pn-meta-novos', mt.novos); set('pn-meta-reunioes', mt.reunioes);
+  set('pn-meta-contatos', mt.contatosDia);
+  set('pn-real-captacao', re.captacao); set('pn-real-receita', re.receita); set('pn-real-novos', re.novos);
+  document.getElementById('pn-mes-label').textContent = '(' + new Date().toLocaleDateString('pt-BR', { month:'long', year:'numeric' }) + ')';
+}
+function salvarMetas() {
+  const g = id => pnNum(document.getElementById(id).value);
+  dash.metas = {
+    captacao: g('pn-meta-captacao'), receita: g('pn-meta-receita'),
+    novos: g('pn-meta-novos'), reunioes: g('pn-meta-reunioes'), contatosDia: g('pn-meta-contatos')
+  };
+  dash.meses[pnMes()] = { captacao: g('pn-real-captacao'), receita: g('pn-real-receita'), novos: g('pn-real-novos') };
+  salvarDash();
+  renderPainel(false);
+}
+
+function pnStatus(real, meta, esperado) {
+  if (!meta) return { cls:'pn-neutral', txt:'Defina a meta' };
+  const pct = real / meta;
+  if (pct >= 1) return { cls:'pn-ok', txt:'✓ Meta batida' };
+  if (pct >= esperado * 0.9) return { cls:'pn-ok', txt:'● No ritmo' };
+  if (pct >= esperado * 0.7) return { cls:'pn-warn', txt:'▲ Atenção' };
+  return { cls:'pn-bad', txt:'▼ Abaixo do ritmo' };
+}
+
+// ─── atividades ───
+function pnAtiv(k, delta) {
+  const dia = pnDia();
+  dash.atividades[dia] = dash.atividades[dia] || {};
+  dash.atividades[dia][k] = Math.max((dash.atividades[dia][k] || 0) + delta, 0);
+  salvarDash();
+  renderPainel(false);
+}
+
+// ─── clientes ───
+function pnCli(id) { return dash.cli[id] || {}; }
+function pnSetCli(id, campo, valor) {
+  dash.cli[id] = Object.assign({}, dash.cli[id], { [campo]: valor });
+  salvarDash();
+  renderPainel(false);
+  const s = document.getElementById('pn-cli-sum-' + id);
+  if (s) s.innerHTML = pnResumoCli(clientes.find(c => String(c.id) === String(id)));
+}
+function pnContatei(id) {
+  pnSetCli(id, 'ultimoContato', pnDia());
+  renderPainel(true);
+}
+function pnToggle(id, el) { el.open ? pnAbertos.add(id) : pnAbertos.delete(id); }
+function pnResumoCli(c) {
+  if (!c) return '';
+  const d = pnCli(c.id), dias = pnDiasDesde(d.ultimoContato);
+  let badge;
+  if (dias === null) badge = '<span class="pn-badge pn-neutral">sem registro</span>';
+  else if (dias > 60) badge = '<span class="pn-badge pn-bad">▼ ' + dias + 'd sem contato</span>';
+  else if (dias > 30) badge = '<span class="pn-badge pn-warn">▲ ' + dias + 'd sem contato</span>';
+  else badge = '<span class="pn-badge pn-ok">● contato há ' + dias + 'd</span>';
+  return '<span>' + pnEsc(c.nomeCompleto) + (d.auc ? ' <span style="font-weight:400;color:#888;font-family:monospace">' + pnBrl(pnNum(d.auc)) + '</span>' : '') + '</span>' + badge;
+}
+function pnWa(c) {
+  const tel = String(c.tel || '').replace(/\D/g, '');
+  return tel ? '<a class="pn-btn-sm wa" href="https://wa.me/' + tel + '" target="_blank" rel="noopener">WhatsApp</a>' : '';
+}
+
+// ─── render ───
+function renderPainel(comCarteira) {
+  if (!document.getElementById('panel-painel')) return;
+  const du = pnDiasUteis();
+  const esperado = du.total ? du.passados / du.total : 0;
+  const mt = dash.metas, re = dash.meses[pnMes()] || {};
+  const mesIni = pnMes() + '-01';
+  const atMes = pnSomaAtiv(d => d >= mesIni && d.slice(0,7) === pnMes());
+  const hoje = dash.atividades[pnDia()] || {};
+
+  // Hero
+  const nomeDia = new Date().toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long' });
+  document.getElementById('pn-hero').innerHTML =
+    '<div class="pn-hero-main"><div class="pn-hero-sub">Painel de performance</div><div class="pn-hero-title">' + pnEsc(nomeDia.charAt(0).toUpperCase() + nomeDia.slice(1)) + '</div></div>'
+    + '<div class="pn-hero-stat"><b>' + du.restantes + '</b><span>dias úteis restantes</span></div>'
+    + '<div class="pn-hero-stat"><b>' + pnPct(esperado) + '</b><span>do mês percorrido</span></div>';
+
+  // Metas
+  const linhas = [
+    { l:'Captação líquida', meta:pnNum(mt.captacao), real:pnNum(re.captacao), f:pnBrl },
+    { l:'Receita', meta:pnNum(mt.receita), real:pnNum(re.receita), f:pnBrl },
+    { l:'Novos clientes', meta:pnNum(mt.novos), real:pnNum(re.novos), f:pnInt },
+    { l:'Reuniões', meta:pnNum(mt.reunioes), real:atMes.reunioes, f:pnInt }
+  ];
+  const semMeta = linhas.every(x => !x.meta);
+  document.getElementById('pn-metas').innerHTML = (semMeta
+    ? '<p class="pn-empty" style="margin-bottom:12px">Defina suas metas do mês em “✏️ Editar metas” para acompanhar o ritmo.</p>' : '')
+    + linhas.map(x => {
+      const st = pnStatus(x.real, x.meta, esperado);
+      const pct = x.meta ? Math.min(x.real / x.meta, 1) : 0;
+      const falta = Math.max(x.meta - x.real, 0);
+      const porDia = du.restantes ? falta / du.restantes : falta;
+      const fDia = x.f === pnInt ? (n => n.toLocaleString('pt-BR', { maximumFractionDigits: 1 })) : x.f;
+      const foot = !x.meta ? '' : (falta <= 0
+        ? 'Superou em ' + x.f(x.real - x.meta)
+        : 'Faltam ' + x.f(falta) + ' · ' + fDia(porDia) + ' por dia útil');
+      return '<div class="pn-meta">'
+        + '<div class="pn-meta-top"><span class="pn-meta-label">' + x.l + '</span><span class="pn-meta-val">' + x.f(x.real) + (x.meta ? ' / ' + x.f(x.meta) : '') + '</span></div>'
+        + '<div class="pn-track" title="' + x.l + ': ' + (x.meta ? pnPct(x.real / x.meta) + ' da meta' : 'sem meta') + ' · ritmo ideal hoje: ' + pnPct(esperado) + '">'
+        +   '<div class="pn-fill" style="width:' + (pct * 100) + '%"></div>'
+        +   (x.meta ? '<div class="pn-pace" style="left:calc(' + (esperado * 100) + '% - 1px)"></div>' : '')
+        + '</div>'
+        + '<div class="pn-meta-foot"><span>' + foot + '</span><span class="pn-badge ' + st.cls + '">' + st.txt + (x.meta ? ' · ' + pnPct(x.real / x.meta) : '') + '</span></div>'
+        + '</div>';
+    }).join('')
+    + (semMeta ? '' : '<div class="pn-legend"><i></i> marcador = onde você deveria estar hoje para bater a meta</div>');
+
+  // Atividade de hoje
+  document.getElementById('pn-hoje').innerHTML = ATIV.map(a =>
+    '<div class="pn-counter"><div class="pn-counter-n">' + (hoje[a.k] || 0) + '</div><div class="pn-counter-l">' + a.l + '</div>'
+    + '<div class="pn-counter-btns"><button onclick="pnAtiv(\'' + a.k + '\',-1)" aria-label="Remover ' + a.l + '">−</button><button class="plus" onclick="pnAtiv(\'' + a.k + '\',1)" aria-label="Adicionar ' + a.l + '">+</button></div></div>'
+  ).join('');
+  const contHoje = (hoje.ligacoes || 0) + (hoje.mensagens || 0);
+  const metaCont = pnNum(mt.contatosDia);
+  const seg = new Date(); seg.setDate(seg.getDate() - ((seg.getDay() + 6) % 7));
+  const atSem = pnSomaAtiv(d => d >= pnDia(seg) && d <= pnDia());
+  document.getElementById('pn-hoje-meta').innerHTML =
+    (metaCont ? '<div class="pn-meta"><div class="pn-meta-top"><span class="pn-meta-label">Contatos hoje (ligações + mensagens)</span><span class="pn-meta-val">' + contHoje + ' / ' + metaCont + '</span></div>'
+      + '<div class="pn-track"><div class="pn-fill" style="width:' + Math.min(contHoje / metaCont, 1) * 100 + '%;background:' + (contHoje >= metaCont ? '#2a6b4a' : '#b8963e') + '"></div></div>'
+      + '<div class="pn-meta-foot"><span>' + (contHoje >= metaCont ? '✓ Meta diária batida' : 'Faltam ' + (metaCont - contHoje) + ' contatos') + '</span></div></div>' : '')
+    + '<div style="font-size:12px;color:#888">Semana: <b>' + (atSem.ligacoes + atSem.mensagens) + '</b> contatos · <b>' + atSem.reunioes + '</b> reuniões · <b>' + atSem.propostas + '</b> propostas · <b>' + atSem.fechamentos + '</b> fechamentos</div>';
+
+  // Funil
+  const etapas = [
+    { l:'Contatos', n: atMes.ligacoes + atMes.mensagens },
+    { l:'Reuniões', n: atMes.reunioes },
+    { l:'Propostas', n: atMes.propostas },
+    { l:'Fechamentos', n: atMes.fechamentos }
+  ];
+  const max = Math.max(...etapas.map(e => e.n), 1);
+  document.getElementById('pn-funil').innerHTML = etapas.every(e => !e.n)
+    ? '<p class="pn-empty">Registre suas atividades em “Atividade de hoje” para ver o funil e as taxas de conversão.</p>'
+    : etapas.map((e, i) => {
+        const conv = i > 0 ? '<div class="pn-funil-conv">↳ ' + (etapas[i-1].n ? pnPct(e.n / etapas[i-1].n) : '—') + ' de conversão</div>' : '';
+        return conv + '<div class="pn-funil-row" title="' + e.l + ': ' + e.n + '"><span class="pn-funil-label">' + e.l + '</span><div><div class="pn-funil-bar" style="width:' + (e.n / max * 100) + '%"></div></div><span class="pn-funil-n">' + e.n + '</span></div>';
+      }).join('')
+      + (etapas[0].n && etapas[3].n ? '<div style="font-size:12px;color:#888;margin-top:8px">Você precisa de ~<b>' + Math.ceil(etapas[0].n / etapas[3].n) + ' contatos</b> para cada fechamento.</div>' : '');
+
+  // KPIs carteira
+  const lista = clientes.map(c => ({ c, d: pnCli(c.id) }));
+  const aucs = lista.map(x => pnNum(x.d.auc)).filter(n => n > 0).sort((a, b) => b - a);
+  const auc = aucs.reduce((s, n) => s + n, 0);
+  const top10 = aucs.slice(0, 10).reduce((s, n) => s + n, 0);
+  const contatados = lista.filter(x => { const d = pnDiasDesde(x.d.ultimoContato); return d !== null && d <= 30; }).length;
+  const receita = pnNum(re.receita);
+  const kpis = [
+    { l:'Custódia (AuC)', v: auc ? pnBrl(auc) : '—', h: aucs.length + ' de ' + clientes.length + ' clientes com patrimônio' },
+    { l:'Clientes', v: pnInt(clientes.length), h: 'cadastrados' },
+    { l:'Ticket médio', v: aucs.length ? pnBrl(auc / aucs.length) : '—', h: 'patrimônio por cliente' },
+    { l:'ROA anualizado', v: auc && receita ? pnPct(receita * 12 / auc) : '—', h: 'receita do mês × 12 ÷ AuC' },
+    { l:'Cobertura 30d', v: clientes.length ? pnPct(contatados / clientes.length) : '—', h: contatados + ' clientes contatados nos últimos 30 dias' },
+    { l:'Concentração top 10', v: auc ? pnPct(top10 / auc) : '—', h: 'do AuC nos 10 maiores clientes' }
+  ];
+  document.getElementById('pn-kpis').innerHTML = kpis.map(k =>
+    '<div class="pn-kpi"><div class="pn-kpi-l">' + k.l + '</div><div class="pn-kpi-v">' + k.v + '</div><div class="pn-kpi-h">' + k.h + '</div></div>'
+  ).join('');
+
+  // Quem contatar agora
+  const acoes = [];
+  lista.forEach(({ c, d }) => {
+    const valAuc = pnNum(d.auc);
+    if (d.vencimento) {
+      const ate = -pnDiasDesde(d.vencimento);
+      if (ate >= 0 && ate <= 30) acoes.push({ c, p: 0, ord: ate, ico:'💰', mot: 'Vencimento ' + (ate === 0 ? 'hoje' : 'em ' + ate + ' dia' + (ate > 1 ? 's' : '')) + (d.valorVenc ? ' · ' + pnBrl(pnNum(d.valorVenc)) : '') + ' — prepare a realocação' });
+    }
+    const aniv = pnDiasAteAniv(d.aniversario);
+    if (aniv !== null && aniv <= 7) acoes.push({ c, p: 1, ord: aniv, ico:'🎂', mot: 'Aniversário ' + (aniv === 0 ? 'hoje!' : 'em ' + aniv + ' dia' + (aniv > 1 ? 's' : '')) });
+    const dias = pnDiasDesde(d.ultimoContato);
+    if (dias === null || dias > 30) acoes.push({ c, p: 2, ord: -valAuc, ico:'📞', mot: (dias === null ? 'Nenhum contato registrado' : dias + ' dias sem contato') + (valAuc ? ' · ' + pnBrl(valAuc) + ' sob custódia' : '') });
+  });
+  acoes.sort((a, b) => a.p - b.p || a.ord - b.ord);
+  document.getElementById('pn-acoes').innerHTML = !acoes.length
+    ? '<p class="pn-empty">✓ Nenhuma pendência: carteira em dia.</p>'
+    : acoes.slice(0, 12).map(a =>
+        '<div class="pn-acao"><div class="pn-acao-ico">' + a.ico + '</div><div class="pn-acao-txt"><div class="pn-acao-nome">' + pnEsc(a.c.nomeCompleto) + '</div><div class="pn-acao-mot">' + pnEsc(a.mot) + '</div></div>'
+        + pnWa(a.c) + '<button class="pn-btn-sm" onclick="pnContatei(\'' + a.c.id + '\')">✓ Contatei</button></div>'
+      ).join('')
+      + (acoes.length > 12 ? '<div style="font-size:11px;color:#aaa;margin-top:8px">+ ' + (acoes.length - 12) + ' outras pendências</div>' : '');
+
+  // Carteira (só re-renderiza quando pedido, para não fechar o cliente em edição)
+  if (comCarteira !== false) {
+    const ord = lista.slice().sort((a, b) => pnNum(b.d.auc) - pnNum(a.d.auc));
+    document.getElementById('pn-carteira').innerHTML = !ord.length
+      ? '<p class="pn-empty">Cadastre clientes na aba 👥 Clientes.</p>'
+      : ord.map(({ c, d }) => {
+          const id = String(c.id).replace(/[^\w-]/g, '');
+          const inp = (campo, label, tipo) => '<div class="field"><label>' + label + '</label><input type="' + tipo + '" value="' + pnEsc(d[campo] || '') + '" onchange="pnSetCli(\'' + id + '\',\'' + campo + '\',this.value)"></div>';
+          return '<details class="pn-cli"' + (pnAbertos.has(id) ? ' open' : '') + ' ontoggle="pnToggle(\'' + id + '\',this)">'
+            + '<summary id="pn-cli-sum-' + id + '">' + pnResumoCli(c) + '</summary>'
+            + '<div class="pn-cli-body"><div class="g2">'
+            + inp('auc', 'Patrimônio sob custódia R$', 'number')
+            + inp('ultimoContato', 'Último contato', 'date')
+            + inp('aniversario', 'Aniversário', 'date')
+            + inp('vencimento', 'Próximo vencimento', 'date')
+            + inp('valorVenc', 'Valor que vence R$', 'number')
+            + '</div><div style="display:flex;gap:8px;margin-top:4px">' + pnWa(c) + '<button class="pn-btn-sm" onclick="pnContatei(\'' + id + '\')">✓ Registrar contato hoje</button></div></div>'
+            + '</details>';
+        }).join('');
+  }
+}
+
+function initPainel() {
+  carregarDash();
+  pnPreencherForm();
+  if (Object.values(dash.metas).every(x => !x)) document.getElementById('pn-metas-form').style.display = 'block';
+  renderPainel(true);
+}
+
 // ─── INIT ────────────────────────────────────
 initTeses();
 carregarLocal();
+initPainel();
 document.getElementById('fd-bench').addEventListener('change', function() {
   document.getElementById('fd-bench-label1').textContent = this.value + ' — 1 mês %';
   document.getElementById('fd-bench-label12').textContent = this.value + ' — 12 meses %';
