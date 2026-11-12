@@ -23,7 +23,7 @@
 | 09 | sex 27/11 | Quem estará à mesa | Apresentar o time |
 | 10 | seg 30/11 | Especialista: Cenários & Alocação | Autoridade |
 | 11 | seg 30/11 (à tarde) | Ecossistema | Cap. 7: quem faz o quê |
-| 12 | ter 01/12 | Especialista 2 (Wealth) | Autoridade |
+| 12 | ter 01/12 | Especialista: Wealth Planning (Isabella Magalhães) | Autoridade |
 | 13 | qua 02/12 | Véspera: logística | Confirmação |
 | 14 | qui 03/12 | É hoje | Lembrete final |
 | 15 | sex 04/12 | Obrigado | Pós-evento e próximo passo |
@@ -68,7 +68,7 @@
 > Ninguém protege um patrimônio sozinho. Investimentos, jurídico, tributário, internacional e proteção precisam conversar entre si. É isso que vamos fechar no jantar.
 
 **12 · 01/12 · Especialista 2**
-> E este é o [Nome], que vai trazer a parte de wealth planning: sucessão, tributação e estruturas. [1 frase pessoal.]
+> E quem vai conduzir a conversa de wealth planning é a Isabella Magalhães. Advogada com mais de uma década dedicada a patrimônio e estruturas de investimento de famílias de alta renda, no Brasil e no exterior. É mestre pelo Insper, pós-graduada em Planejamento Patrimonial e Sucessório pela FGV e certificada CFP. Sucessão, offshore e holdings são o dia a dia dela.
 
 **13 · 02/12 · Véspera**
 > Amanhã é o nosso jantar! Seguem os detalhes 👇 Qualquer coisa, me chama. Confirmado?

@@ -27,6 +27,8 @@ window.EVENTO = {
     { nome: "[Nome do especialista]", papel: "Cenários & Alocação", cargo: "Investor · XP Investimentos · CNPI e CGA",
       bio: "Economista pelo Insper, com mais de 11 anos de mercado. Passou pelas tesourarias do Haitong e do Scotiabank, pela Estratégia de Alocação em Renda Fixa do Bradesco Private Bank e estruturou o Research de Renda Fixa da Genial. Há mais de 3 anos na XP, desenha estratégias de alocação para investidores de alta renda.",
       foto: "fotos/especialista-cenarios.jpg" },
-    { nome: "[Especialista Wealth]", papel: "Wealth Planning",   cargo: "[Planejador patrimonial]",   bio: "[1 linha: sucessão, tributário, offshore]", foto: "" },
+    { nome: "Isabella Magalhães", papel: "Wealth Planning", cargo: "Advogada · Patrimonial e Sucessório · CFP e CGA",
+      bio: "Especializada em gestão de patrimônio e estruturas de investimento no Brasil e no exterior, com foco em famílias UHNW. Mestre (LL.M.) em Direito dos Mercados Financeiro e de Capitais pelo Insper e pós-graduada em Planejamento Patrimonial e Sucessório pela FGV. Atua com fundos exclusivos, offshores e trusts em múltiplas jurisdições.",
+      foto: "fotos/especialista-wealth.jpg" },
   ],
 };
