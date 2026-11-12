@@ -46,7 +46,7 @@ const capa = `<section class="pg y">
     <p style="margin-top:40px;font-size:40px;font-weight:600">Jantar reservado · 5 convidados<br>03 de dezembro · Joinville/SC</p>
     <p style="margin-top:50px;max-width:820px">Série de ${items.length} pílulas enviadas pelo WhatsApp de 13/11 a 04/12. A narrativa vai do mundo ao Brasil, do Brasil à família, e da família à mesa.</p>
     <div class="arc"><div>Cenários</div><div>Wealth Planning</div><div>Ecossistema</div><div>A mesa</div></div>
-    <p style="margin-top:60px;font-size:22px;opacity:.7">Campos tracejados = informações a confirmar (nomes, local, endereço).</p>
+    <p style="margin-top:60px;font-size:26px;font-weight:600">Anfitriões: Luiz Calfat e Glaucio Gonçalves<br>Santa Mistura · 20h</p>
   </div></section>`;
 const cal = `<section class="pg" id="cal">
   <div class="k">Arquitetura de datas</div>

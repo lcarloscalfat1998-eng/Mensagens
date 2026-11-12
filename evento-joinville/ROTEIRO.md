@@ -35,7 +35,7 @@
 ## Textos de WhatsApp
 
 **01 · 13/11 · Save the date**
-> [Nome], tudo bem? O [Cliente] e eu estamos organizando um jantar reservado em Joinville no dia **3 de dezembro**, para apenas 5 convidados. Uma conversa franca sobre o cenário que vem por aí e o que ele significa para o patrimônio da sua família. Gostaria muito de contar com você. Nas próximas semanas, vou te mandar algumas pílulas do que vamos discutir. Posso reservar seu lugar?
+> [Nome], tudo bem? O Glaucio e eu estamos organizando um jantar reservado em Joinville no dia **3 de dezembro**, para apenas 5 convidados. Uma conversa franca sobre o cenário que vem por aí e o que ele significa para o patrimônio da sua família. Gostaria muito de contar com você. Nas próximas semanas, vou te mandar algumas pílulas do que vamos discutir. Posso reservar seu lugar?
 
 **02 · 16/11 · A agenda**
 > A noite terá três blocos: **cenários** (geopolítico, macro e Brasil), **wealth planning** (sucessão, tributação, offshore e holdings) e o **ecossistema** que integra tudo isso. Do mundo à mesa. 🍷
