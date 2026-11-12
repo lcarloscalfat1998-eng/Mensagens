@@ -65,7 +65,9 @@ h1 em{font-style:normal;color:var(--gold)}
 .person .role{font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-top:8px}
 .person .nm{font-size:32px;font-weight:700}
 .person .cg{font-size:23px;color:var(--muted)}
-.spot .av{width:300px;height:300px;font-size:104px}
+.spot .av{width:340px;height:340px;font-size:104px}
+.people .av{background-size:160%;background-position:50% 8%}
+.spot-bio{font-size:29px;line-height:1.45;margin-top:22px;color:var(--muted);font-weight:400}
 .info{margin-top:56px;display:grid;grid-template-columns:200px 1fr;gap:26px 20px;font-size:32px}
 .info dt{color:var(--gold);letter-spacing:.18em;text-transform:uppercase;font-size:21px;font-weight:700;padding-top:8px}
 .tbd{border:2px dashed rgba(255,199,9,.7);border-radius:6px;padding:0 .25em;color:inherit;opacity:.9;white-space:nowrap}
@@ -164,10 +166,10 @@ const cards = [
     <div class="people">${E.pessoas.map(p=>`<div class="person">${av(p)}<div class="role">${p.papel}</div><div class="nm">${p.nome}</div><div class="cg">${p.cargo}</div></div>`).join("")}</div>`},
   ...specialists.map((p,i)=>({id:`10${"abcdefg"[i]}-especialista-${i+1}`, date:i===0?"2026-11-30":"2026-12-01", tag:"Quem estará à mesa", body:`
     <div class="kicker">${p.papel}</div>
-    <div class="spot" style="margin-top:60px">${av(p)}</div>
-    <h1 style="font-size:96px;margin-top:50px">${p.nome}</h1>
-    <p class="lead gold" style="margin-top:16px;font-weight:500">${p.cargo}</p>
-    <p class="lead muted" style="margin-top:24px">${p.bio}</p>`})),
+    <div class="spot" style="margin-top:44px">${av(p)}</div>
+    <h1 style="font-size:80px;margin-top:40px">${p.nome}</h1>
+    <p class="lead gold" style="margin-top:14px;font-weight:600;font-size:30px">${p.cargo}</p>
+    <p class="spot-bio">${p.bio}</p>`})),
   {id:"11-ecossistema", date:"2026-11-30", cap:7, tag:"Ecossistema", body:`
     <div class="kicker">Análise do ecossistema</div>
     <h1>Ninguém protege um patrimônio <em>sozinho.</em></h1>

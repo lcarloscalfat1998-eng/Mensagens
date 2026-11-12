@@ -21,7 +21,7 @@
 | 07 | qua 25/11 | Offshore | Cap. 5: o patrimônio fora do Brasil |
 | 08 | qui 26/11 | Holdings | Cap. 6: a estrutura |
 | 09 | sex 27/11 | Quem estará à mesa | Apresentar o time |
-| 10 | seg 30/11 | Especialista 1 (Cenários) | Autoridade |
+| 10 | seg 30/11 | Especialista: Cenários & Alocação | Autoridade |
 | 11 | seg 30/11 (à tarde) | Ecossistema | Cap. 7: quem faz o quê |
 | 12 | ter 01/12 | Especialista 2 (Wealth) | Autoridade |
 | 13 | qua 02/12 | Véspera: logística | Confirmação |
@@ -62,7 +62,7 @@
 > Quero te apresentar quem vai estar com a gente no dia 3. Um time pequeno, escolhido a dedo para os temas da noite.
 
 **10 · 30/11 · Especialista 1**
-> Este é o [Nome], que vai conduzir a conversa sobre cenários. [1 frase pessoal sobre por que você o convidou.]
+> Quero te apresentar o [Nome], que vai conduzir a conversa sobre cenários no jantar. Economista pelo Insper, com mais de 11 anos de mercado: passou pelas tesourarias do Haitong e do Scotiabank, pelo Bradesco Private Bank e pela Genial. Há mais de 3 anos está na XP, desenhando estratégias de alocação para investidores de alta renda. Vai ser uma conversa muito rica.
 
 **11 · 30/11 · Ecossistema**
 > Ninguém protege um patrimônio sozinho. Investimentos, jurídico, tributário, internacional e proteção precisam conversar entre si. É isso que vamos fechar no jantar.

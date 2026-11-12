@@ -24,7 +24,9 @@ window.EVENTO = {
   pessoas: [
     { nome: "[Seu Nome]",            papel: "Anfitrião",         cargo: "[Seu cargo]",                bio: "[1 linha: experiência e foco de atuação]", foto: "" },
     { nome: "[Nome do Cliente]",     papel: "Anfitrião",         cargo: "[Cargo / empresa]",          bio: "[1 linha sobre o cliente que apresenta os convidados]", foto: "" },
-    { nome: "[Especialista Macro]",  papel: "Cenários",          cargo: "[Economista / Estrategista]", bio: "[1 linha: formação, onde atua, diferencial]", foto: "" },
+    { nome: "[Nome do especialista]", papel: "Cenários & Alocação", cargo: "Investor · XP Investimentos · CNPI e CGA",
+      bio: "Economista pelo Insper, com mais de 11 anos de mercado. Passou pelas tesourarias do Haitong e do Scotiabank, pela Estratégia de Alocação em Renda Fixa do Bradesco Private Bank e estruturou o Research de Renda Fixa da Genial. Há mais de 3 anos na XP, desenha estratégias de alocação para investidores de alta renda.",
+      foto: "fotos/especialista-cenarios.jpg" },
     { nome: "[Especialista Wealth]", papel: "Wealth Planning",   cargo: "[Planejador patrimonial]",   bio: "[1 linha: sucessão, tributário, offshore]", foto: "" },
   ],
 };
