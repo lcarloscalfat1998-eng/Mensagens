@@ -195,6 +195,7 @@ const cards = [
     <div class="kicker">Obrigado pela noite</div>
     <h1>A conversa <em>continua.</em></h1>
     <p class="lead">Foi um prazer receber você em Joinville. Nos próximos dias, envio um resumo dos principais pontos e fico à disposição para aprofundarmos o seu caso — com calma, e sob medida.</p>
+    <p style="margin-top:40px;font-size:32px;font-weight:800">${E.pessoas[0].nome}<br><span style="font-weight:500;font-size:26px">${E.pessoas[0].cargo}</span></p>
     <div class="question">Do mundo à mesa — e da mesa ao seu plano.</div>`},
 ];
 cards.sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id));

@@ -22,7 +22,9 @@ window.EVENTO = {
   // Pessoas que estarão à mesa (anfitriões + especialistas que você vai levar).
   // foto: caminho opcional, ex. "fotos/carlos.jpg" (quadrada). Sem foto = iniciais.
   pessoas: [
-    { nome: "[Seu Nome]",            papel: "Anfitrião",         cargo: "[Seu cargo]",                bio: "[1 linha: experiência e foco de atuação]", foto: "" },
+    { nome: "Luiz Calfá", papel: "Anfitrião", cargo: "Banker · XP Investimentos",
+      bio: "Advogado formado pelo Mackenzie, com 5 anos de carreira em M&A. Há 3 anos é banker na XP Investimentos, cuidando do patrimônio de famílias e empresários.",
+      foto: "fotos/luiz-calfa.jpg" },
     { nome: "[Nome do Cliente]",     papel: "Anfitrião",         cargo: "[Cargo / empresa]",          bio: "[1 linha sobre o cliente que apresenta os convidados]", foto: "" },
     { nome: "[Nome do especialista]", papel: "Cenários & Alocação", cargo: "Investor · XP Investimentos · CNPI e CGA",
       bio: "Economista pelo Insper, com mais de 11 anos de mercado. Passou pelas tesourarias do Haitong e do Scotiabank, pela Estratégia de Alocação em Renda Fixa do Bradesco Private Bank e estruturou o Research de Renda Fixa da Genial. Há mais de 3 anos na XP, desenha estratégias de alocação para investidores de alta renda.",
