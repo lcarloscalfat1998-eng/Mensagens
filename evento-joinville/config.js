@@ -23,7 +23,7 @@ window.EVENTO = {
     { nome: "Luiz Calfat", titulo: "Anfitrião", papel: "Anfitrião", cargo: "Banker · XP Investimentos", slug: "luiz-calfat",
       bio: "Advogado formado pelo Mackenzie, com 5 anos de carreira em M&A. Há 3 anos é banker na XP Investimentos, cuidando do patrimônio de famílias e empresários.",
       foto: "fotos/luiz-calfat.jpg" },
-    { nome: "Glaucio Gonçalves", titulo: "Anfitrião", papel: "Anfitrião", cargo: "Diretor Comercial · Softdata Hub de Tecnologia", slug: "glaucio-goncalves",
+    { nome: "Glaucio Gonçalves", titulo: "Anfitrião · Abertura", papel: "Anfitrião", cargo: "Diretor Comercial · Softdata Hub de Tecnologia", slug: "glaucio-goncalves",
       bio: "", foto: "fotos/glaucio-goncalves.jpg" },
     { nome: "André Torres", titulo: "Economista", papel: "Cenários & Alocação", cargo: "XP Investimentos · CNPI e CGA", slug: "economista-andre-torres",
       bio: "Formado pelo Insper, com mais de 11 anos de mercado. Passou pelas tesourarias do Haitong e do Scotiabank, pela Estratégia de Alocação em Renda Fixa do Bradesco Private Bank e estruturou o Research de Renda Fixa da Genial. Há mais de 3 anos na XP, desenha estratégias de alocação para investidores de alta renda.",

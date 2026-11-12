@@ -16,6 +16,7 @@ A série tem 15 envios e vai do mais amplo ao mais pessoal: **o mundo → o Bras
 - Cada pílula de conteúdo termina com uma pergunta que será respondida no jantar.
 - A barra de progresso no topo e a contagem regressiva no rodapé mostram ao convidado que ele acompanha uma história com data marcada.
 - Os anfitriões e os convidados especiais são apresentados na reta final, depois que os temas criaram interesse.
+- A abertura é do Glaucio Gonçalves, anfitrião que reuniu os convidados; é ele quem dá as boas-vindas.
 - O fechamento é o ecossistema XP em 360°: o cliente no centro, escolhendo, e todos os serviços da XP ao redor dele.
 
 **Formato das imagens:** PNG 1080×1350 (vertical 4:5), ideal para WhatsApp. Os arquivos já estão nomeados na ordem de envio (`01_13-11_…` até `15_04-12_…`).
@@ -27,7 +28,7 @@ A série tem 15 envios e vai do mais amplo ao mais pessoal: **o mundo → o Bras
 | # | Data | Horário sugerido | Peça | Objetivo |
 |---|------|------|------|----------|
 | 01 | sex 13/11 | 9h | Save the date | Convite e exclusividade |
-| 02 | seg 16/11 | 8h30 | A agenda | Apresentar os três blocos da noite |
+| 02 | seg 16/11 | 8h30 | A agenda | Abertura do anfitrião e os três blocos da noite |
 | 03 | qua 18/11 | 8h30 | Geopolítica & Macro | Cap. 1: o mundo |
 | 04 | sex 20/11 | 8h30 | Brasil político & econômico | Cap. 2: o país |
 | 05 | seg 23/11 | 8h30 | Sucessão | Cap. 3: a família |
@@ -49,10 +50,10 @@ A série tem 15 envios e vai do mais amplo ao mais pessoal: **o mundo → o Bras
 ## Textos de WhatsApp
 
 **01 · 13/11 · Save the date**
-> Olá, tudo bem? O Glaucio Gonçalves e eu estamos organizando um jantar reservado em Joinville no dia **3 de dezembro**, para apenas cinco convidados. Será uma conversa franca sobre os cenários que vêm pela frente e o que eles significam para o patrimônio da sua família. Será um prazer contar com a sua presença. Nas próximas semanas, compartilho por aqui algumas pílulas dos temas da noite. Posso reservar o seu lugar?
+> Olá, tudo bem? A convite do Glaucio Gonçalves, estamos organizando um jantar reservado em Joinville no dia **3 de dezembro**, para apenas cinco convidados. Será uma conversa franca sobre os cenários que vêm pela frente e o que eles significam para o patrimônio da sua família. Será um prazer contar com a sua presença. Nas próximas semanas, compartilho por aqui algumas pílulas dos temas da noite. Posso reservar o seu lugar?
 
 **02 · 16/11 · A agenda**
-> A noite terá três blocos: **cenários** (geopolítico, macro global e Brasil), com o economista André Torres; **wealth planning** (sucessão, tributação, offshore e holdings), com a advogada Isabella Magalhães; e o **ecossistema XP**, com uma visão 360° em que você está no centro de tudo. Do mundo à mesa.
+> A noite começa com as boas-vindas do nosso anfitrião, Glaucio Gonçalves, e segue em três blocos: **cenários** (geopolítico, macro global e Brasil), com o economista André Torres; **wealth planning** (sucessão, tributação, offshore e holdings), com a advogada Isabella Magalhães; e o **ecossistema XP**, com uma visão 360° em que você está no centro de tudo. Do mundo à mesa.
 
 **03 · 18/11 · Geopolítica & Macro**
 > Primeira pílula: o mundo mudou de regime. Juros globais, tarifas e conflitos deixaram de ser notícia e passaram a ser variáveis de portfólio. No dia 3, vamos discutir o que isso significa na prática.
@@ -73,7 +74,7 @@ A série tem 15 envios e vai do mais amplo ao mais pessoal: **o mundo → o Bras
 > Holding não é moda, é arquitetura. Bem desenhada, organiza e protege o patrimônio. Feita de prateleira, pode custar caro. No jantar, vamos compartilhar casos reais, sempre preservando a confidencialidade.
 
 **09 · 27/11 · Quem estará à mesa**
-> Quero apresentar quem estará com a gente no dia 3: o Glaucio Gonçalves e eu como anfitriões, e dois convidados especiais escolhidos para os temas da noite. Nos próximos dias, apresento cada um deles.
+> Quero apresentar quem estará com a gente no dia 3. O Glaucio Gonçalves, nosso anfitrião, abre a noite. Eu conduzo o encontro ao lado de dois convidados especiais, escolhidos a dedo para os temas da noite. Nos próximos dias, apresento cada um deles.
 
 **10 · 30/11 · Economista: André Torres**
 > Apresento o André Torres, economista que conduzirá a conversa sobre cenários. Formado pelo Insper, tem mais de 11 anos de mercado, com passagens pelas tesourarias do Haitong e do Scotiabank, pelo Bradesco Private Bank e pela Genial. Há mais de três anos na XP, desenha estratégias de alocação para investidores de alta renda.
@@ -91,7 +92,7 @@ A série tem 15 envios e vai do mais amplo ao mais pessoal: **o mundo → o Bras
 > É hoje! Às 20h, no Santa Mistura. Nos vemos à mesa.
 
 **15 · 04/12 · Obrigado**
-> Muito obrigado pela presença ontem, foi um prazer receber você. Nos próximos dias, envio um resumo dos principais pontos da noite. Que tal reservarmos 30 minutos para olharmos o seu caso com calma?
+> Muito obrigado pela presença ontem, foi um prazer receber você. Um agradecimento especial ao Glaucio Gonçalves pela generosidade de abrir a mesa. Nos próximos dias, envio um resumo dos principais pontos da noite. Que tal reservarmos 30 minutos para olharmos o seu caso com calma?
 
 ---
 

@@ -54,11 +54,12 @@ h1 em{font-style:normal;color:var(--gold)}
 .stat{display:flex;align-items:center;gap:30px;margin-top:40px}
 .stat .v{font-size:130px;color:var(--gold);line-height:1;font-weight:900;letter-spacing:-.05em}
 .stat .l{font-size:28px;line-height:1.35;max-width:520px;color:var(--muted)}
-.pillars{display:grid;grid-template-columns:1fr;gap:22px;margin-top:56px}
-.pillar{background:var(--ink2);border-left:6px solid var(--gold);padding:30px 36px;display:grid;grid-template-columns:110px 1fr;align-items:center}
+.pillars{display:grid;grid-template-columns:1fr;gap:18px;margin-top:44px}
+.pillar{background:var(--ink2);border-left:6px solid var(--gold);padding:24px 36px;display:grid;grid-template-columns:110px 1fr;align-items:center}
 .pillar .r{font-size:64px;font-weight:900;color:var(--gold)}
 .pillar b{font-size:36px;display:block;font-weight:700}
 .pillar span{font-size:26px;color:var(--muted);line-height:1.4}
+.pillar.open{background:var(--gold);color:#000;border-left-color:#000}.pillar.open .r{color:#000;font-size:48px}.pillar.open span,.pillar.open .by{color:#000}
 .pillar .by{font-style:normal;color:var(--cream);font-weight:600}
 .people{display:grid;grid-template-columns:1fr 1fr;gap:44px 40px;margin-top:56px}
 .person{display:flex;flex-direction:column;gap:10px}
@@ -132,6 +133,7 @@ const cards = [
     <div class="kicker">O roteiro da noite</div>
     <h1>Do mundo<br><em>à sua mesa.</em></h1>
     <div class="pillars">
+      <div class="pillar open"><div class="r">◆</div><div><b>Abertura</b><span>Boas-vindas e palavra do anfitrião<br><em class="by">com ${E.pessoas[1].nome}</em></span></div></div>
       <div class="pillar"><div class="r">I</div><div><b>Cenários</b><span>Geopolítico · Macro global · Brasil<br><em class="by">com ${byPapel("Cenários & Alocação")}</em></span></div></div>
       <div class="pillar"><div class="r">II</div><div><b>Wealth Planning</b><span>Sucessão · Tributação · Offshore · Holdings<br><em class="by">com ${byPapel("Wealth Planning")}</em></span></div></div>
       <div class="pillar"><div class="r">III</div><div><b>Ecossistema XP</b><span>Visão 360°: você no centro de tudo<br><em class="by">com ${E.pessoas[0].nome}</em></span></div></div>
@@ -202,6 +204,7 @@ const cards = [
     <div class="kicker">Obrigado pela noite</div>
     <h1>A conversa <em>continua.</em></h1>
     <p class="lead">Foi um prazer receber você em Joinville. Nos próximos dias, envio um resumo dos principais pontos da noite e fico à disposição para aprofundarmos o seu caso, com calma e sob medida.</p>
+    <p class="lead" style="margin-top:24px">Um agradecimento especial ao ${E.pessoas[1].nome}, nosso anfitrião, pela generosidade de abrir a mesa e reunir pessoas tão especiais.</p>
     <p style="margin-top:40px;font-size:32px;font-weight:800">${E.pessoas[0].nome}<br><span style="font-weight:500;font-size:26px">${E.pessoas[0].cargo}</span></p>
     <div class="question">Do mundo à mesa — e da mesa ao seu plano.</div>`},
 ];
