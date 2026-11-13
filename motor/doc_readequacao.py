@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import datetime as dt
+import re
 
 from .readequacao import DECISAO, Plano
+from .dados import sem_acento
 from .render import brl, pct
 
 CORES = {
@@ -19,6 +21,7 @@ CORES = {
     "Internacional": "#4f8fd6",
     "Cripto": "#a65bd6",
     "Renda variável Brasil": "#5aa66e",
+    "COE": "#8f6bd6",
     "Outros": "#262626",
 }
 
@@ -176,14 +179,46 @@ def contexto(plano: Plano, entrada: dict | None = None) -> dict:
         txt = "A venda parcial reenquadra a carteira no limite por emissor."
         if perdas:
             txt += f" Atenção: {', '.join(a.posicao.nome.split(' - ')[0] for a in perdas)} está com perda de marcação, e a venda realiza parte dela. Se preferir, o estouro pode ficar só registrado."
+        isentos_aj = [a for a in ajustes if re.match(r"(cra|cri|lca|lci|lcd)\b", sem_acento(a.posicao.nome))]
+        if isentos_aj:
+            txt += " O título vendido é isento de IR, e o fundo de destino é tributado: a ideia é que esse valor volte aos poucos para isentos de outros emissores (etapa 3), mantendo a isenção sem concentrar risco."
         cards.append({"titulo": "Ajuste de enquadramento", "texto": txt})
     if resgates:
         cards.append({"titulo": "Prazos de resgate", "texto": "Fundos de crédito privado costumam ter resgate em D+30 ou mais, e fundos internacionais têm prazo próprio. O dinheiro chega ao fundo de destino em datas diferentes."})
     if vendas:
         cards.append({"titulo": "Venda de títulos", "texto": "As vendas foram consideradas pelo valor de posição de hoje. O preço no mercado secundário pode ser diferente."})
 
+    sai = []
+    if resgates:
+        sai.append(f"{len(resgates)} fundo{'s' if len(resgates) > 1 else ''}")
+    if vendas:
+        sai.append(f"{len(vendas)} título{'s' if len(vendas) > 1 else ''}")
+    n_aj = len({a.posicao.nome for a in ajustes})
+    if sai:
+        sai_big = " + ".join(sai)
+        sai_sub = (f"{n_aj} venda{'s' if n_aj > 1 else ''} parcial para enquadramento" if n_aj else "")
+    elif n_aj:
+        sai_big = f"{n_aj} venda{'s' if n_aj > 1 else ''} parcial"
+        sai_sub = "para enquadrar na política de risco"
+    else:
+        sai_big, sai_sub = "Nada", "carteira enquadrada na política"
+    if fechados:
+        sai_sub = (sai_sub + " · " if sai_sub else "") + "fechados saem conforme liberar"
+    objetivos = []
+    if resgates or fechados:
+        objetivos.append("tirar fundos replicáveis ou sem função na carteira")
+    if vendas:
+        objetivos.append("sair de emissores com crédito em deterioração")
+    if ajustes or plano.estouros_antes:
+        objetivos.append("enquadrar a carteira na política de risco")
+    if not objetivos:
+        objetivos.append("revisar o risco e a liquidez da carteira")
+    n = len(objetivos)
+    obj_txt = ("Revisão das posições com " + ("um objetivo: " if n == 1 else ("dois objetivos: " if n == 2 else "três objetivos: "))
+               + (", ".join(objetivos[:-1]) + " e " if n > 1 else "") + objetivos[-1] + ".")
     return {
         "titulo": plano.carteira.titulo or "Readequação da carteira",
+        "sai_big": sai_big, "sai_sub": sai_sub, "objetivos": obj_txt,
         "data_posicao": plano.carteira.data_posicao,
         "plano": plano,
         "janela": (ini, fim),
@@ -210,13 +245,22 @@ def contexto(plano: Plano, entrada: dict | None = None) -> dict:
 def mensagem(ctx: dict) -> str:
     """Texto curto para WhatsApp/e-mail."""
     p = ctx["plano"]
+    motivos = []
+    if p.ajustes:
+        motivos.append("enquadrar a concentração por emissor na nossa política de risco")
+    if p.acoes_de("resgatar"):
+        motivos.append("substituir fundos que renderam abaixo do DI")
+    if p.acoes_de("vender"):
+        motivos.append("sair de emissores com crédito em deterioração")
     linhas = [
         "Olá! Segue a proposta de readequação da sua carteira.",
         "",
         f"Resumo: sugerimos concentrar {brl(p.valor_destino_agora)} no {p.destino_nome.split(' FI')[0]}, "
         f"reduzindo o crédito privado de {pct(p.credito_antes/p.total_antes,0)} para {pct(p.credito_depois/p.total_depois,0)} do patrimônio.",
     ]
-    if ctx["dest"]:
+    if motivos:
+        linhas.append("O objetivo é " + ", ".join(motivos[:-1]) + (" e " if len(motivos) > 1 else "") + motivos[-1] + ".")
+    if ctx["dest"] and ctx["fundos"]:
         linhas.append(f"Nos últimos 12 meses, esse fundo rendeu {pct(ctx['dest']['retorno'])} ({pct(ctx['dest']['pct_cdi'],1)} do CDI), mais que os fundos de crédito que saem.")
     linhas += ["", "O documento completo está em anexo. Fico à disposição para conversarmos."]
     return "\n".join(linhas)

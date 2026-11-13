@@ -8,14 +8,14 @@
   <header class="head">
     <div class="eyebrow">Proposta de readequação · redução de risco</div>
     <h1>Readequação <span class="x">da carteira</span></h1>
-    <p>Revisão das posições com três objetivos: tirar fundos replicáveis ou sem função na carteira, sair de emissores com crédito em deterioração e enquadrar a carteira na política de risco. Os recursos vão para o {{ p.destino_nome }}, base para uma estratégia de médio prazo com ajustes ao longo do tempo.</p>
+    <p>{{ objetivos }} Os recursos vão para o {{ p.destino_nome }}, base para uma estratégia de médio prazo com ajustes ao longo do tempo.</p>
     <div class="meta"><span>Patrimônio <b>{{ p.total_antes | brl(True) }}</b></span><span>Posição de <b>{{ data_posicao | data }}</b></span><span>Rentabilidades <b>{{ janela_ini_mes | mes_longo }} a {{ janela[1] | mes_longo }}</b></span></div>
   </header>
 
   <div class="verdict">
     <div class="v d"><span class="k">Para o fundo de destino agora</span><span class="big">{{ p.valor_destino_agora | brl }}</span><span class="sub">{{ (p.valor_destino_agora / p.total_antes) | pct(1) }} do patrimônio{% if fechados %} · {{ p.valor_destino_total | brl }} com os fundos fechados{% endif %}</span></div>
     <div class="v"><span class="k">Crédito privado no patrimônio</span><span class="big"><s>{{ (p.credito_antes / p.total_antes) | pct(0) }}</s> → {{ (p.credito_depois / p.total_depois) | pct(0) }}</span><span class="sub">de {{ p.credito_antes | brl }} para {{ p.credito_depois | brl }}</span></div>
-    <div class="v"><span class="k">O que sai</span><span class="big">{{ n_fundos }} fundo{{ 's' if n_fundos != 1 }}{% if n_titulos %} + {{ n_titulos }} título{{ 's' if n_titulos != 1 }}{% endif %}</span><span class="sub">{% if n_ajustes %}{{ n_ajustes }} venda{{ 's' if n_ajustes != 1 }} parcial para enquadramento{% if fechados %} · {% endif %}{% endif %}{% if fechados %}fechados saem conforme liberar{% endif %}{% if not n_ajustes and not fechados %}carteira enquadrada na política{% endif %}</span></div>
+    <div class="v"><span class="k">O que sai</span><span class="big">{{ sai_big }}</span><span class="sub">{{ sai_sub }}</span></div>
   </div>
 
   {% if tese.texto or tese.pontos %}
@@ -105,7 +105,7 @@
       {% endfor %}
       </tbody>
     </table></div>
-    <p class="note">"Depois" considera os resgates e vendas da primeira etapa. O patrimônio passa para {{ p.total_depois | brl }} por causa do IR de {{ p.ir | brl }} pago nos resgates.</p>
+    <p class="note">"Depois" considera os resgates e vendas da primeira etapa. {% if p.ir > 0.5 %}O patrimônio passa para {{ p.total_depois | brl }} por causa do IR de {{ p.ir | brl }} pago nos resgates.{% endif %}{% if grupos | selectattr('nome', 'equalto', 'COE') | list %} COE fica fora da análise e segue até o vencimento.{% endif %}</p>
   </section>
 
   <section class="pb">

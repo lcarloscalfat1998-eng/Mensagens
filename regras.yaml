@@ -68,6 +68,10 @@ fundos_conhecidos:
   - {padrao: "az-axs energia", cnpj: 61.258.419/0001-32, setor: Energia}
   - {padrao: "newave energia i advisory - classe a - fip", cnpj: 46.153.220/0001-56, setor: Energia}
   - {padrao: "trend pe xvi", tipo_fundo: renda_fixa, fechado: false}
+  - {padrao: "xp corporate light", cnpj: 11.046.179/0001-34}
+  - {padrao: "xp bancos fic", cnpj: 50.088.190/0001-19}
+  - {padrao: "tg renda urbana feeder", cnpj: 60.513.922/0001-24, setor: Imobiliário}
+  - {padrao: "trend investback", tipo_fundo: renda_fixa, fechado: false}
   - {padrao: "xpag11", nome: "XP Crédito Agro (XPAG11)", tipo_fundo: fiagro, fechado: true, setor: Agronegócio}
 
 # Emissores de crédito privado: setor (nicho) e situação.
@@ -118,6 +122,11 @@ emissores:
     setor: Imobiliário
     status: manter
     nota: Empresa pública do DF.
+  - padrao: armac
+    emissor: Armac
+    setor: Locação de máquinas
+    status: manter
+    nota: Rating AA-(bra) pela Fitch (set/26) e AA.br pela Moody's (abr/26), ambos estáveis. Alavancagem subiu de 2,36x para 2,50x no 2T26.
   - padrao: btg
     emissor: BTG Pactual
     setor: Financeiro

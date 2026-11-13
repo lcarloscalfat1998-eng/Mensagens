@@ -26,6 +26,7 @@ GRUPOS = [
     "Internacional",
     "Cripto",
     "Renda variável Brasil",
+    "COE",
     "Outros",
 ]
 
@@ -130,7 +131,7 @@ def classificar(p: Posicao, regras: dict) -> Posicao:
     ignorar = set(regras.get("compliance", {}).get("ignorar", []))
 
     if p.tipo == "coe" or n.startswith("coe"):
-        p.categoria, p.grupo = ("ignorado" if "coe" in ignorar else "outros"), "Outros"
+        p.categoria, p.grupo = ("ignorado" if "coe" in ignorar else "outros"), "COE"
         return p
     if p.tipo == "renda_variavel":
         p.categoria, p.grupo = "renda_variavel", "Renda variável Brasil"
