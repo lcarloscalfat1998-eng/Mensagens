@@ -1,0 +1,17 @@
+# Proposta de carteira nova: projeção líquida de IR por cenário de CDI
+titulo: Carteira de R$ 300 mil
+titulo_html: Carteira de <span class="x">R$ 300 mil</span>
+horizonte_anos: 3
+vencimento_label: nov/2029
+ativos:
+  # tipo: cdi (taxa = % do CDI) | pre (taxa = % a.a.). taxa "historico" usa o % do CDI dos últimos 12 meses (CVM)
+  - {nome: XP CDI 94 CRA I Fiagro, cnpj: 69.198.825/0001-69, valor: 100000, tipo: cdi, taxa: 0.94, isento: true, liquidez: Cotas em bolsa, fgc: false}
+  - {nome: XP Liquidez, cnpj: 51.488.342/0001-33, valor: 100000, tipo: cdi, taxa: historico, isento: false, liquidez: Diária, fgc: false}
+  - {nome: LCA Banco ASA, id: Vencimento 2029, valor: 50000, tipo: cdi, taxa: 0.93, isento: true, liquidez: No vencimento, fgc: true}
+  - {nome: CDB XP prefixado, id: Vencimento 2029, valor: 50000, tipo: pre, taxa: 0.15, isento: false, liquidez: No vencimento, fgc: true}
+cenarios:
+  - {nome: Mantido, cdi: atual}
+  - {nome: Queda gradual, cdi: 0.12}
+  - {nome: Queda forte, cdi: 0.105}
+observacoes:
+  - "XP CDI 94 CRA I Fiagro: rendimentos isentos de IR para pessoa física, observadas as condições da legislação. 94% do CDI é o objetivo do fundo, não uma garantia."

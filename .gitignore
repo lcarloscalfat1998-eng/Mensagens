@@ -1,0 +1,5 @@
+.cache/
+saidas/
+clientes/
+__pycache__/
+*.pyc
