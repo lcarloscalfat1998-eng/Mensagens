@@ -1,0 +1,135 @@
+<title>{{ titulo }}</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>{{ css_base | safe }}</style>
+{% set p = plano %}
+<div class="wrap">
+  <header class="head">
+    <div class="eyebrow">Proposta de readequação · redução de risco</div>
+    <h1>Readequação <span class="x">da carteira</span></h1>
+    <p>Revisão das posições com três objetivos: tirar fundos replicáveis ou sem função na carteira, sair de emissores com crédito em deterioração e enquadrar a carteira na política de risco. Os recursos vão para o {{ p.destino_nome }}, base para uma estratégia de médio prazo com ajustes ao longo do tempo.</p>
+    <div class="meta"><span>Patrimônio <b>{{ p.total_antes | brl(True) }}</b></span><span>Posição de <b>{{ data_posicao | data }}</b></span><span>Rentabilidades <b>{{ janela_ini_mes | mes_longo }} a {{ janela[1] | mes_longo }}</b></span></div>
+  </header>
+
+  <div class="verdict">
+    <div class="v d"><span class="k">Para o fundo de destino agora</span><span class="big">{{ p.valor_destino_agora | brl }}</span><span class="sub">{{ (p.valor_destino_agora / p.total_antes) | pct(1) }} do patrimônio{% if fechados %} · {{ p.valor_destino_total | brl }} com os fundos fechados{% endif %}</span></div>
+    <div class="v"><span class="k">Crédito privado no patrimônio</span><span class="big"><s>{{ (p.credito_antes / p.total_antes) | pct(0) }}</s> → {{ (p.credito_depois / p.total_depois) | pct(0) }}</span><span class="sub">de {{ p.credito_antes | brl }} para {{ p.credito_depois | brl }}</span></div>
+    <div class="v"><span class="k">O que sai</span><span class="big">{{ n_fundos }} fundo{{ 's' if n_fundos != 1 }}{% if n_titulos %} + {{ n_titulos }} título{{ 's' if n_titulos != 1 }}{% endif %}</span><span class="sub">{% if n_ajustes %}{{ n_ajustes }} venda{{ 's' if n_ajustes != 1 }} parcial para enquadramento{% if fechados %} · {% endif %}{% endif %}{% if fechados %}fechados saem conforme liberar{% endif %}{% if not n_ajustes and not fechados %}carteira enquadrada na política{% endif %}</span></div>
+  </div>
+
+  {% if tese.texto or tese.pontos %}
+  <section class="thesis">
+    <div class="eyebrow">Por que readequar</div>
+    <h2>{{ tese.titulo | safe }}</h2>
+    {% if tese.texto %}<p>{{ tese.texto }}</p>{% endif %}
+    {% if tese.pontos %}<div class="pts">{% for pt in tese.pontos %}<div class="pt"><h3>{{ pt.titulo }}</h3><p>{{ pt.texto }}</p></div>{% endfor %}</div>{% endif %}
+  </section>
+  {% endif %}
+
+  {% if fundos %}
+  <section class="pb">
+    <h2>Fundos que saem</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Fundo</th><th>Valor líquido</th><th>12 meses</th><th>% CDI</th><th>Volatilidade</th><th>Maior queda</th><th>Motivo</th></tr></thead>
+      <tbody>
+      {% for f in fundos %}
+        <tr><td><div class="fn">{{ f.nome }}{% if f.fechado %} <span class="tag">fechado</span>{% endif %}</div><div class="cnpj">{% if f.cnpj %}CNPJ {{ f.cnpj }}{% endif %}</div></td>
+          <td>{{ f.valor | brl }}</td>
+          {% if f.s %}
+          <td class="{{ 'neg' if f.s.retorno < 0 }}">{{ f.s.retorno | pct }}</td>
+          <td>{% if f.s.retorno < 0 %}<span class="neg">negativo</span>{% else %}{{ f.s.pct_cdi | pct(1) }}{% endif %}</td>
+          <td>{{ f.s.vol | pct }}</td><td class="{{ 'neg' if f.s.mdd < -0.01 }}">{{ f.s.mdd | pct }}</td>
+          {% else %}<td class="muted">–</td><td class="muted">–</td><td class="muted">–</td><td class="muted">–</td>{% endif %}
+          <td class="why">{{ f.motivo }}</td></tr>
+      {% endfor %}
+        <tr class="tot"><td><div class="fn">Total resgatado agora</div></td><td>{{ total_resgates | brl }}</td><td colspan="5" class="why">Valor líquido, já descontado o IR de {{ p.ir | brl }} sobre os fundos tributados.{% if fechados %} Fundos fechados não entram neste total.{% endif %}</td></tr>
+        {% if dest %}
+        <tr class="ref"><td><div class="fn">{{ p.destino_nome }} <span class="pill dest">destino</span></div><div class="cnpj">CNPJ {{ p.destino_cnpj }}</div></td>
+          <td>{{ p.valor_destino_agora | brl }}</td><td>{{ dest.retorno | pct }}</td><td>{{ dest.pct_cdi | pct(1) }}</td><td>{{ dest.vol | pct }}</td><td>{{ dest.mdd | pct }}</td><td class="why">Referência para os resgates.</td></tr>
+        {% endif %}
+      </tbody>
+    </table></div>
+    <p class="note">Rentabilidade, volatilidade e maior queda calculadas pelas cotas diárias da CVM, de {{ (dest.ini if dest else janela[0]) | data }} a {{ (dest.fim if dest else janela[1]) | data }}. CDI no período (Banco Central): {{ cdi | pct }}. Fundos fechados (FIDC, FIP) não publicam cota diária nessa base.</p>
+  </section>
+  {% endif %}
+
+  {% if creditos %}
+  <section class="pb">
+    <h2>Revisão do crédito privado</h2>
+    <p>Para cada emissor, olhamos alavancagem, rating e direção do crédito. Títulos públicos e bancários com FGC ficam fora desta análise e seguem na carteira.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Ativo</th><th>Posição</th><th>Vs. aplicado</th><th>Situação do emissor</th><th>Decisão</th></tr></thead>
+      <tbody>
+      {% for c in creditos %}
+        <tr><td><div class="fn">{{ c.nome }}</div><div class="cnpj">{{ c.taxa or '' }}{% if c.venc %} · venc. {{ c.venc }}{% endif %}</div></td>
+          <td>{{ c.posicao | brl }}</td><td class="{{ 'neg' if c.resultado is not none and c.resultado < -0.005 }}">{{ c.resultado | pct(1) }}</td>
+          <td class="why wide">{{ c.nota }}</td><td><span class="rec {{ c.cls }}">{{ c.rotulo }}</span></td></tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    <p class="note">"Vs. aplicado" compara a posição de hoje com o valor investido. Nos títulos que ficam, a diferença costuma vir da marcação a mercado (juros) e é recuperada se o título for levado até o vencimento.</p>
+  </section>
+  {% endif %}
+
+  <section class="pb">
+    <h2>Enquadramento na política de risco</h2>
+    <p>Limites sobre o patrimônio total: crédito privado até {{ (plano.regras.compliance.limite_emissor) | pct(0) }} por emissor, até {{ (plano.regras.compliance.limite_nicho) | pct(0) }} por nicho e fundos fechados até {{ (plano.regras.compliance.limite_fundo_fechado) | pct(0) }} cada. Títulos públicos, bancários com FGC e fundos abertos ficam fora do limite por emissor.</p>
+    {% for bloco in enq %}{% if bloco.rows %}
+    <div class="tbl"><table>
+      <thead><tr><th>{{ bloco.titulo }}</th><th>Antes</th><th>Depois</th><th>Limite</th><th>Situação</th></tr></thead>
+      <tbody>
+      {% for r in bloco.rows %}
+        <tr><td>{{ r.chave }}</td><td class="{{ 'neg' if r.antes > bloco.limite + 0.00001 }}">{{ r.antes | pct(1) }}</td><td>{{ r.depois | pct(1) }}</td><td class="muted">{{ bloco.limite | pct(0) }}</td>
+          <td>{% if r.depois > bloco.limite + 0.00001 %}<span class="rec sell">Acima</span>{% elif r.antes > bloco.limite + 0.00001 %}<span class="rec watch">Enquadrado</span>{% else %}<span class="rec keep">Dentro</span>{% endif %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    {% endif %}{% endfor %}
+    {% if estouros_depois %}<p class="note">Itens ainda acima do limite não têm liquidez para ajuste imediato e ficam sinalizados para acompanhamento.</p>{% endif %}
+  </section>
+
+  <section class="pb">
+    <h2>Antes e depois</h2>
+    <div class="ba">
+      <div class="ba-row"><span>Antes</span><div class="stack">{% for g in grupos %}{% if g.antes > 0 %}<i style="flex:{{ g.antes|round|int }};background:{{ g.cor }}" title="{{ g.nome }}"></i>{% endif %}{% endfor %}</div></div>
+      <div class="ba-row"><span>Depois</span><div class="stack">{% for g in grupos %}{% if g.depois > 0 %}<i style="flex:{{ g.depois|round|int }};background:{{ g.cor }}" title="{{ g.nome }}"></i>{% endif %}{% endfor %}</div></div>
+      <div class="legend">{% for g in grupos %}{% if g.nome != 'Outros' %}<span><i class="dot" style="background:{{ g.cor }}"></i>{{ g.nome }}</span>{% endif %}{% endfor %}</div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Classe</th><th>Antes</th><th>%</th><th>Depois</th><th>%</th><th>Variação</th></tr></thead>
+      <tbody>
+      {% for g in grupos %}
+        <tr><td><span class="dot" style="background:{{ g.cor }}"></span>{{ g.nome }}</td><td>{{ g.antes | brl }}</td><td>{{ g.pa | pct(1) }}</td><td>{{ g.depois | brl }}</td><td>{{ g.pd | pct(1) }}</td>
+          <td class="{{ 'up' if g.delta > 1 else ('down' if g.delta < -1 else '') }}">{% if g.delta > 1 %}+{{ g.delta | brl }}{% elif g.delta < -1 %}{{ g.delta | brl }}{% else %}–{% endif %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    <p class="note">"Depois" considera os resgates e vendas da primeira etapa. O patrimônio passa para {{ p.total_depois | brl }} por causa do IR de {{ p.ir | brl }} pago nos resgates.</p>
+  </section>
+
+  <section class="pb">
+    <h2>Estratégia de médio prazo</h2>
+    <div class="steps">
+      {% for e in etapas %}<div class="step"><span class="when">{{ e.quando }}</span><h3>{{ e.titulo }}</h3><ul>{% for i in e.itens %}<li>{{ i | safe }}</li>{% endfor %}</ul></div>{% endfor %}
+    </div>
+  </section>
+
+  {% if cards %}
+  <section>
+    <h2>Pontos de atenção</h2>
+    <div class="cards">{% for c in cards %}<div class="card"><h3>{{ c.titulo }}</h3><p>{{ c.texto }}</p></div>{% endfor %}</div>
+  </section>
+  {% endif %}
+
+  <footer class="method">
+    <h2>Fontes e observações</h2>
+    <ul>
+      <li>Posições e valores líquidos da posição consolidada de {{ data_posicao | data }}.</li>
+      <li>Rentabilidades dos fundos calculadas pelas cotas do Informe Diário da CVM; CDI diário do Banco Central (série SGS 12).</li>
+      <li>Situação dos emissores conforme a lista de acompanhamento de crédito da assessoria (ratings e resultados divulgados).</li>
+      <li>Equivalente bruto dos fundos isentos calculado com IR de 15%.</li>
+      <li>{{ textos.aviso_legal }}</li>
+    </ul>
+  </footer>
+</div>

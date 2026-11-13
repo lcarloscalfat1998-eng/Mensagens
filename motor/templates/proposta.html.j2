@@ -1,0 +1,118 @@
+<title>Proposta de Carteira</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>{{ css_base | safe }}
+.alloc{display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px}
+.alloc i{display:block}
+.ctrl{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.ctrl-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px}
+.ctrl label{font-weight:600}
+.ctrl .val{font-family:var(--display);font-size:24px;font-weight:800;color:var(--acc);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13px;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:6px 12px;cursor:pointer}
+.chip:hover{border-color:var(--acc)}
+.chip[aria-pressed="true"]{background:var(--acc);color:#0a0a0a;border-color:var(--acc);font-weight:600}
+.chip:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.hint{font-size:13px;color:var(--muted);margin:0}
+</style>
+{% set cores = ['#ffc709', '#c9a12a', '#8a8a8a', '#e6e6e6', '#5aa66e', '#4f8fd6', '#a65bd6'] %}
+<div class="wrap">
+  <header class="head">
+    <div class="eyebrow">{{ eyebrow }}</div>
+    <h1>{{ titulo_html | safe }}</h1>
+    <p>{{ descricao }}</p>
+    <div class="alloc" aria-hidden="true">{% for a in ativos %}<i style="flex:{{ a.valor|round|int }};background:{{ cores[loop.index0 % 7] }}"></i>{% endfor %}</div>
+    <div class="legend">{% for a in ativos %}<span><i class="dot" style="background:{{ cores[loop.index0 % 7] }}"></i>{{ a.nome }} · {{ a.valor | brl }}</span>{% endfor %}</div>
+  </header>
+
+  <div class="verdict">
+    <div class="v"><span class="k">Rentabilidade líquida</span><span class="big" id="k-rate">–</span><span class="sub" id="k-rate-sub">–</span></div>
+    <div class="v"><span class="k">Saldo líquido em {{ vencimento }}</span><span class="big" id="k-final">–</span><span class="sub" id="k-gain">–</span></div>
+    <div class="v d"><span class="k">Vs. 100% do CDI tributado</span><span class="big" id="k-diff">–</span><span class="sub" id="k-diff-sub">–</span></div>
+  </div>
+
+  <div class="ctrl">
+    <div class="ctrl-top"><label for="cdi">CDI médio até {{ vencimento }}</label><span class="val" id="cdi-val">–</span></div>
+    <input type="range" id="cdi" min="6" max="18" step="0.05" value="{{ '%.2f' % (cdi_atual*100) }}">
+    <div class="chips" role="group" aria-label="Cenários de CDI">{% for c in cenarios %}<button class="chip" data-v="{{ '%.2f' % (c.cdi*100) }}" type="button">{{ c.nome }}: {{ c.cdi | pct }}</button>{% endfor %}</div>
+    <p class="hint">Hoje a Selic está em {{ selic | pct }} ao ano e o CDI em {{ cdi_atual | pct }}. Mova a barra para ver a carteira em outros cenários de juros.</p>
+  </div>
+
+  <section>
+    <h2>Ativos da carteira</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Ativo</th><th>Valor</th><th>Taxa</th><th>Equiv. bruta*</th><th>Líquido a.a.</th><th>Saldo líquido</th><th>Liquidez</th><th>FGC</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <p class="note">* Taxa que um investimento tributado (IR de 15%) precisaria pagar para entregar o mesmo valor líquido.</p>
+  </section>
+
+  <section>
+    <h2>A carteira em cada cenário de juros</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>CDI médio</th><th>Carteira proposta</th><th>100% do CDI tributado</th><th>Diferença</th></tr></thead>
+      <tbody>{% for t in tabela_cen %}<tr><td>{{ t.nome }} · {{ t.cdi | pct }}</td><td class="hl">{{ t.fin | brl }}</td><td>{{ t.bench | brl }}</td><td>{{ '+' if t.dif >= 0 }}{{ t.dif | brl }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+    <p class="note">Valores líquidos de IR em {{ vencimento }}, para {{ total | brl }}.</p>
+  </section>
+
+  <section class="pb">
+    <h2>Papel de cada ativo</h2>
+    <div class="cards">{% for a in ativos %}<div class="card"><h3>{{ a.nome }}{% if a.isento %} · isento{% endif %}</h3><p>{{ a.papel }}</p></div>{% endfor %}</div>
+  </section>
+
+  <footer class="method">
+    <h2>Premissas e observações</h2>
+    <ul>
+      <li>Projeção de {{ '%g' % anos }} anos, com 252 dias úteis por ano e o CDI médio constante no período, conforme o cenário escolhido.</li>
+      <li>IR de 15% no resgate para os ativos tributados (prazo acima de 2 anos). O come-cotas semestral de fundos foi desconsiderado.</li>
+      <li>LCA, LCI e CDB contam com a garantia do FGC até R$ 250 mil por CPF e por instituição. Fundos e Fiagros não têm essa garantia.</li>
+      <li>CDI e Selic do Banco Central. Rentabilidade de fundos calculada pelas cotas da CVM.</li>
+      {% for o in observacoes %}<li>{{ o }}</li>{% endfor %}
+      <li>{{ aviso }}</li>
+    </ul>
+  </footer>
+</div>
+<script>
+(function(){
+  const D = {{ js | safe }};
+  const N = D.anos, DU = Math.round(252 * N), IR = D.ir, A = D.ativos;
+  const total = A.reduce((s,a)=>s+a.valor,0);
+  const fmtP = (x,d=2)=> (x*100).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})+'%';
+  const fmtR = x => 'R$ ' + Math.round(x).toLocaleString('pt-BR');
+  const gross = (a,c) => a.tipo==='pre' ? Math.pow(1+a.taxa,N)-1 : Math.pow(1+a.taxa*(Math.pow(1+c,1/252)-1),DU)-1;
+  const net = (a,c) => { const g = gross(a,c); return a.isento ? g : g*(1-IR); };
+  const ann = x => Math.pow(1+x,1/N)-1;
+  const cdiNet = c => (Math.pow(1+c,N)-1)*(1-IR);
+  const slider = document.getElementById('cdi');
+  function render(){
+    const c = parseFloat(slider.value)/100;
+    document.getElementById('cdi-val').textContent = fmtP(c) + ' a.a.';
+    document.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed', Math.abs(parseFloat(b.dataset.v)-c*100)<0.001 ? 'true':'false'));
+    const fin = A.reduce((s,a)=>s+a.valor*(1+net(a,c)),0), r = fin/total-1, ra = ann(r);
+    const bench = total*(1+cdiNet(c)), diff = fin-bench;
+    document.getElementById('k-rate').textContent = fmtP(ra) + ' a.a.';
+    document.getElementById('k-rate-sub').textContent = fmtP(ra/c,1) + ' do CDI, já sem IR · equivale a ' + fmtP(ra/(1-IR)) + ' bruto';
+    document.getElementById('k-final').textContent = fmtR(fin);
+    document.getElementById('k-gain').textContent = fmtR(fin-total) + ' de rendimento líquido';
+    document.getElementById('k-diff').textContent = (diff>=0?'+':'−') + fmtR(Math.abs(diff));
+    document.getElementById('k-diff-sub').textContent = '100% do CDI tributado chegaria a ' + fmtR(bench);
+    let rows='';
+    A.forEach(a=>{
+      const n = net(a,c);
+      const rate = a.tipo==='pre' ? fmtP(a.taxa) + ' a.a.' : fmtP(a.taxa,1) + ' CDI';
+      const eq = a.tipo==='pre' ? fmtP(a.taxa) + ' a.a.' : (a.isento ? fmtP(a.taxa/(1-IR),1) : fmtP(a.taxa,1)) + ' CDI';
+      rows += '<tr><td><div class="fn">'+a.nome+(a.isento?' <span class="pill free">isento</span>':'')+'</div><div class="cnpj">'+(a.id||'')+'</div></td>'+
+        '<td>'+fmtR(a.valor)+'</td><td>'+rate+'</td><td>'+eq+'</td><td>'+fmtP(ann(n))+'</td><td class="hl">'+fmtR(a.valor*(1+n))+'</td><td>'+(a.liquidez||'')+'</td><td>'+(a.fgc?'Sim':'Não')+'</td></tr>';
+    });
+    rows += '<tr class="tot"><td><div class="fn">Carteira</div></td><td>'+fmtR(total)+'</td><td></td><td>'+fmtP(ra/(1-IR))+' a.a.</td><td>'+fmtP(ra)+'</td><td>'+fmtR(fin)+'</td><td></td><td></td></tr>';
+    rows += '<tr class="cur"><td><div class="fn">Referência: 100% do CDI tributado</div></td><td>'+fmtR(total)+'</td><td>100% CDI</td><td>100% CDI</td><td>'+fmtP(ann(cdiNet(c)))+'</td><td>'+fmtR(bench)+'</td><td></td><td></td></tr>';
+    document.getElementById('rows').innerHTML = rows;
+  }
+  slider.addEventListener('input',render);
+  document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{slider.value=b.dataset.v;render();}));
+  render();
+})();
+</script>

@@ -1,0 +1,21 @@
+# Estudo comparativo: carteira proposta de fundos x fundo atual
+titulo: Carteira proposta × Trend Pós II
+eyebrow: Estudo de previdência · comparativo de 12 meses
+valor: 1000000
+meses: 12
+data_ref: 2026-11-13          # opcional: a janela termina no último mês fechado antes desta data
+proposta:
+  - {cnpj: 58.943.835/0001-65, peso: 0.45, nome: Giant Cash FIF RF}
+  - {cnpj: 36.352.610/0001-00, peso: 0.50, nome: XP Crédito Estruturado Seguros Prev}
+  - {cnpj: 30.998.045/0001-68, peso: 0.05, nome: Adam XP Seguros Prev I}
+atual: {cnpj: 35.420.532/0001-62, nome: Trend Pós II}
+tese:                          # opcional
+  titulo: Um ano difícil para bater a Selic, e mesmo assim a proposta <em>ganhou</em>
+  texto: Os últimos 12 meses foram de juros muito altos e de mercado mais volátil. Nesse cenário, um fundo pós-fixado puro, que basicamente acompanha a Selic, é o adversário mais difícil de superar.
+  pontos:
+    - {titulo: Selic arrefecendo, texto: "O fundo atual rende a Selic e nada além disso. Com os juros em trajetória de queda, o retorno dele cai na mesma proporção."}
+    - {titulo: Curva de juros fechando, texto: "Com a queda das taxas futuras, crédito e multimercados tendem a se valorizar. É um ganho que um fundo puro Selic não captura."}
+    - {titulo: Prêmio do crédito, texto: "O crédito estruturado paga um prêmio acima do CDI. Com o CDI menor, esse prêmio passa a pesar mais no retorno total da carteira."}
+  conclusao: Em tese, com Selic mais baixa e curva fechando, a tendência é que a carteira proposta amplie a vantagem sobre o fundo atual.
+observacoes:
+  - "Giant Cash: o CNPJ 58.943.835/0001-65 é o fundo Giant Cash FIF RF. A versão previdenciária começou em 28/09/2026 e ainda não tem 12 meses de histórico; por isso o estudo usa o Giant Cash como referência da estratégia."

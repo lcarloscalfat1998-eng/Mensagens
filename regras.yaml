@@ -1,0 +1,143 @@
+# Regras da casa: tudo que o motor aplica a todas as carteiras.
+# Edite este arquivo para mudar o comportamento do motor. Valores em fração (0.05 = 5%).
+
+versao: 2026-11-13
+
+compliance:
+  # Base de cálculo de todos os limites: patrimônio total do cliente.
+  limite_emissor: 0.05          # crédito privado: máximo por emissor
+  limite_nicho: 0.15            # máximo por setor do devedor (agro, imobiliário...)
+  limite_fundo_fechado: 0.10    # FIDC, FIP, FII, Fiagro: máximo por fundo
+  fgc_por_instituicao: 250000   # bancários com FGC ficam fora do limite até este valor por banco
+  # Categorias que NÃO contam no limite por emissor
+  excecoes_emissor: [titulo_publico, bancario_fgc, quase_soberano, fundo_aberto]
+  # O que fazer quando um limite estoura: sugerir_ajuste | alertar
+  acao_estouro: sugerir_ajuste
+  # Produtos ignorados pelo motor (não vendemos)
+  ignorar: [coe]
+
+# Fundo que recebe os recursos dos resgates e vendas
+destino_padrao:
+  nome: XP Referenciado DI FIF RF CP
+  cnpj: 10.843.445/0001-97
+
+# Fundos que saem sempre que aparecerem numa carteira
+fundos_substituir:
+  - cnpj: 35.789.436/0001-96
+    nome: ARX Everest Advisory FIC FIF RF CP
+    motivo: Crédito privado que rendeu abaixo do CDI. Replicável com menos risco.
+  - cnpj: 41.888.492/0001-80
+    nome: ARX Vinson Advisory FIC FIF RF CP
+    motivo: Crédito privado que rendeu abaixo do CDI. Replicável com menos risco.
+  - cnpj: 31.455.879/0001-90
+    nome: Polo Crédito Corporativo Advisory FIC FIF RF CP LP
+    motivo: Crédito corporativo abaixo do CDI. Replicável.
+  - cnpj: 18.623.722/0001-68
+    nome: Safra Debêntures Incentivadas CP
+    motivo: Isento, mas rendeu abaixo do DI mesmo considerando a isenção.
+  - cnpj: 55.994.151/0001-02
+    nome: XP Debêntures Incentivadas IMA-B 5 CP Infra
+    motivo: Isento, mas rendeu abaixo do DI mesmo considerando a isenção.
+  - cnpj: 33.913.562/0001-85
+    nome: MS Global Opportunities Dólar Advisory FIC FIA IE
+    motivo: Readequação da exposição global.
+  - cnpj: 36.986.672/0001-65
+    nome: Hashdex Bitcoin FIM
+    motivo: Cripto com alta volatilidade e sem função na carteira.
+  - cnpj: 61.885.788/0001-55
+    nome: Itaú Crédito Estruturado Advisory Alpes III FIDC
+    motivo: Crédito estruturado replicável. Fundo fechado, sai pelas amortizações.
+
+# Fundos reconhecidos pelo nome (quando a posição não traz CNPJ).
+# 'padrao' é procurado no nome da posição, sem acentos e sem diferenciar maiúsculas.
+# 'setor' faz o fundo contar no limite por nicho (use só para fundos de um setor só).
+fundos_conhecidos:
+  - {padrao: "xp referenciado", cnpj: 10.843.445/0001-97}
+  - {padrao: "xp liquidez", cnpj: 51.488.342/0001-33}
+  - {padrao: "arx everest", cnpj: 35.789.436/0001-96}
+  - {padrao: "arx vinson", cnpj: 41.888.492/0001-80}
+  - {padrao: "polo credito corporativo", cnpj: 31.455.879/0001-90}
+  - {padrao: "safra debentures incentivadas", cnpj: 18.623.722/0001-68}
+  - {padrao: "xp debentures incentivadas", cnpj: 55.994.151/0001-02}
+  - {padrao: "ms global opportunities", cnpj: 33.913.562/0001-85}
+  - {padrao: "hashdex bitcoin", cnpj: 36.986.672/0001-65}
+  - {padrao: "absolute atenas advisory", cnpj: 48.096.589/0001-08}
+  - {padrao: "alpes iii", cnpj: 61.885.788/0001-55}
+  - {padrao: "root capital figueira", cnpj: 57.271.402/0001-48}
+  - {padrao: "xp credit opportunities", cnpj: 53.779.703/0001-26}
+  - {padrao: "az-axs energia", cnpj: 61.258.419/0001-32, setor: Energia}
+  - {padrao: "newave energia i advisory - classe a - fip", cnpj: 46.153.220/0001-56, setor: Energia}
+  - {padrao: "trend pe xvi", tipo_fundo: renda_fixa, fechado: false}
+  - {padrao: "xpag11", nome: "XP Crédito Agro (XPAG11)", tipo_fundo: fiagro, fechado: true, setor: Agronegócio}
+
+# Emissores de crédito privado: setor (nicho) e situação.
+# status: manter | monitorar | vender | sem_liquidez | quase_soberano | bancario
+emissores:
+  - padrao: oncoclinicas
+    emissor: Oncoclínicas
+    setor: Saúde
+    status: sem_liquidez
+    nota: Fitch rebaixou para RD(bra) em abr/26 (default restrito). Sem liquidez para venda; acompanhamos a reestruturação com os credores.
+  - padrao: corsan
+    emissor: Corsan (Aegea)
+    setor: Saneamento
+    status: vender
+    nota: Grupo Aegea com alavancagem de 4,5x. Rebaixado em 2026 por S&P (B), Moody's (B2, em revisão) e Fitch.
+  - padrao: minerva
+    emissor: Minerva
+    setor: Agronegócio
+    status: monitorar
+    nota: Alavancagem de 2,9x no 2T26, em processo de desalavancagem.
+  - padrao: movida
+    emissor: Movida
+    setor: Locação de veículos
+    status: monitorar
+    nota: Alavancagem de 3,1x e rating AA+.br (Moody's Local). Vencimentos concentrados a partir de 2027.
+  - padrao: "enauta|brava"
+    emissor: Brava Energia (Enauta)
+    setor: Óleo e gás
+    status: manter
+    nota: Alavancagem caiu para 1,97x. S&P elevou para brAA com perspectiva positiva.
+  - padrao: jbs
+    emissor: JBS
+    setor: Agronegócio
+    status: manter
+    nota: Emissor de grande porte, com grau de investimento global.
+  - padrao: suzano
+    emissor: Suzano
+    setor: Papel e celulose
+    status: manter
+    nota: Grau de investimento global. Risco de crédito baixo.
+  - padrao: "equatorial|celg"
+    emissor: Equatorial
+    setor: Energia
+    status: manter
+    nota: Distribuidora de energia do grupo Equatorial. Setor regulado.
+  - padrao: terracap
+    emissor: Terracap
+    setor: Imobiliário
+    status: manter
+    nota: Empresa pública do DF.
+  - padrao: btg
+    emissor: BTG Pactual
+    setor: Financeiro
+    status: manter
+    nota: Risco BTG Pactual.
+  - padrao: bndes
+    emissor: BNDES
+    setor: Financeiro
+    status: quase_soberano
+  - padrao: original
+    emissor: Banco Original
+    setor: Financeiro
+    status: bancario
+
+# Textos-padrão usados nos documentos
+textos:
+  exposicao_global: O resgate faz parte de uma readequação da exposição global, que será reestruturada dentro da estratégia da carteira.
+  sem_liquidez: O título não tem liquidez para venda e segue na carteira. Vamos acompanhar a reestruturação da dívida com os credores e avaliar as alternativas conforme o processo avançar.
+  etapa3:
+    - Usar o fundo de destino como base e sair dele <b>aos poucos</b>.
+    - Priorizar <b>isentos de bons emissores</b> (LCA, LCD, CRA/CRI de grau de investimento) e <b>títulos públicos</b>.
+    - Travar taxas prefixadas e IPCA+ conforme a curva de juros.
+  aviso_legal: Rentabilidade passada não é garantia de rentabilidade futura. Fundos de investimento não contam com garantia do administrador, do gestor, de mecanismo de seguro ou do FGC. Esta é uma sugestão e deve ser avaliada de acordo com o perfil e os objetivos do investidor.

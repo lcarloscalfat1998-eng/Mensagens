@@ -1,0 +1,82 @@
+<title>Estudo Comparativo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>{{ css_base | safe }}</style>
+<div class="wrap">
+  <header class="head">
+    <div class="eyebrow">{{ eyebrow }}</div>
+    <h1>{{ titulo | replace(' × ', ' <span class="x">×</span> ') | safe }}</h1>
+    <p>Simulação do patrimônio de {{ valor | brl }} aplicado na carteira proposta, comparado com a manutenção no fundo atual, no período de {{ ini | data }} a {{ fim | data }}.</p>
+    <div class="meta"><span>Valor simulado <b>{{ valor | brl }}</b></span><span>Período <b>{{ ini_mes | mes_longo }} a {{ fim | mes_longo }}</b></span><span>Fonte <b>cotas oficiais CVM</b></span></div>
+  </header>
+
+  <div class="verdict">
+    <div class="v"><span class="k">Carteira proposta</span><span class="big">{{ P12 | pct }}</span><span class="sub">{{ pcdi_p | pct(1) }} do CDI · saldo {{ (valor * (1 + P12)) | brl }}</span></div>
+    <div class="v c"><span class="k">{{ atual.nome }} (atual)</span><span class="big">{{ A12 | pct }}</span><span class="sub">{{ pcdi_a | pct(1) }} do CDI · saldo {{ (valor * (1 + A12)) | brl }}</span></div>
+    <div class="v d"><span class="k">Diferença no período</span><span class="big">{{ dif_txt }} p.p.</span><span class="sub">≈ {{ (valor * dif) | brl }} {{ 'a mais' if dif >= 0 else 'a menos' }} no período</span></div>
+  </div>
+
+  {% if tese %}
+  <section class="thesis">
+    <div class="eyebrow">Ponto importante</div>
+    <h2>{{ tese.titulo | safe }}</h2>
+    {% if tese.texto %}<p>{{ tese.texto }}</p>{% endif %}
+    {% if tese.pontos %}<div class="pts">{% for pt in tese.pontos %}<div class="pt"><h3>{{ pt.titulo }}</h3><p>{{ pt.texto }}</p></div>{% endfor %}</div>{% endif %}
+    {% if tese.conclusao %}<p class="concl">{{ tese.conclusao }}</p>{% endif %}
+    <p class="disc">{{ tese.aviso or 'Expectativa baseada no cenário econômico, sem garantia de rentabilidade futura.' }}</p>
+  </section>
+  {% endif %}
+
+  <section>
+    <h2>Rentabilidade acumulada</h2>
+    <div class="legend"><span><i class="sw" style="background:var(--acc)"></i>Carteira proposta</span><span><i class="sw" style="background:var(--cur)"></i>{{ atual.nome }} (atual)</span><span><i class="sw" style="background:var(--cdi)"></i>CDI ({{ cdi12 | pct }})</span></div>
+    <div class="chartbox">{{ grafico | safe }}</div>
+  </section>
+
+  <section class="pb">
+    <h2>Composição da carteira proposta</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Fundo</th><th>Peso</th><th>Aplicação</th><th>12 meses</th><th>% CDI</th><th>Volatilidade</th><th>Maior queda</th><th>Saldo final</th></tr></thead>
+      <tbody>
+      {% for f in proposta %}
+        <tr><td><div class="fn">{{ f.nome }}</div><div class="cnpj">CNPJ {{ f.cnpj }}</div></td><td>{{ f.peso | pct(0) }}</td><td>{{ f.aplic | brl }}</td>
+          <td>{{ f.r | pct }}</td><td>{{ f.pcdi | pct(1) }}</td><td>{{ f.s.vol | pct }}</td><td>{{ f.s.mdd | pct }}</td><td>{{ f.final | brl }}</td></tr>
+      {% endfor %}
+        <tr class="tot"><td><div class="fn">Carteira proposta</div></td><td>100%</td><td>{{ valor | brl }}</td><td>{{ P12 | pct }}</td><td>{{ pcdi_p | pct(1) }}</td><td>{{ vol_p | pct }}</td><td>{{ mdd_p | pct }}</td><td>{{ (valor * (1 + P12)) | brl }}</td></tr>
+        <tr class="cur"><td><div class="fn">{{ atual.nome }} <span class="tag">atual</span></div><div class="cnpj">CNPJ {{ atual.cnpj }}</div></td><td>100%</td><td>{{ valor | brl }}</td>
+          <td>{{ A12 | pct }}</td><td>{{ pcdi_a | pct(1) }}</td><td>{{ atual.s.vol | pct }}</td><td>{{ atual.s.mdd | pct }}</td><td>{{ (valor * (1 + A12)) | brl }}</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Volatilidade anualizada a partir das cotas diárias. Maior queda é a perda máxima entre um pico e o vale seguinte dentro do período.</p>
+
+    <h2>Mês a mês</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Mês</th>{% for f in proposta %}<th>{{ f.nome.split(' ')[:3] | join(' ') }}<br>{{ f.peso | pct(0) }}</th>{% endfor %}<th>Proposta</th><th>Atual</th><th>CDI</th></tr></thead>
+      <tbody>
+      {% for t in tabela %}
+        <tr><td>{{ t.mes }}</td>{% for x in t.fundos %}<td class="{{ 'neg' if x < 0 }}">{{ x | pct }}</td>{% endfor %}
+          <td class="hl {{ 'up' if t.ganhou }}">{{ t.p | pct }}</td><td>{{ t.a | pct }}</td><td class="muted">{{ t.c | pct }}</td></tr>
+      {% endfor %}
+        <tr class="tot"><td>{{ tabela|length }} meses</td>{% for f in proposta %}<td>{{ f.r | pct }}</td>{% endfor %}<td class="hl">{{ P12 | pct }}</td><td>{{ A12 | pct }}</td><td class="muted">{{ cdi12 | pct }}</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Destaque amarelo: meses em que a carteira proposta rendeu mais que o fundo atual.</p>
+  </section>
+
+  <section class="pb">
+    <h2>Leitura do resultado</h2>
+    <div class="cards">{% for l in leituras %}<div class="card"><h3>{{ l.titulo }}</h3><p>{{ l.texto }}</p></div>{% endfor %}</div>
+  </section>
+
+  <footer class="method">
+    <h2>Metodologia e observações</h2>
+    <ul>
+      <li>Rentabilidades calculadas a partir das cotas diárias informadas à CVM (Informe Diário), entre {{ ini | data }} e {{ fim | data }}. Valores líquidos de taxas e brutos de imposto de renda.</li>
+      <li>CDI diário oficial do Banco Central (série SGS 12): {{ cdi12 | pct }} no período.</li>
+      <li>Simulação sem rebalanceamento: o valor é aplicado no início do período nos pesos da proposta e mantido até o fim.</li>
+      {% for o in observacoes %}<li>{{ o }}</li>{% endfor %}
+      <li>{{ aviso }}</li>
+    </ul>
+  </footer>
+</div>

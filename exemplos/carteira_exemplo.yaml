@@ -1,0 +1,25 @@
+# Carteira FICTÍCIA para teste do motor (valores inventados).
+# Dados reais de clientes ficam na pasta clientes/, que não vai para o GitHub.
+titulo: Readequação da carteira
+data_posicao: 2026-11-12
+patrimonio_total: 1000000      # opcional: patrimônio total da posição consolidada
+posicoes:
+  # Títulos: tipo é detectado pelo nome (NTN, LCA, LCI, CDB, LCD, CRA, CRI, DEB, CDCA...)
+  - {nome: NTN-B - MAI/2035, taxa: "IPCA + 7,68%", vencimento: 2035-05-15, aplicado: 150000, posicao: 152000, liquido: 151000}
+  - {nome: LCA ORIGINAL - ABR/2030, taxa: "94% CDI", vencimento: 2030-04-16, aplicado: 100000, posicao: 104000}
+  - {nome: CRA JBS - SET/2038, taxa: "IPCA + 9,44%", vencimento: 2038-09-15, aplicado: 80000, posicao: 70000}
+  - {nome: DEB CORSAN - SET/2034, taxa: "IPCA + 10,12%", vencimento: 2034-09-15, aplicado: 30000, posicao: 27000}
+  - {nome: CRI ONCOCLÍNICAS - OUT/2030, taxa: "Pré 30,73%", vencimento: 2030-10-15, aplicado: 20000, posicao: 19000}
+  - {nome: CRA MINERVA - NOV/2034, taxa: "Pré 19,71%", vencimento: 2034-11-16, aplicado: 40000, posicao: 35000}
+  # Fundos: reconhecidos pelo nome (regras.yaml > fundos_conhecidos) ou pelo campo cnpj
+  - {nome: ARX Everest Advisory FIC de FIF RF CP RL, posicao: 120000, liquido: 119000}
+  - {nome: Absolute Atenas Advisory FIC FIF RF CP RL, posicao: 80000, liquido: 79200}
+  - {nome: Hashdex Bitcoin FIM RL, posicao: 10000, liquido: 9800}
+  - {nome: XP Credit Opportunities FIDC - Modelo A, posicao: 50000}
+  # Renda variável: informe tipo
+  - {nome: Ações, tipo: renda_variavel, posicao: 300000}
+# Opcional: decisões do assessor para esta carteira
+opcoes:
+  manter: []        # nomes (ou parte do nome) que não devem ser vendidos
+  vender: []        # nomes que devem sair mesmo sem regra
+  # acao_estouro: alertar   # para só sinalizar estouros de limite nesta carteira
