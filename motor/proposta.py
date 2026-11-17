@@ -94,14 +94,36 @@ def contexto(cfg: dict) -> dict:
         bench = total * (1 + ((1 + c["cdi"]) ** anos - 1) * (1 - IR))
         tabela_cen.append({"nome": c["nome"], "cdi": c["cdi"], "fin": fin, "bench": bench, "dif": fin - bench})
 
+    # fundos imobiliários (renda mensal), opcional
+    fiis = []
+    for f in cfg.get("fiis", []):
+        f = dict(f)
+        f["valor"], f["dy"] = float(f["valor"]), float(f["dy"])
+        f["pvp"] = float(f["pvp"]) if f.get("pvp") is not None else None
+        f["renda"] = f["valor"] * f["dy"]
+        fiis.append(f)
+    total_fii = sum(f["valor"] for f in fiis)
+    fii = None
+    if fiis:
+        segs = {}
+        for f in fiis:
+            segs[f["segmento"]] = segs.get(f["segmento"], 0) + f["valor"]
+        com_pvp = [f for f in fiis if f["pvp"]]
+        fii = {"lista": fiis, "total": total_fii, "renda": sum(f["renda"] for f in fiis),
+               "dy": sum(f["renda"] for f in fiis) / total_fii,
+               "desconto": 1 - sum(f["valor"] * f["pvp"] for f in com_pvp) / sum(f["valor"] for f in com_pvp) if com_pvp else None,
+               "segmentos": sorted(({"nome": k, "valor": v, "pct": v / total_fii} for k, v in segs.items()), key=lambda x: -x["valor"])}
+    pos = sum(a["valor"] for a in ativos if a["tipo"] != "pre")
+    pre = sum(a["valor"] for a in ativos if a["tipo"] == "pre")
+
     js_ativos = [{k: a.get(k) for k in ("nome", "id", "valor", "tipo", "taxa", "isento", "liquidez", "fgc")} for a in ativos]
     return {
-        "titulo": cfg.get("titulo", f"Carteira de {brl(total)}"),
-        "titulo_html": cfg.get("titulo_html") or (f'Carteira de <span class="x">{brl(total)}</span>' if "titulo" not in cfg else cfg["titulo"]),
+        "titulo": cfg.get("titulo", f"Carteira de {brl(total + total_fii)}"),
+        "titulo_html": cfg.get("titulo_html") or (f'Carteira de <span class="x">{brl(total + total_fii)}</span>' if "titulo" not in cfg else cfg["titulo"]),
         "eyebrow": cfg.get("eyebrow", "Proposta de carteira · renda fixa"),
         "descricao": cfg.get("descricao", "Projeção líquida de IR até o vencimento, com o CDI médio ajustável abaixo."),
         "vencimento": cfg.get("vencimento_label", f"{anos:g} anos"),
-        "anos": anos, "total": total, "ativos": ativos, "cenarios": cenarios, "tabela_cen": tabela_cen,
+        "anos": anos, "total": total, "fii": fii, "total_geral": total + total_fii, "pos": pos, "pre": pre, "ativos": ativos, "cenarios": cenarios, "tabela_cen": tabela_cen,
         "cdi_atual": cdi_atual, "selic": selic,
         "js": json.dumps({"ativos": js_ativos, "cenarios": cenarios, "anos": anos, "ir": IR, "cdi": round(cdi_atual, 4)}, ensure_ascii=False),
         "observacoes": cfg.get("observacoes", []),
@@ -114,8 +136,9 @@ def mensagem(ctx: dict) -> str:
     return "\n".join([
         "Olá! Segue a proposta de carteira que conversamos.",
         "",
-        f"Com o CDI em {pct(c['cdi'])} ao ano, a projeção é chegar a {brl(c['fin'])} líquidos em {ctx['vencimento']}, "
+        ("Na renda fixa, c" if ctx.get("fii") else "C") + f"om o CDI em {pct(c['cdi'])} ao ano, a projeção é chegar a {brl(c['fin'])} líquidos em {ctx['vencimento']}, "
         f"{brl(c['dif'])} acima de uma aplicação em 100% do CDI tributada.",
+        *([f"Os fundos imobiliários geram renda mensal estimada de {brl(ctx['fii']['renda'])}, isenta de IR (dividend yield médio de {pct(ctx['fii']['dy'])} ao mês)."] if ctx.get("fii") else []),
         "O documento mostra também os cenários de queda de juros.",
         "",
         "Fico à disposição para conversarmos.",

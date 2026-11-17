@@ -23,10 +23,12 @@ input[type=range]{width:100%;accent-color:var(--acc)}
     <div class="eyebrow">{{ eyebrow }}</div>
     <h1>{{ titulo_html | safe }}</h1>
     <p>{{ descricao }}</p>
-    <div class="alloc" aria-hidden="true">{% for a in ativos %}<i style="flex:{{ a.valor|round|int }};background:{{ cores[loop.index0 % 7] }}"></i>{% endfor %}</div>
-    <div class="legend">{% for a in ativos %}<span><i class="dot" style="background:{{ cores[loop.index0 % 7] }}"></i>{{ a.nome }} · {{ a.valor | brl }}</span>{% endfor %}</div>
+    {% if fii %}<div class="meta"><span>Total <b>{{ total_geral | brl }}</b></span><span>Fundos imobiliários <b>{{ fii.total | brl }}</b></span><span>Renda fixa <b>{{ total | brl }}</b> ({{ (pos/total) | pct(0) }} pós · {{ (pre/total) | pct(0) }} pré)</span></div>{% endif %}
+    <div class="alloc" aria-hidden="true">{% if fii %}<i style="flex:{{ fii.total|round|int }};background:#5aa66e"></i>{% endif %}{% for a in ativos %}<i style="flex:{{ a.valor|round|int }};background:{{ cores[loop.index0 % 7] }}"></i>{% endfor %}</div>
+    <div class="legend">{% if fii %}<span><i class="dot" style="background:#5aa66e"></i>Fundos imobiliários · {{ fii.total | brl }}</span>{% endif %}{% for a in ativos %}<span><i class="dot" style="background:{{ cores[loop.index0 % 7] }}"></i>{{ a.nome }} · {{ a.valor | brl }}</span>{% endfor %}</div>
   </header>
 
+  {% if fii %}<h2>Renda fixa: projeção até {{ vencimento }}</h2>{% endif %}
   <div class="verdict">
     <div class="v"><span class="k">Rentabilidade líquida</span><span class="big" id="k-rate">–</span><span class="sub" id="k-rate-sub">–</span></div>
     <div class="v"><span class="k">Saldo líquido em {{ vencimento }}</span><span class="big" id="k-final">–</span><span class="sub" id="k-gain">–</span></div>
@@ -57,6 +59,26 @@ input[type=range]{width:100%;accent-color:var(--acc)}
     </table></div>
     <p class="note">Valores líquidos de IR em {{ vencimento }}, para {{ total | brl }}.</p>
   </section>
+
+  {% if fii %}
+  <section class="pb">
+    <h2>Fundos imobiliários: renda mensal</h2>
+    <div class="verdict">
+      <div class="v d"><span class="k">Renda mensal estimada</span><span class="big">{{ fii.renda | brl }}</span><span class="sub">isenta de IR para pessoa física</span></div>
+      <div class="v"><span class="k">Dividend yield médio</span><span class="big">{{ fii.dy | pct }} a.m.</span><span class="sub">sobre {{ fii.total | brl }} investidos</span></div>
+      <div class="v"><span class="k">Desconto médio (P/VP)</span><span class="big">{{ fii.desconto | pct(0) if fii.desconto is not none else '–' }}</span><span class="sub">abaixo do valor patrimonial das cotas</span></div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Fundo</th><th>Segmento</th><th>Posição</th><th>Exposição</th><th>P/VP</th><th>DY mensal</th><th>Renda mensal</th></tr></thead>
+      <tbody>
+      {% for f in fii.lista %}<tr><td><div class="fn">{{ f.ticker }}</div></td><td>{{ f.segmento }}</td><td>{{ f.valor | brl }}</td><td>{{ (f.valor / fii.total) | pct(0) }}</td><td>{{ f.pvp | pct(0) if f.pvp else '–' }}</td><td>{{ f.dy | pct }}</td><td class="hl">{{ f.renda | brl }}</td></tr>{% endfor %}
+        <tr class="tot"><td><div class="fn">Total</div></td><td></td><td>{{ fii.total | brl }}</td><td>100%</td><td></td><td>{{ fii.dy | pct }}</td><td>{{ fii.renda | brl }}</td></tr>
+      </tbody>
+    </table></div>
+    <div class="legend">{% for g in fii.segmentos %}<span><b>{{ g.nome }}</b>&nbsp;{{ g.pct | pct(0) }}</span>{% endfor %}</div>
+    <p class="note">Dividend yield com base nos últimos rendimentos distribuídos. A renda de fundos imobiliários varia mês a mês e o preço das cotas oscila na bolsa: não há garantia de rendimento.</p>
+  </section>
+  {% endif %}
 
   <section class="pb">
     <h2>Papel de cada ativo</h2>

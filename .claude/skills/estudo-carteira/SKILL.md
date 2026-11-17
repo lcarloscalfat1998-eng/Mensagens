@@ -33,6 +33,8 @@ O motor está em `motor/` e as regras da casa em `regras.yaml`. A documentação
 
 ## Cuidados
 
+- Em propostas com produtos de prateleira (CDB, LCA, LCD), use sempre a **taxa mínima** da tela.
+
 - Os números vêm da CVM e do Banco Central. Não substitua por estimativas. Se um fundo não tiver cota na CVM (FIDC, FIP), o documento mostra "–".
 - Fundo citado sem CNPJ: confirme com `python3 -m motor fundo "nome"` antes de usar.
 - Texto de tese e projeção deve falar em "tende a" e "em tese", nunca prometer retorno.
