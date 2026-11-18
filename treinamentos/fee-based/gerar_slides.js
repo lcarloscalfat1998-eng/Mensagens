@@ -133,18 +133,18 @@ async function icon(Comp, color = "#141414") {
   // Antes
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 1.3, w: 4.1, h: 3.5, rectRadius: 0.12, fill: { color: C.background2 }, line: { type: "none" }, objectName: "Card antes" });
   s.addText("ANTES", { x: 0.8, y: 1.5, w: 3.5, h: 0.35, fontSize: 14, bold: true, color: C.accent4, charSpacing: 2, margin: 0, isTextBox: true });
-  s.addText("Postura extremamente neutra", { x: 0.8, y: 1.9, w: 3.5, h: 0.5, fontSize: 20, bold: true, color: C.text2, fontFace: "Cambria", margin: 0, isTextBox: true });
+  s.addText("Postura extremamente neutra", { x: 0.8, y: 1.9, w: 3.6, h: 0.75, fontSize: 18, valign: "top", bold: true, color: C.text2, fontFace: "Cambria", margin: 0, isTextBox: true });
   s.addText([
     { text: "Apresentava transacional e Fee Based lado a lado", options: { bullet: true, breakLine: true } },
     { text: "Sem direcionamento claro", options: { bullet: true, breakLine: true } },
     { text: "Decisão 100% nas mãos do cliente", options: { bullet: true } },
   ], { x: 0.8, y: 2.8, w: 3.6, h: 1.8, fontSize: 15, color: C.text1, paraSpaceAfter: 8, valign: "top", margin: 0, isTextBox: true });
   // seta
-  s.addShape(pres.shapes.RIGHT_ARROW, { x: 4.75, y: 2.8, w: 0.5, h: 0.5, fill: { color: C.accent2 }, line: { type: "none" }, objectName: "Seta" });
+  s.addShape(pres.shapes.RIGHT_ARROW, { x: 4.75, y: 2.8, w: 0.5, h: 0.5, fill: { color: C.accent1 }, line: { type: "none" }, objectName: "Seta" });
   // Agora
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 5.4, y: 1.3, w: 4.1, h: 3.5, rectRadius: 0.12, fill: { color: C.text2 }, line: { type: "none" }, objectName: "Card agora" });
   s.addText("AGORA", { x: 5.7, y: 1.5, w: 3.5, h: 0.35, fontSize: 14, bold: true, color: C.accent6, charSpacing: 2, margin: 0, isTextBox: true });
-  s.addText("Opcionalidade + opinião profissional", { x: 5.7, y: 1.9, w: 3.6, h: 0.5, fontSize: 20, bold: true, color: C.background1, fontFace: "Cambria", margin: 0, isTextBox: true, fit: "shrink" });
+  s.addText("Opcionalidade + opinião profissional", { x: 5.7, y: 1.9, w: 3.6, h: 0.75, fontSize: 18, valign: "top", bold: true, color: C.background1, fontFace: "Cambria", margin: 0, isTextBox: true });
   s.addText([
     { text: "O cliente continua escolhendo", options: { bullet: true, breakLine: true } },
     { text: "O assessor diz qual formato considera melhor para a construção patrimonial de longo prazo", options: { bullet: true, breakLine: true } },
@@ -191,13 +191,13 @@ async function icon(Comp, color = "#141414") {
     const x = 0.5 + k * 3.1;
     const isLast = k === 2;
     s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y: 1.3, w: 2.8, h: 3.6, rectRadius: 0.12, fill: { color: isLast ? C.text2 : C.background2 }, line: { type: "none" }, objectName: "Bloco " + b.n });
-    circleIcon(s, b.i, x + 0.25, 1.5, 0.6, isLast ? C.accent2 : C.accent1);
+    circleIcon(s, b.i, x + 0.25, 1.5, 0.6, isLast ? C.accent1 : C.accent1);
     s.addText("BLOCO " + b.n, { x: x + 1.0, y: 1.55, w: 1.6, h: 0.5, fontSize: 14, bold: true, color: isLast ? C.accent6 : C.accent4, valign: "middle", charSpacing: 2, margin: 0, isTextBox: true });
     s.addText(b.t, { x: x + 0.25, y: 2.25, w: 2.35, h: 0.7, fontSize: 17, bold: true, color: isLast ? C.background1 : C.text2, fontFace: "Cambria", valign: "top", margin: 0, isTextBox: true });
     s.addText(b.items.map((t, j) => ({ text: t, options: { bullet: true, breakLine: j < b.items.length - 1 } })), {
       x: x + 0.25, y: 3.0, w: 2.4, h: 1.8, fontSize: 14, color: isLast ? C.background1 : C.text1, paraSpaceAfter: 4, valign: "top", margin: 0, isTextBox: true,
     });
-    if (k < 2) s.addShape(pres.shapes.CHEVRON, { x: x + 2.85, y: 2.95, w: 0.2, h: 0.35, fill: { color: C.accent2 }, line: { type: "none" }, objectName: "Seta" });
+    if (k < 2) s.addShape(pres.shapes.CHEVRON, { x: x + 2.85, y: 2.95, w: 0.2, h: 0.35, fill: { color: C.accent1 }, line: { type: "none" }, objectName: "Seta" });
   });
   s.addNotes(
     "Estrutura da reunião (3 min). A ordem importa.\n" +
@@ -242,8 +242,8 @@ async function icon(Comp, color = "#141414") {
   ];
   q2.forEach((q, k) => {
     const x = 0.5 + (k % 2) * 4.6;
-    const y = 1.25 + Math.floor(k / 2) * 1.85;
-    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w: 4.4, h: 1.7, rectRadius: 0.1, fill: { color: C.background2 }, line: { type: "none" }, objectName: "Speech " + (k + 4) });
+    const y = 1.35 + Math.floor(k / 2) * 1.75;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w: 4.4, h: 1.45, rectRadius: 0.1, fill: { color: C.background2 }, line: { type: "none" }, objectName: "Speech " + (k + 4) });
     s.addText(String(k + 4), { x: x + 0.2, y: y + 0.2, w: 0.45, h: 0.45, shape: pres.shapes.OVAL, fill: { color: C.accent1 }, color: C.text2, fontSize: 15, bold: true, align: "center", valign: "middle", margin: 0, isTextBox: true });
     s.addText(q.t, { x: x + 0.8, y: y + 0.2, w: 3.4, h: 0.45, fontSize: 15, bold: true, color: C.text2, valign: "middle", margin: 0, isTextBox: true });
     s.addText(q.q, { x: x + 0.2, y: y + 0.8, w: 4.0, h: 0.8, fontSize: 14, italic: true, color: C.text1, valign: "top", margin: 0, isTextBox: true });
@@ -262,7 +262,7 @@ async function icon(Comp, color = "#141414") {
   s = pres.addSlide({ masterName: "CONTEUDO", sectionTitle: "Modelo e preço" });
   s.addText("O que o cliente recebe: 3 encontros por ano", { placeholder: "title" });
   // linha do tempo
-  s.addShape(pres.shapes.LINE, { x: 1.1, y: 1.85, w: 7.8, h: 0, line: { color: C.accent5, width: 2 }, objectName: "Linha do tempo" });
+  s.addShape(pres.shapes.LINE, { x: 1.4, y: 1.85, w: 6.2, h: 0, line: { color: C.accent5, width: 2 }, objectName: "Linha do tempo" });
   const enc = [
     { t: "Planejamento financeiro", items: ["Revisão patrimonial", "Avaliação de objetivos"] },
     { t: "Estratégia de investimentos", items: ["Alocação de carteira", "Discussão de cenários"] },
@@ -271,13 +271,13 @@ async function icon(Comp, color = "#141414") {
   enc.forEach((e, k) => {
     const cx = 1.1 + k * 3.9;
     const x = 0.5 + k * 3.1;
-    s.addText(String(k + 1), { x: x + 1.1, y: 1.45, w: 0.8, h: 0.8, shape: pres.shapes.OVAL, fill: { color: C.accent1 }, color: C.text2, fontSize: 22, bold: true, fontFace: "Cambria", align: "center", valign: "middle", margin: 0, isTextBox: true });
+    s.addText(String(k + 1), { x: x + 1.0, y: 1.45, w: 0.8, h: 0.8, shape: pres.shapes.OVAL, fill: { color: C.accent1 }, color: C.text2, fontSize: 22, bold: true, fontFace: "Cambria", align: "center", valign: "middle", margin: 0, isTextBox: true });
     s.addText("Encontro " + (k + 1), { x, y: 2.4, w: 2.8, h: 0.3, fontSize: 12, bold: true, color: C.accent4, align: "center", charSpacing: 1, margin: 0, isTextBox: true });
     s.addText(e.t, { x, y: 2.7, w: 2.8, h: 0.4, fontSize: 15, bold: true, color: C.text2, fontFace: "Cambria", align: "center", margin: 0, isTextBox: true });
     s.addText(e.items.join(" · "), { x: x + 0.1, y: 3.1, w: 2.6, h: 0.5, fontSize: 14, color: C.text1, align: "center", valign: "top", margin: 0, isTextBox: true });
   });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 3.95, w: 9.0, h: 0.95, rectRadius: 0.1, fill: { color: C.text2 }, line: { type: "none" }, objectName: "Atendimento contínuo" });
-  circleIcon(s, ic.phone, 0.75, 4.1, 0.65, C.accent2);
+  circleIcon(s, ic.phone, 0.75, 4.1, 0.65, C.accent1);
   s.addText([
     { text: "Entre os encontros: ", options: { bold: true, color: C.accent6 } },
     { text: "atendimento contínuo para eventos relevantes, dúvidas e mudanças de cenário.", options: { color: C.background1 } },
@@ -324,11 +324,11 @@ async function icon(Comp, color = "#141414") {
   s.addText("Na sua próxima reunião", { placeholder: "title" });
   const passos = [
     "Comece pelo planejamento, não pelo produto",
-    "Recomende como se o cliente já fosse Fee Based",
+    "Recomende como se já fosse Fee Based",
     "Só no fim apresente o modelo de atendimento",
     "Dê sua opinião, mas deixe a escolha com o cliente",
     "Use a remuneração atual como referência de taxa",
-    "Zero pressão: \"pode decidir no ano que vem\"",
+    "Sem pressão: “decida no ano que vem”",
   ];
   passos.forEach((p, k) => {
     const x = 0.5 + (k % 2) * 4.6;
