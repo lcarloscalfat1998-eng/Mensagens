@@ -270,7 +270,7 @@ function field(key,label,hint,type,step,chips){
 function show(k,t){const v=eff(k);if(t==='money')return brl(v);if(t==='pct2')return v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%';if(t==='num2')return f2(v);if(t==='int')return String(Math.round(v));return v.toLocaleString('pt-BR',{maximumFractionDigits:2})+'%';}
 function parseMoney(str,small){
  let t=str.toLowerCase().replace(/r\$|\s/g,'');let mult=0;
- if(/(mi|mm|milh)/.test(t))mult=1e6;else if(/(mil|k)$/.test(t))mult=1e3;
+ if(/(milh|mi$|mm$|mi\b)/.test(t))mult=1e6;else if(/(mil|k)$/.test(t))mult=1e3;
  t=t.replace(/[^\d,.]/g,'');if(!t)return 0;
  if(t.includes(','))t=t.replace(/\./g,'').replace(',','.');
  else if(/\.\d{3}(\.|$)/.test(t))t=t.replace(/\./g,'');
