@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador Mereo — semestre</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f8;--card:#fff;--tx:#111418;--mu:#6b7280;--bd:#e6e8ec;--ok:#16a34a;--okbg:#dcfce7;--mid:#d97706;--midbg:#fef3c7;--bad:#dc2626;--badbg:#fee2e2;--ac:#2563eb;--acbg:#dbeafe;--tr:#eceef2}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1014;--card:#171a20;--tx:#eceef2;--mu:#9aa1ad;--bd:#262a33;--tr:#23272f;--ac:#60a5fa;--acbg:#1e2a3d;--okbg:#14301f;--midbg:#3a2a10;--badbg:#3a1616}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:14px 14px 40px}
+.num{font-variant-numeric:tabular-nums}
+
+/* HERO */
+.hero{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;margin-bottom:14px}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.hero .lbl{font-size:12px;color:var(--mu);font-weight:500}
+.big{font-size:52px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.status{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-weight:700;font-size:13px;margin-top:8px}
+.timeline{display:flex;gap:8px;margin-top:4px}
+.tl{background:var(--bg);border-radius:12px;padding:8px 12px;text-align:center;min-width:76px}
+.tl .t{font-size:11px;color:var(--mu)}.tl .v{font-size:18px;font-weight:700}
+.gauge{position:relative;height:14px;background:var(--tr);border-radius:8px;margin:18px 0 6px;overflow:visible}
+.gauge .fill{position:absolute;left:0;top:0;bottom:0;border-radius:8px;transition:width .25s}
+.gauge .cutmk{position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--tx)}
+.gauge .cutlb{position:absolute;top:-22px;font-size:10.5px;color:var(--mu);transform:translateX(-50%);white-space:nowrap}
+.gscale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--mu)}
+.msg{margin-top:12px;font-size:13.5px;line-height:1.45;padding:10px 12px;border-radius:10px}
+
+/* section */
+.sec{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 10px;gap:10px;flex-wrap:wrap}
+.sec h2{font-size:16px;margin:0}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:3px}
+.seg button{border:0;background:transparent;color:var(--mu);padding:6px 12px;border-radius:8px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.seg button.on{background:var(--ac);color:#fff}
+
+/* KPI cards */
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:700px){.kpis{grid-template-columns:1fr}.big{font-size:44px}}
+@keyframes fl{0%{box-shadow:0 0 0 3px var(--ac)}100%{box-shadow:0 0 0 0 transparent}}.kpi.flash{animation:fl 1.2s ease-out}
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px 16px}
+.kpi-h{display:flex;justify-content:space-between;align-items:center}
+.kpi-h .n{font-weight:600;font-size:14px}
+.kpi-h .w{font-size:11px;color:var(--mu);margin-left:6px;font-weight:500}
+.nota{font-weight:800;font-size:14px;padding:3px 10px;border-radius:8px}
+.kpi .val{font-size:24px;font-weight:700;margin-top:8px;letter-spacing:-.01em}
+.kpi .of{font-size:12.5px;color:var(--mu);margin-top:2px}
+.kpi .delta{font-size:12px;font-weight:600;margin-top:2px;min-height:16px}
+.pbar{position:relative;height:10px;background:var(--tr);border-radius:6px;margin:18px 0 4px}
+.pbar .fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px;transition:width .25s}
+.pbar .mk{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--mu);opacity:.5}
+.pbar .mk.meta{background:var(--tx);opacity:.8}
+.pscale{position:relative;height:14px;font-size:10px;color:var(--mu)}
+.pscale span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.kpi .foot{display:flex;justify-content:space-between;font-size:12px;color:var(--mu);margin-top:6px}
+
+/* inputs */
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:6px 16px}
+.f{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bd)}
+.f:last-child{border:0}
+.f .fl{font-weight:600;font-size:13.5px}
+.f .fh{font-size:11.5px;color:var(--mu);grid-column:1/2}
+.stp{display:flex;align-items:center;gap:6px;grid-row:1/3;grid-column:2}
+.stp button{width:34px;height:34px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:16px;font-weight:600;cursor:pointer;flex:none}
+.stp input{width:150px;padding:8px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;font-size:15px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.stp input.sm{width:92px}
+@media(max-width:420px){.stp input{width:120px}.stp input.sm{width:74px}.f{grid-template-columns:1fr}.stp{grid-row:auto;grid-column:1}}
+.chips{display:flex;gap:6px;flex-wrap:wrap;grid-column:1/-1}
+.chips button{border:1px solid var(--bd);background:var(--bg);color:var(--mu);border-radius:999px;padding:4px 10px;font:inherit;font-size:11.5px;cursor:pointer}
+.chips button:hover{color:var(--tx)}
+
+/* levers */
+.levers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:700px){.levers{grid-template-columns:1fr}}
+.lv{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px 16px}
+.lv .t{font-size:12px;color:var(--mu);font-weight:500}
+.lv .v{font-size:20px;font-weight:700;margin-top:4px}
+.lv .d{font-size:12.5px;color:var(--mu);margin-top:4px;line-height:1.4}
+
+details{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px 16px;margin-top:14px}
+summary{cursor:pointer;font-weight:600;font-size:14px}
+.cfg{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-top:8px}
+@media(max-width:700px){.cfg{grid-template-columns:1fr}}
+.cfg .f{padding:8px 0}
+.note{color:var(--mu);font-size:11.5px;line-height:1.5;margin-top:14px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btns button{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;padding:8px 12px;font:inherit;font-size:12.5px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-top">
+    <div>
+      <div class="lbl" id="heroLbl">Mereo projetado — fim de dezembro</div>
+      <div class="big num" id="heroScore">–</div>
+      <div class="status" id="heroStatus">–</div>
+    </div>
+    <div class="timeline">
+      <div class="tl"><div class="t">Hoje</div><div class="v num" id="tl0">–</div></div>
+      <div class="tl"><div class="t">Fim nov</div><div class="v num" id="tl1">–</div></div>
+      <div class="tl"><div class="t">Fim dez</div><div class="v num" id="tl2">–</div></div>
+    </div>
+  </div>
+  <div class="gauge"><div class="fill" id="gFill"></div><div class="cutmk" id="gCut"></div><div class="cutlb" id="gCutLb"></div></div>
+  <div class="gscale"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+  <div class="msg" id="heroMsg"></div>
+</div>
+
+<!-- CONSOLIDADO -->
+<div class="sec">
+  <h2>Consolidado</h2>
+  <div class="seg" id="viewSeg">
+    <button data-v="0">Hoje</button><button data-v="1" class="on">Fim nov</button><button data-v="2">Fim dez</button>
+  </div>
+</div>
+<div class="kpis" id="kpis"></div>
+
+<!-- LANÇAMENTOS -->
+<div class="sec">
+  <h2>Lançamentos do mês</h2>
+  <div class="seg" id="monSeg"><button data-m="1" class="on">Novembro</button><button data-m="2">Dezembro</button></div>
+</div>
+<div class="sub" style="color:var(--mu);font-size:12px;margin:-4px 2px 10px">Mudou aqui, o consolidado acima mostra o mesmo mês e pisca o card que mudou. Dezembro herda ROA, IC e NPS de novembro.</div>
+<div class="panel" id="panel"></div>
+
+<!-- ALAVANCAS -->
+<div class="sec"><h2>O que falta para o Mereo 5 em dezembro</h2></div>
+<div class="levers" id="levers"></div>
+
+<!-- CONFIG -->
+<details>
+  <summary>Ponto de partida, metas e corte</summary>
+  <div class="cfg" id="cfg"></div>
+  <div class="btns"><button id="reset">Voltar ao cenário original</button><button id="clear">Zerar novembro e dezembro</button></div>
+</details>
+
+<div class="note">Como a nota é calculada: cada indicador vai de 1 a 5 em linha reta pela curva do card (mínimo → 1, meta → 3, máximo → 5). O Mereo é a média ponderada pelos pesos (somam 100). Metas do semestre = meta de hoje + acréscimo de cada mês. ROA, IC e NPS são o acumulado do semestre no fim do mês. Confirme a régua oficial com a liderança — o simulador não substitui o card da XP.</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const DEF={
+ // ponto de partida (card de hoje)
+ pf0:12192267, tt0:24132091, sg0:44614, ro0:0.80, roOct:0.87, roN:4, roNow:0.56, ic0:100, np0:100,
+ // metas de hoje e acréscimo mensal
+ pm0:3400000, pmN:0, pmD:800000, tm0:6650000, tmN:0, tmD:1450000, sm0:75000, smN:0, smD:15000,
+ roM:0.85, icM:80, npM:77, cut:4.00,
+ // novembro
+ pf1:1500000, rs1:0, tx1:0, sg1:15000, ro1:0.88, ic1:100, np1:100,
+ // dezembro
+ pf2:1500000, rs2:8000000, tx2:0, sg2:0, ro2:null, ic2:null, np2:null,
+ resgTot:1
+};
+let S={...DEF}, view=1, mon=1, LAST={};
+
+const W={pf:20,tt:25,ic:10,np:15,ro:20,sg:10};
+const CURVE={pf:[0,200],tt:[0,200],ic:[80,120],np:[80,120],ro:[60,140],sg:[60,140]};
+const NAME={pf:'Captação Líquida PF',tt:'Captação Total',sg:'Seguros',ro:'ROA Investimento',ic:'Índice Comercial',np:'NPS Assessoria'};
+const ORDER=['pf','tt','sg','ro','ic','np'];
+const RATES=['ro','ic','np'];
+function get(s,k,m){for(let i=m;i>=0;i--){const v=s[k+i];if(v!=null)return v;}return 0;}
+// ROA: ro1/ro2 são o ROA DO MÊS; o semestral é a média dos meses
+function roMonth(s,m){const n=s.ro1!=null?s.ro1:s.roNow;return m===1?n:(s.ro2!=null?s.ro2:n);}
+function roSem(s,m){if(m===0)return s.ro0;const prev=s.roOct*s.roN;return m===1?(prev+roMonth(s,1))/(s.roN+1):(prev+roMonth(s,1)+roMonth(s,2))/(s.roN+2);}
+function eff(k){if(k==='ro1')return roMonth(S,1);if(k==='ro2')return roMonth(S,2);const b=k.slice(0,2),m=+k.slice(2);return (RATES.includes(b)&&!isNaN(m))?get(S,b,m):S[k];}
+const nota=(p,[a,b])=>Math.max(1,Math.min(5,1+(p-a)*4/(b-a)));
+
+const brl=n=>(n<0?'−':'')+'R$ '+Math.round(Math.abs(n)).toLocaleString('pt-BR');
+function short(n){const a=Math.abs(n),s=n<0?'−':'';
+ if(a>=1e6){const v=a/1e6;return s+(Number.isInteger(+v.toFixed(2))?v.toFixed(0):v.toLocaleString('pt-BR',{maximumFractionDigits:2}))+(v>=2?' milhões':' milhão');}
+ if(a>=1e3)return s+Math.round(a/1e3).toLocaleString('pt-BR')+' mil';return s+Math.round(a);}
+const pct=(n,d=0)=>n.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})+'%';
+const f2=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const tone=n=>n>=4.5?['var(--ok)','var(--okbg)']:n>=3?['var(--mid)','var(--midbg)']:['var(--bad)','var(--badbg)'];
+
+function compute(s){
+ const out=[];let pf=s.pf0,tt=s.tt0,sg=s.sg0,pm=s.pm0,tm=s.tm0,sm=s.sm0;
+ for(let m=0;m<3;m++){
+  if(m>0){pf+=s['pf'+m]-s['rs'+m];tt+=s['pf'+m]+s['tx'+m]-(s.resgTot?s['rs'+m]:0);sg+=s['sg'+m];const sx=m===1?'N':'D';pm+=s['pm'+sx];tm+=s['tm'+sx];sm+=s['sm'+sx];}
+  const it={
+   pf:{v:pf,meta:pm},tt:{v:tt,meta:tm},sg:{v:sg,meta:sm},
+   ro:{v:roSem(s,m),meta:s.roM},ic:{v:get(s,'ic',m),meta:s.icM},np:{v:get(s,'np',m),meta:s.npM}};
+  let t=0;for(const k in it){const i=it[k];i.pct=i.v/i.meta*100;i.n=nota(i.pct,CURVE[k]);t+=i.n*W[k];}
+  out.push({it,score:t/100});
+ }
+ return out;
+}
+const fin=s=>compute(s)[2].score;
+function solve(key,lo,hi,inc){
+ const f=x=>fin({...S,[key]:x}),c=S.cut;
+ if(inc){if(f(hi)<c)return null;if(f(lo)>=c)return lo;for(let i=0;i<60;i++){const m=(lo+hi)/2;f(m)>=c?hi=m:lo=m;}return hi;}
+ if(f(lo)<c)return null;if(f(hi)>=c)return hi;for(let i=0;i<60;i++){const m=(lo+hi)/2;f(m)>=c?lo=m:hi=m;}return lo;
+}
+
+function fmtVal(k,v){return k==='ro'?pct(v,2):(k==='ic'||k==='np')?pct(v,1):brl(v);}
+
+function renderKPIs(R){
+ const r=R[view],prev=view>0?R[view-1]:null;
+ $('kpis').innerHTML=ORDER.map(k=>{
+  const i=r.it[k],[a,b]=CURVE[k],max=b*1.1,[c,bg]=tone(i.n);
+  const w=Math.max(0,Math.min(100,i.pct/max*100));
+  const pos=x=>(x/max*100);
+  let delta='';
+  if(prev){const d=i.v-prev.it[k].v;
+   if(Math.abs(d)>1e-9){const up=d>0;delta=`<span style="color:${up?'var(--ok)':'var(--bad)'}">${up?'▲':'▼'} ${k==='ro'?f2(Math.abs(d))+' p.p.':(k==='ic'||k==='np')?pct(Math.abs(d),1).replace('%',' p.p.'):short(Math.abs(d))} no mês</span>`;}}
+  const pts=i.n*W[k]/100,lost=(5-i.n)*W[k]/100;
+  const key=view+k,changed=LAST[key]!==undefined&&Math.abs(LAST[key]-i.v)>1e-9;LAST[key]=i.v;
+  const thr=i.meta*b/100;
+  const maxTxt=`nota máxima ✓ · segue 5 até ${k==='ro'?pct(thr,2):(k==='ic'||k==='np')?pct(thr,1):short(thr)}`;
+  return `<div class="kpi${changed?' flash':''}">
+   <div class="kpi-h"><div><span class="n">${NAME[k]}</span><span class="w">peso ${W[k]}</span></div><span class="nota num" style="color:${c};background:${bg}">${f2(i.n)}</span></div>
+   <div class="val num">${fmtVal(k,i.v)}</div>
+   <div class="of num">meta ${fmtVal(k,i.meta)} · <b style="color:var(--tx)">${pct(i.pct)}</b> atingido</div>
+   <div class="delta">${delta}</div>
+   <div class="pbar"><div class="fill" style="width:${w}%;background:${c}"></div>
+     <div class="mk" style="left:${pos(a)}%"></div><div class="mk meta" style="left:${pos(100)}%"></div><div class="mk" style="left:${pos(b)}%"></div></div>
+   <div class="pscale"><span style="left:${pos(a)}%;${pos(a)<8?'transform:none':''}">nota 1</span><span style="left:${pos(100)}%">meta</span><span style="left:${pos(b)}%">nota 5</span></div>
+   <div class="foot num"><span>vale ${f2(pts)} na nota final</span><span>${lost>0.005?'deixa '+f2(lost)+' na mesa':maxTxt}</span></div>
+  </div>`}).join('');
+}
+
+function renderHero(R){
+ const r=R[view],ok=r.score>=S.cut,[c,bg]=tone(ok?5:1);
+ $('heroLbl').textContent='Mereo projetado — '+['hoje','fim de novembro','fim de dezembro'][view];
+ $('heroScore').textContent=f2(r.score);$('heroScore').style.color=c;
+ $('heroStatus').textContent=ok?'✓ Mereo 5':'✕ Abaixo do corte';$('heroStatus').style.color=c;$('heroStatus').style.background=bg;
+ R.forEach((x,m)=>{$('tl'+m).textContent=f2(x.score);$('tl'+m).style.color=x.score>=S.cut?'var(--ok)':'var(--bad)';});
+ const p=v=>((v-1)/4*100);
+ $('gFill').style.width=p(r.score)+'%';$('gFill').style.background=c;
+ $('gCut').style.left=p(S.cut)+'%';$('gCutLb').style.left=p(S.cut)+'%';$('gCutLb').textContent='corte '+f2(S.cut);
+ const g=r.score-S.cut;
+ $('heroMsg').style.background=bg;
+ $('heroMsg').innerHTML=ok?`Você está <b>${f2(g)} ponto${g>=0.015&&g<1.5?'s':''} acima</b> do corte. ${g<0.1?'Folga apertada — qualquer imprevisto derruba.':'Folga confortável.'}`
+  :`Faltam <b>${f2(-g)} pontos</b> para o corte. Veja abaixo o caminho mais curto.`;
+}
+
+function renderLevers(){
+ const L=[];
+ const sN=solve('sg2',0,5e6,true);
+ L.push(sN===null?['Seguros em dezembro','—','Sozinho não leva ao corte.']:
+  sN<=S.sg2?['Seguros em dezembro','✓ OK','Já está acima do necessário.']:
+  ['Seguros em dezembro','+ '+brl(sN-S.sg2),'É o que falta fechar em seguros para bater o corte.']);
+ const rM=solve('rs2',0,1e8,false);
+ L.push(rM===null?['Resgate em dezembro','—','Mesmo sem resgate, não chega ao corte.']:
+  S.rs2<=rM?['Resgate máximo em dezembro',brl(rM),`Folga de ${short(rM-S.rs2)} além do resgate atual.`]:
+  ['Resgate em dezembro','Segurar '+short(S.rs2-rM),`O máximo que você aguenta é ${brl(rM)}.`]);
+ const roN=solve('ro2',0.2,3,true);
+ L.push(roN===null?['ROA mínimo em dezembro','—','Sozinho não leva ao corte.']:['ROA mínimo em dezembro (mês)',pct(roN,2),roN<=eff('ro2')?`Folga: projetado em ${pct(eff('ro2'),2)}.`:`Projetado em ${pct(eff('ro2'),2)}.`]);
+ const nN=solve('np2',0,100,true);
+ L.push(nN===null?['NPS mínimo','—','Sozinho não leva ao corte.']:['NPS mínimo',pct(nN,1),'Abaixo disso você sai do Mereo 5.']);
+ $('levers').innerHTML=L.map(([t,v,d])=>`<div class="lv"><div class="t">${t}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join('');
+}
+
+/* ---------- inputs ---------- */
+// type: money | pct
+function field(key,label,hint,type,step,chips){
+ const isM=type==='money';
+ return `<div class="f"><div class="fl">${label}</div><div class="fh">${hint||''}</div>
+  <div class="stp"><button data-k="${key}" data-d="${-step}">−</button>
+  <input data-k="${key}" data-t="${type}" class="${isM?'':'sm'}" inputmode="decimal" value="${show(key,type)}">
+  <button data-k="${key}" data-d="${step}">+</button></div>
+  ${chips?`<div class="chips">${chips.map(c=>`<button data-k="${key}" data-set="${c}">${short(c)}</button>`).join('')}</div>`:''}</div>`;
+}
+function show(k,t){const v=eff(k);if(t==='money')return brl(v);if(t==='pct2')return v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%';if(t==='num2')return f2(v);if(t==='int')return String(Math.round(v));return v.toLocaleString('pt-BR',{maximumFractionDigits:2})+'%';}
+function parseMoney(str,small){
+ let t=str.toLowerCase().replace(/r\$|\s/g,'');let mult=0;
+ if(/(mi|mm|milh)/.test(t))mult=1e6;else if(/(mil|k)$/.test(t))mult=1e3;
+ t=t.replace(/[^\d,.]/g,'');if(!t)return 0;
+ if(t.includes(','))t=t.replace(/\./g,'').replace(',','.');
+ else if(/\.\d{3}(\.|$)/.test(t))t=t.replace(/\./g,'');
+ let n=parseFloat(t);if(isNaN(n))return 0;
+ if(mult)return Math.round(n*mult);
+ if(small)return n<1000?Math.round(n*1000):Math.round(n);
+ if(n<100)return Math.round(n*1e6);if(n<1000)return Math.round(n*1000);return Math.round(n);
+}
+function parse(str,t,k){
+ if(t==='money')return parseMoney(str,/^(sg|sm)/.test(k||''));
+ let c=str.replace(/[^\d,.-]/g,'');c=c.includes(',')?c.replace(/\./g,'').replace(',','.'):c;const n=parseFloat(c);return isNaN(n)?0:n;
+}
+function isInh(k){return RATES.includes(k.slice(0,2))&&+k.slice(2)>0;}
+function rfield(b,m,label,t,step){
+ const k=b+m,prev=m===1?'hoje':'novembro',mn=m===1?'novembro':'dezembro';
+ if(b==='ro'){const sem=roSem(S,m);
+  const h=m===1?`ROA de novembro fechado (hoje em ${pct(S.roNow,2)}) → semestre fica em <b>${pct(sem,2)}</b>`
+   :(S.ro2==null?`ROA de dezembro · <b>igual a novembro</b> → semestre fica em <b>${pct(sem,2)}</b>`:`ROA de dezembro → semestre fica em <b>${pct(sem,2)}</b> · <a href="#" data-inhl="ro2" style="color:var(--ac)">voltar a seguir novembro</a>`);
+  return field(k,'ROA do mês',h,t,step);}
+ const inh=S[k]==null;
+ const hint=inh?`Acumulado no fim de ${mn} · <b>igual a ${prev}</b> (mude para simular)`:`Acumulado no fim de ${mn} · <a href="#" data-inhl="${k}" style="color:var(--ac)">voltar a seguir ${prev}</a>`;
+ return field(k,label,hint,t,step);
+}
+function renderPanel(){
+ const m=mon,mn=m===1?'novembro':'dezembro';
+ $('panel').innerHTML=
+  field('pf'+m,'Captação PF',`Entradas em ${mn} · digite 1,5 = 1,5 milhão · 800 = 800 mil`,'money',100000,[500000,1000000,1500000,2000000])+
+  field('rs'+m,'Resgates',`Saídas em ${mn}`,'money',100000,[0,1000000,3000000,8000000])+
+  field('sg'+m,'Seguros',`Prêmio fechado em ${mn} · digite 126 = 126 mil`,'money',5000,[0,15000,30000,66000])+
+  rfield('ro',m,'ROA do mês','pct2',0.01)+
+  rfield('ic',m,'Índice Comercial','pct',1)+
+  rfield('np',m,'NPS','pct',1)+
+  field('tx'+m,'Captação extra (só Total)',`Fora da PF, em ${mn}`,'money',100000);
+}
+function renderCfg(){
+ $('cfg').innerHTML=
+  field('pf0','Captação PF hoje','Realizado no card','money',100000)+
+  field('tt0','Captação Total hoje','Realizado no card','money',100000)+
+  field('sg0','Seguros hoje','Realizado no card','money',1000)+
+  field('pm0','Meta PF hoje','No card','money',100000)+
+  field('pmN','Meta PF — acréscimo em nov','0 se o card já inclui nov','money',50000)+field('pmD','Meta PF — acréscimo em dez','','money',50000)+
+  field('tm0','Meta Total hoje','No card','money',100000)+
+  field('tmN','Meta Total — acréscimo em nov','0 se o card já inclui nov','money',50000)+field('tmD','Meta Total — acréscimo em dez','','money',50000)+
+  field('sm0','Meta Seguros hoje','No card','money',5000)+
+  field('smN','Meta Seguros — acréscimo em nov','0 se o card já inclui nov','money',2500)+field('smD','Meta Seguros — acréscimo em dez','','money',2500)+
+  field('ro0','ROA no card hoje','Com novembro parcial','pct2',0.01)+field('roOct','ROA do semestre até outubro','Fechado','pct2',0.01)+field('roN','Meses fechados até outubro','Jul a out = 4','int',1)+field('roNow','ROA de novembro até hoje','Parcial, receita incompleta','pct2',0.01)+field('roM','Meta ROA','','pct2',0.01)+
+  field('ic0','IC hoje','','pct',1)+field('icM','Meta IC','','pct',1)+
+  field('np0','NPS hoje','','pct',1)+field('npM','Meta NPS','','pct',1)+
+  field('cut','Corte do Mereo 5','Nota mínima','num2',0.05)+
+  `<div class="f"><div class="fl">Resgate abate a Captação Total</div><div class="fh">Desmarque se o resgate só afeta a PF</div><div class="stp"><input type="checkbox" id="resgTot" ${S.resgTot?'checked':''} style="width:22px;height:22px"></div></div>`;
+}
+function setView(v){view=v;if(v>0)mon=v;
+ document.querySelectorAll('#viewSeg button').forEach(x=>x.classList.toggle('on',+x.dataset.v===view));
+ document.querySelectorAll('#monSeg button').forEach(x=>x.classList.toggle('on',+x.dataset.m===mon));
+ LAST={};renderAll(true);}
+function renderAll(full){
+ const R=compute(S);renderHero(R);renderKPIs(R);renderLevers();
+ if(full){renderPanel();renderCfg();}
+ else document.querySelectorAll('input[data-k]').forEach(el=>{if(el!==document.activeElement)el.value=show(el.dataset.k,el.dataset.t);});
+}
+document.addEventListener('click',e=>{
+ const a=e.target.closest('a[data-inhl]');if(a){e.preventDefault();S[a.dataset.inhl]=null;renderAll();renderPanel();return;}
+ const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.d){const k=b.dataset.k;S[k]=Math.max(0,+(eff(k)+parseFloat(b.dataset.d)).toFixed(4));renderAll();renderPanel();}
+ else if(b.dataset.inh!==undefined){S[b.dataset.inh]=null;renderAll();renderPanel();}
+ else if(b.dataset.set!==undefined){S[b.dataset.k]=parseFloat(b.dataset.set);renderAll();}
+ else if(b.dataset.v!==undefined){setView(+b.dataset.v);}
+ else if(b.dataset.m!==undefined){setView(+b.dataset.m);}
+ else if(b.id==='reset'){S={...DEF};renderAll(true);}
+ else if(b.id==='clear'){Object.assign(S,{pf1:0,pf2:0,rs1:0,rs2:0,tx1:0,tx2:0,sg1:0,sg2:0,ro1:null,ro2:null,ic1:null,ic2:null,np1:null,np2:null});renderAll(true);}
+});
+document.addEventListener('input',e=>{
+ const el=e.target;
+ if(el.id==='resgTot'){S.resgTot=el.checked?1:0;renderAll();return;}
+ if(!el.dataset.k)return;S[el.dataset.k]=parse(el.value,el.dataset.t,el.dataset.k);
+ renderAll();
+});
+document.addEventListener('focusout',e=>{const el=e.target;if(el.dataset&&el.dataset.k){el.value=show(el.dataset.k,el.dataset.t);if(el.closest('#panel'))setTimeout(renderPanel,0);}});
+renderAll(true);
+</script>
+</body>
+</html>
