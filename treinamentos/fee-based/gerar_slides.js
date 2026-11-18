@@ -9,21 +9,21 @@ const { applyTheme } = require("/root/.claude/skills/synced/eadbc07d-170b-447c-8
 const OUT = process.argv[2] || "deck.pptx";
 
 const HEX = {
-  dark: "12343B", teal: "2D8C7F", gold: "C89B3C", light: "EEF4F3",
-  white: "FFFFFF", text: "1F2A2E", muted: "5B6B70",
+  dark: "141414", teal: "FFC709", gold: "E0A800", light: "F3F3F3",
+  white: "FFFFFF", text: "1F1F1F", muted: "5F5F5F",
 };
 const THEME = {
-  name: "Fee Based",
+  name: "XP Fee Based",
   headFontFace: "Cambria",
   bodyFontFace: "Calibri",
   colors: {
     dk1: HEX.text, lt1: HEX.white, dk2: HEX.dark, lt2: HEX.light,
-    accent1: HEX.teal, accent2: HEX.gold, accent3: "7FB8AE", accent4: HEX.muted,
-    accent5: "A8C9C3", accent6: "E3C98E", hlink: HEX.teal, folHlink: HEX.muted,
+    accent1: HEX.teal, accent2: HEX.gold, accent3: "8C8C8C", accent4: HEX.muted,
+    accent5: "BDBDBD", accent6: "FFC709", hlink: "B38A00", folHlink: HEX.muted,
   },
 };
 
-async function icon(Comp, color = "#FFFFFF") {
+async function icon(Comp, color = "#141414") {
   const svg = ReactDOMServer.renderToStaticMarkup(React.createElement(Comp, { color, size: 256 }));
   const buf = await sharp(Buffer.from(svg)).resize(256, 256).png().toBuffer();
   return "image/png;base64," + buf.toString("base64");
@@ -66,7 +66,7 @@ async function icon(Comp, color = "#FFFFFF") {
   });
 
   const flag = (s, x, y, w = 1.0) =>
-    s.addText("REVISAR", { x, y, w, h: 0.26, fontSize: 9, bold: true, color: C.background1, fill: { color: C.accent2 }, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: "Marcador revisar" });
+    s.addText("REVISAR", { x, y, w, h: 0.26, fontSize: 9, bold: true, color: C.text2, fill: { color: C.accent1 }, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: "Marcador revisar" });
 
   const circleIcon = (s, data, x, y, d, fillColor) => {
     s.addShape(pres.shapes.OVAL, { x, y, w: d, h: d, fill: { color: fillColor }, line: { type: "none" }, objectName: "Círculo ícone" });
@@ -220,7 +220,7 @@ async function icon(Comp, color = "#FFFFFF") {
     const y = 1.25 + k * 1.3;
     s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y, w: 9.0, h: 1.15, rectRadius: 0.1, fill: { color: C.background2 }, line: { type: "none" }, objectName: "Speech " + (k + 1) });
     circleIcon(s, ic.quote, 0.7, y + 0.3, 0.55, C.accent1);
-    s.addText(q.t, { x: 1.45, y: y + 0.1, w: 7.8, h: 0.35, fontSize: 15, bold: true, color: C.accent1, margin: 0, isTextBox: true });
+    s.addText(q.t, { x: 1.45, y: y + 0.1, w: 7.8, h: 0.35, fontSize: 15, bold: true, color: C.text2, margin: 0, isTextBox: true });
     s.addText(q.q, { x: 1.45, y: y + 0.45, w: 7.8, h: 0.65, fontSize: 14, italic: true, color: C.text1, valign: "top", margin: 0, isTextBox: true });
   });
   s.addNotes(
@@ -244,8 +244,8 @@ async function icon(Comp, color = "#FFFFFF") {
     const x = 0.5 + (k % 2) * 4.6;
     const y = 1.25 + Math.floor(k / 2) * 1.85;
     s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w: 4.4, h: 1.7, rectRadius: 0.1, fill: { color: C.background2 }, line: { type: "none" }, objectName: "Speech " + (k + 4) });
-    s.addText(String(k + 4), { x: x + 0.2, y: y + 0.2, w: 0.45, h: 0.45, shape: pres.shapes.OVAL, fill: { color: C.accent1 }, color: C.background1, fontSize: 15, bold: true, align: "center", valign: "middle", margin: 0, isTextBox: true });
-    s.addText(q.t, { x: x + 0.8, y: y + 0.2, w: 3.4, h: 0.45, fontSize: 15, bold: true, color: C.accent1, valign: "middle", margin: 0, isTextBox: true });
+    s.addText(String(k + 4), { x: x + 0.2, y: y + 0.2, w: 0.45, h: 0.45, shape: pres.shapes.OVAL, fill: { color: C.accent1 }, color: C.text2, fontSize: 15, bold: true, align: "center", valign: "middle", margin: 0, isTextBox: true });
+    s.addText(q.t, { x: x + 0.8, y: y + 0.2, w: 3.4, h: 0.45, fontSize: 15, bold: true, color: C.text2, valign: "middle", margin: 0, isTextBox: true });
     s.addText(q.q, { x: x + 0.2, y: y + 0.8, w: 4.0, h: 0.8, fontSize: 14, italic: true, color: C.text1, valign: "top", margin: 0, isTextBox: true });
   });
   s.addNotes(
@@ -271,7 +271,7 @@ async function icon(Comp, color = "#FFFFFF") {
   enc.forEach((e, k) => {
     const cx = 1.1 + k * 3.9;
     const x = 0.5 + k * 3.1;
-    s.addText(String(k + 1), { x: x + 1.1, y: 1.45, w: 0.8, h: 0.8, shape: pres.shapes.OVAL, fill: { color: C.accent1 }, color: C.background1, fontSize: 22, bold: true, fontFace: "Cambria", align: "center", valign: "middle", margin: 0, isTextBox: true });
+    s.addText(String(k + 1), { x: x + 1.1, y: 1.45, w: 0.8, h: 0.8, shape: pres.shapes.OVAL, fill: { color: C.accent1 }, color: C.text2, fontSize: 22, bold: true, fontFace: "Cambria", align: "center", valign: "middle", margin: 0, isTextBox: true });
     s.addText("Encontro " + (k + 1), { x, y: 2.4, w: 2.8, h: 0.3, fontSize: 12, bold: true, color: C.accent4, align: "center", charSpacing: 1, margin: 0, isTextBox: true });
     s.addText(e.t, { x, y: 2.7, w: 2.8, h: 0.4, fontSize: 15, bold: true, color: C.text2, fontFace: "Cambria", align: "center", margin: 0, isTextBox: true });
     s.addText(e.items.join(" · "), { x: x + 0.1, y: 3.1, w: 2.6, h: 0.5, fontSize: 14, color: C.text1, align: "center", valign: "top", margin: 0, isTextBox: true });
@@ -304,11 +304,11 @@ async function icon(Comp, color = "#FFFFFF") {
     [cell("Patrimônio elevado / perfil Unique"), cell("0,7%", true)],
   ], {
     x: 0.5, y: 1.3, w: 5.2, colW: [3.4, 1.8], rowH: 0.6, valign: "middle", margin: [0, 0.15, 0, 0.15],
-    border: { type: "solid", pt: 0.75, color: "A8C9C3" }, fill: { color: C.background1 }, objectName: "Tabela de taxas",
+    border: { type: "solid", pt: 0.75, color: "D0D0D0" }, fill: { color: C.background1 }, objectName: "Tabela de taxas",
   });
-  s.addText("[REVISAR] Confirme se as taxas são anuais e se a tabela é a vigente.", { x: 0.5, y: 3.85, w: 5.2, h: 0.5, fontSize: 11, italic: true, color: C.accent2, margin: 0, isTextBox: true });
+  s.addText("[REVISAR] Confirme se as taxas são anuais e se a tabela é a vigente.", { x: 0.5, y: 3.85, w: 5.2, h: 0.5, fontSize: 11, italic: true, bold: true, color: C.accent4, margin: 0, isTextBox: true });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 6.0, y: 1.3, w: 3.5, h: 2.95, rectRadius: 0.12, fill: { color: C.background2 }, line: { type: "none" }, objectName: "Regra de ouro" });
-  s.addText("Regra de ouro", { x: 6.25, y: 1.5, w: 3.0, h: 0.4, fontSize: 18, bold: true, color: C.accent1, fontFace: "Cambria", margin: 0, isTextBox: true });
+  s.addText("Regra de ouro", { x: 6.25, y: 1.5, w: 3.0, h: 0.4, fontSize: 18, bold: true, color: C.text2, fontFace: "Cambria", margin: 0, isTextBox: true });
   s.addText("A referência é a média de remuneração que a carteira atual do cliente já gera.", { x: 6.25, y: 2.0, w: 3.05, h: 1.1, fontSize: 15, color: C.text1, valign: "top", margin: 0, isTextBox: true });
   s.addText("Assim o cliente não sente aumento de custo: muda a filosofia de atendimento, não a cobrança.", { x: 6.25, y: 3.15, w: 3.05, h: 1.4, fontSize: 15, italic: true, color: C.text2, valign: "top", margin: 0, isTextBox: true });
   s.addNotes(
