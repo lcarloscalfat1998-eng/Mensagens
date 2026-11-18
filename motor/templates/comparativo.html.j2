@@ -62,9 +62,9 @@
     <h2>Mês a mês</h2>
     <div class="tbl"><table>
       <thead><tr><th>Mês</th>
-        {% for f in proposta if multi_p %}<th>{{ f.nome.split(' ')[:3] | join(' ') }}<br>{{ f.peso | pct(0) }}</th>{% endfor %}
+        {% for f in col_p %}<th>{{ f.nome.split(' ')[:2] | join(' ') }}<br>{{ f.peso | pct(0) }}</th>{% endfor %}
         <th>{{ 'Proposta' if multi_p else (proposta_nome.split(' ')[:2] | join(' ')) }}</th>
-        {% for f in atuais if multi_a %}<th>{{ f.nome.split(' ')[:2] | join(' ') }}</th>{% endfor %}
+        {% for f in col_a %}<th>{{ f.nome.split(' ')[:2] | join(' ') }}<br>{{ f.peso | pct(0) }}</th>{% endfor %}
         <th>{{ 'Atual' if multi_a else (atual.nome.split(' ')[:2] | join(' ')) }}</th><th>CDI</th></tr></thead>
       <tbody>
       {% for t in tabela %}
@@ -73,16 +73,16 @@
           {% for x in t.atuais %}<td class="{{ 'neg' if x < 0 }}">{{ x | pct }}</td>{% endfor %}
           <td class="{{ 'neg' if t.a < 0 }}">{{ t.a | pct }}</td><td class="muted">{{ t.c | pct }}</td></tr>
       {% endfor %}
-        <tr class="tot"><td>{{ tabela|length }} meses</td>{% for f in proposta if multi_p %}<td>{{ f.r | pct }}</td>{% endfor %}<td class="hl">{{ P12 | pct }}</td>
-          {% for f in atuais if multi_a %}<td>{{ f.r | pct }}</td>{% endfor %}<td>{{ A12 | pct }}</td><td class="muted">{{ cdi12 | pct }}</td></tr>
+        <tr class="tot"><td>{{ tabela|length }} meses</td>{% for f in col_p %}<td>{{ f.r | pct }}</td>{% endfor %}<td class="hl">{{ P12 | pct }}</td>
+          {% for f in col_a %}<td>{{ f.r | pct }}</td>{% endfor %}<td>{{ A12 | pct }}</td><td class="muted">{{ cdi12 | pct }}</td></tr>
       </tbody>
     </table></div>
-    <p class="note">Destaque amarelo: meses em que {{ 'a carteira proposta' if multi_p else 'o fundo proposto' }} rendeu mais que {{ 'a carteira atual' if multi_a else 'o fundo atual' }}.{% if multi_a %} "Atual" combina os fundos atuais nos pesos indicados.{% endif %}</p>
+    <p class="note">Destaque amarelo: meses em que {{ 'a carteira proposta' if multi_p else 'o fundo proposto' }} rendeu mais que {{ 'a carteira atual' if multi_a else 'o fundo atual' }}.{% if multi_a %} "Atual" combina os fundos atuais nos pesos indicados.{% endif %}{% if comuns %} Fundos mantidos nas duas carteiras ficam fora das colunas individuais.{% endif %}</p>
   </section>
 
   <section class="pb">
     <h2>Leitura do resultado</h2>
-    <div class="cards">{% for l in leituras %}<div class="card"><h3>{{ l.titulo }}{% if l.lado == 'atual' %} <span class="tag">atual</span>{% endif %}</h3><p>{{ l.texto }}</p></div>{% endfor %}</div>
+    <div class="cards">{% for l in leituras %}<div class="card"><h3>{{ l.titulo }}{% if l.lado == 'atual' %} <span class="tag">sai</span>{% elif l.lado == 'proposta' %} <span class="pill dest">entra</span>{% elif l.lado == 'mantido' %} <span class="tag">mantido</span>{% endif %}</h3><p>{{ l.texto }}</p></div>{% endfor %}</div>
   </section>
 
   <footer class="method">

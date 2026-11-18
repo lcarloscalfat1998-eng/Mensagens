@@ -125,11 +125,18 @@ def contexto(cfg: dict) -> dict:
     lp, la = linhas(proposta, P), linhas(atuais, A)
     atual_nome = la[0]["nome"] if len(la) == 1 else cfg.get("atual_nome", "Carteira atual")
 
+    comuns = {f["cnpj"] for f in lp} & {f["cnpj"] for f in la}
+    col_p = [f for f in lp if f["cnpj"] not in comuns]
+    col_a = [f for f in la if f["cnpj"] not in comuns]
     leituras = []
+    vistos = set()
     for f in la + lp:
+        if f["cnpj"] in vistos:
+            continue
+        vistos.add(f["cnpj"])
         neg = sum(1 for x in f["mensal"] if x < 0)
         acima = sum(1 for x, c in zip(f["mensal"], cdi_m) if x >= c)
-        lado = "atual" if f in la else "proposta"
+        lado = "mantido" if f["cnpj"] in comuns else ("atual" if f in la else "proposta")
         txt = f"Rendeu {pct(f['r'])} ({pct(f['pcdi'],1)} do CDI), com volatilidade de {pct(f['s']['vol'])}."
         if neg:
             pior = min(range(n), key=lambda i: f["mensal"][i])
@@ -140,13 +147,13 @@ def contexto(cfg: dict) -> dict:
         peso = f" · {pct(f['peso'],0)}" if (lado == "proposta" and len(lp) > 1) or (lado == "atual" and len(la) > 1) else ""
         leituras.append({"titulo": f"{f['nome']}{peso}", "texto": txt, "lado": lado})
     if len(lp) > 1:
-        leituras.append({"titulo": "Risco da carteira proposta", "lado": "proposta",
+        leituras.append({"titulo": "Risco da carteira proposta", "lado": "resumo",
                          "texto": f"A carteira proposta teve volatilidade de {pct(P['vol'])} ao ano e queda máxima de {pct(P['mdd'])} no período."})
 
     tabela = []
     for i in range(n):
-        tabela.append({"mes": rot[i], "fundos": [f["mensal"][i] for f in lp] if len(lp) > 1 else [],
-                       "p": P["mensal"][i], "atuais": [f["mensal"][i] for f in la] if len(la) > 1 else [],
+        tabela.append({"mes": rot[i], "fundos": [f["mensal"][i] for f in col_p] if len(lp) > 1 else [],
+                       "p": P["mensal"][i], "atuais": [f["mensal"][i] for f in col_a] if len(la) > 1 else [],
                        "a": A["mensal"][i], "c": cdi_m[i], "ganhou": P["mensal"][i] > A["mensal"][i]})
 
     cum = {"P": P["cum"], "A": A["cum"], "C": cdi_cum}
@@ -155,6 +162,7 @@ def contexto(cfg: dict) -> dict:
         "eyebrow": cfg.get("eyebrow", f"Estudo comparativo · {meses} meses"),
         "valor": valor, "ini": la[0]["s"]["ini"], "fim": la[0]["s"]["fim"], "ini_mes": ini + dt.timedelta(days=1),
         "proposta": lp, "atuais": la, "multi_p": len(lp) > 1, "multi_a": len(la) > 1,
+        "col_p": col_p if len(lp) > 1 else [], "col_a": col_a if len(la) > 1 else [], "comuns": comuns,
         "atual": {"nome": atual_nome, "cnpj": la[0]["cnpj"], "s": {"vol": A["vol"], "mdd": A["mdd"]}},
         "proposta_nome": cfg.get("proposta_nome", lp[0]["nome"] if len(lp) == 1 else "Carteira proposta"),
         "P12": P12, "A12": A12, "cdi12": cdi12,
